@@ -26,6 +26,10 @@
   margin: 2rem;
 }
 
+.close-icon:hover {
+  cursor: pointer;
+}
+
 .btn-primary:hover {
   background-color: #47A992;
 }
@@ -100,8 +104,9 @@ nav .btn-nav:disabled {
   margin-right: auto;
   max-width: 30rem;
   height: 600px;
-  background-color: white;
+  background-color: #FBFFDC;
   border-radius: 10px;
+  border: solid 1px #025464;
   padding: 40px;
 }
 
