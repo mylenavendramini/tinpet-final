@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,400;1,700&family=Roboto:wght@300;400;500;700&display=swap');
+
+
+body {
+  text-align: center;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.btn-primary {
+  color: aliceblue;
+  text-transform: uppercase;
+  font-size: 1rem;
+  background-color: #025464;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  border: none;
+  margin: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #47A992;
+}
+button:hover {
+  cursor: pointer;
+}
+
+/* Navbar styles */
+
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav .logo-container {
+  width: 2rem;
+  margin: 1rem;
+}
+
+nav .logo-container .logo {
+  width: 100%;
+}
+
+nav .btn-nav {
+  color: #025464;
+  background-color: white;
+  font-size: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 1rem;
+  border:1px solid #025464;
+  margin: 1rem
+}
+nav .btn-nav:disabled {
+  background-color: rgb(207, 207, 207);
+  color: #025464;
+}
+
+/* HomePage */
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: linear-gradient(45deg, rgba(208,245,190,1) 0%, rgba(251,255,220,1) 100%);
+}
+
+/* Auth Modal */
+.auth-modal {
+  /* position: absolute; */
+  top:10rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 30rem;
+  height: 50rem;
+  background-color: white;
+  border-radius: 10px;
+  padding: 40px;
+}
