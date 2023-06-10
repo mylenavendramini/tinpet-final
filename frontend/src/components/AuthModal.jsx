@@ -1,11 +1,17 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
-const AuthModal = ({ setShowModal, setIsSignUp, isSignUp }) => {
+const AuthModal = ({ setShowModal, isSignUp }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [error, setError] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies(['user']);
+
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setShowModal(false);
@@ -13,13 +19,26 @@ const AuthModal = ({ setShowModal, setIsSignUp, isSignUp }) => {
 
   // console.log(email);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isSignUp && password !== confirmPassword) {
         setError('Passwords needs to match!');
+        return;
       }
-      console.log('make a post request to database');
+
+      const response = await axios.post('http://localhost:3000/signup', {
+        email,
+        password,
+      });
+
+      setCookie('Email', response.data.email);
+      setCookie('User', response.data.userId);
+      setCookie('Authtoken', response.data.token);
+
+      const success = response.status === 201;
+
+      if (success) navigate('/onboarding');
     } catch (error) {
       console.log(error);
     }
