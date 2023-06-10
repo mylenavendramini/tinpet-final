@@ -1,4 +1,4 @@
-import logo from '../../public/tinder-icon.svg';
+import logo from '../assets/icon.svg';
 
 const Nav = ({ setShowModal, showModal, setIsSignUp }) => {
   const handleClick = () => {

@@ -130,3 +130,62 @@ nav .btn-nav:disabled {
   cursor: pointer;
   background-color: gainsboro;
 }
+/* Onboarding page */
+
+.onboarding form {
+  display: flex;
+  justify-content: center;
+}
+
+.onboarding form label {
+  margin: 1rem 0;
+  font-size: x-large;
+}
+
+.onboarding form section {
+  display: flex;
+  flex-direction: column;
+  padding: 1.3rem;
+  width: 35%;
+}
+
+.onboarding form input {
+  padding: 1rem 2rem;
+  margin: 0.7rem 0;
+  font-size: 1rem;
+  border: solid 2px lightgray;
+  border-radius: 1rem;
+}
+
+.onboarding form .multiple-input-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.onboarding form .multiple-input-container label {
+  padding: 10px;
+  border: solid 2px lightgray;
+  border-radius: 1rem;
+  margin-right: 0.8rem;
+  transition: all 0.3s;
+  font-size: 1.3rem;
+}
+
+.onboarding form  input[type='radio'] {
+  display: none;
+}
+
+.onboarding form  input[type='radio']:checked + label {
+  border: solid 2px #025464;
+  color: #025464;
+}
+
+.onboarding form  input[type='submit']:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.onboarding form  input[type='submit']:active {
+  background-color: #47A992;
+}
