@@ -132,6 +132,11 @@ nav .btn-nav:disabled {
 }
 /* Onboarding page */
 
+.onboarding {
+  border-top: solid 1px lightgrey;
+  padding-top: 1rem;
+}
+
 .onboarding form {
   display: flex;
   justify-content: center;
@@ -182,10 +187,16 @@ nav .btn-nav:disabled {
   color: #025464;
 }
 
-.onboarding form  input[type='submit']:hover {
+.onboarding form input[type='submit']:hover {
   background-color: rgb(235, 235, 235);
 }
 
-.onboarding form  input[type='submit']:active {
+.onboarding form input[type='submit']:active {
   background-color: #47A992;
+}
+
+.onboarding form .photo-container img{
+  width: 100%;
+  border-radius: 1rem;
+  margin-top: 1rem;
 }

@@ -2,13 +2,31 @@ import Nav from '../components/Nav';
 import { useState } from 'react';
 
 const Onboarding = () => {
+  const [formData, setFormData] = useState({
+    user_id: '',
+    name: '',
+    age: '',
+    gender: '',
+    email: '',
+    url: '',
+    about: '',
+    matches: [],
+  });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Submited');
   };
 
-  const handleChange = () => {
-    console.log('change');
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(formData);
   };
 
   return (
@@ -22,14 +40,14 @@ const Onboarding = () => {
 
         <form onSubmit={handleSubmit}>
           <section>
-            <label htmlFor='first_name'>First Name</label>
+            <label htmlFor='first_name'>Name</label>
             <input
               type='text'
-              name='first_name'
-              id='first_name'
-              placeholder='First Name'
+              name='name'
+              id='name'
+              placeholder='Name'
               required={true}
-              value={''}
+              value={formData.name}
               onChange={handleChange}
             />
             <label>Age</label>
@@ -39,7 +57,7 @@ const Onboarding = () => {
               id='age'
               placeholder='Age'
               required={true}
-              value={''}
+              value={formData.age}
               onChange={handleChange}
             />
             <label>Gender</label>
@@ -50,7 +68,7 @@ const Onboarding = () => {
                 name='gender'
                 placeholder='Gender'
                 value='male'
-                checked={false}
+                checked={formData.gender === 'male'}
                 onChange={handleChange}
               />
 
@@ -61,7 +79,7 @@ const Onboarding = () => {
                 name='gender'
                 placeholder='Gender'
                 value='female'
-                checked={false}
+                checked={formData.gender === 'female'}
                 onChange={handleChange}
               />
               <label htmlFor='female-gender'>Female</label>
@@ -74,7 +92,7 @@ const Onboarding = () => {
               name='about'
               required={true}
               placeholder='Friendly and playful'
-              value={''}
+              value={formData.about}
               onChange={handleChange}
             />
             <input
@@ -90,10 +108,14 @@ const Onboarding = () => {
               type='url'
               name='url'
               required={true}
-              value={''}
               onChange={handleChange}
             />
-            <div className='photo-container'></div>
+            <div className='photo-container'>
+              <img
+                src={formData.url}
+                alt='profile picture'
+              />
+            </div>
           </section>
         </form>
       </div>
