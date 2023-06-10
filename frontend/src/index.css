@@ -83,3 +83,37 @@ nav .btn-nav:disabled {
   border-radius: 10px;
   padding: 40px;
 }
+
+.auth-modal .close-icon {
+  float: right;
+}
+
+.auth-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-modal input[type=password],
+.auth-modal input[type=email]  {
+  padding: 0.5rem;
+  margin: 0.5rem;
+  font: 1rem;
+}
+
+.btn-secondary {
+  color: rgb(136, 141, 145);
+  text-transform: uppercase;
+  font-size: 1rem;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: solid 2px rgb(136, 141, 145);
+  margin: 0.5rem;
+}
+
+.btn-secondary:hover {
+  color:black;
+  border: solid 2px black;
+  cursor: pointer;
+  background-color: gainsboro;
+}
