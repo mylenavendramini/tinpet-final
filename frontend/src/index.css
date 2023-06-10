@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,700;1,400;1,700&family=Roboto:wght@300;400;500;700&display=swap');
 
 
-body {
-  text-align: center;
-}
-
 * {
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  text-align: center;
+}
+
+.primary-title{
+  font-size: 6rem;
+  color: #025464;
+  margin: 2rem;
 }
 
 .btn-primary {
@@ -20,11 +23,23 @@ body {
   padding: 1rem 2rem;
   border-radius: 2rem;
   border: none;
-  margin: 1rem;
+  margin: 2rem;
 }
 
 .btn-primary:hover {
   background-color: #47A992;
+}
+
+
+.btn-secondary {
+  color: rgb(136, 141, 145);
+  text-transform: uppercase;
+  font-size: 1rem;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: solid 2px rgb(136, 141, 145);
+  margin: 0.5rem;
 }
 button:hover {
   cursor: pointer;
@@ -37,6 +52,7 @@ nav {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  /* border-bottom: 1px solid green; */
 }
 
 nav .logo-container {
@@ -63,6 +79,9 @@ nav .btn-nav:disabled {
 }
 
 /* HomePage */
+.home {
+  margin-top: 30vh;
+}
 
 .overlay {
   width: 100vw;
@@ -73,12 +92,14 @@ nav .btn-nav:disabled {
 
 /* Auth Modal */
 .auth-modal {
-  /* position: absolute; */
+  position: absolute;
+  left: 0;
+  right: 0;
   top:10rem;
   margin-left: auto;
   margin-right: auto;
   max-width: 30rem;
-  height: 50rem;
+  height: 600px;
   background-color: white;
   border-radius: 10px;
   padding: 40px;
@@ -86,11 +107,13 @@ nav .btn-nav:disabled {
 
 .auth-modal .close-icon {
   float: right;
+  color: red;
 }
 
 .auth-modal form {
   display: flex;
   flex-direction: column;
+  margin-bottom: 2rem;
 }
 
 .auth-modal input[type=password],
@@ -100,16 +123,6 @@ nav .btn-nav:disabled {
   font: 1rem;
 }
 
-.btn-secondary {
-  color: rgb(136, 141, 145);
-  text-transform: uppercase;
-  font-size: 1rem;
-  background-color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  border: solid 2px rgb(136, 141, 145);
-  margin: 0.5rem;
-}
 
 .btn-secondary:hover {
   color:black;

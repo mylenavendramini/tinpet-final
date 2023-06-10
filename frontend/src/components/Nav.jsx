@@ -1,10 +1,12 @@
 import logo from '../../public/tinder-icon.svg';
 
-const Nav = ({ authToken, setShowModal, showModal }) => {
+const Nav = ({ setShowModal, showModal, setIsSignUp }) => {
   const handleClick = () => {
     setShowModal(true);
+    setIsSignUp(false);
   };
 
+  const authToken = true;
   return (
     <nav>
       <div className='logo-container'>
