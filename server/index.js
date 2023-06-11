@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { MongoClient } from 'mongodb';
+import { ClientSession, MongoClient } from 'mongodb';
 import { v4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -24,7 +24,6 @@ const PORT = process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
 
 //Sign Up function to new users
 app.post('/signup', async (req, res) => {
@@ -59,13 +58,43 @@ app.post('/signup', async (req, res) => {
       expiresIn: 60 * 24,
     });
 
-    res
-      .status(201)
-      .json({ token, userId: generateUserId, email: sanitizedEmail });
+    res.status(201).json({ token, userId: generateUserId });
   } catch (error) {
     console.log(error);
   }
 });
+
+// login existing user
+
+app.post('/login', async (req, res) => {
+  const client = new MongoClient(URI);
+  const { email, password } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db('app-data');
+    const users = database.collection('users');
+
+    const user = await users.findOne({ email });
+
+    const correctPassword = await bcrypt.compare(
+      password,
+      user.hashed_password
+    );
+
+    if (user && correctPassword) {
+      const token = jwt.sign(user, email, {
+        expiresIn: 60 * 24,
+      });
+      res.status(201).json({ token, userId: user.user_id });
+    }
+    res.status(400).send('Invalid Credentials');
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// get all users
 
 app.get('/users', async (req, res) => {
   const client = new MongoClient(URI);
@@ -79,6 +108,34 @@ app.get('/users', async (req, res) => {
     res.send(returnedUsers);
   } catch (error) {
     console.log(`Error: ${error}`);
+  } finally {
+    await client.close();
+  }
+});
+
+// Update account /onboarding
+app.put('/user', async (req, res) => {
+  const client = new MongoClient(URI);
+  const formData = req.body.formData;
+
+  try {
+    await client.connect();
+    const database = client.db('app-data');
+    const users = database.collection('users');
+
+    const query = { user_id: formData.user_id };
+    const updateDocument = {
+      $set: {
+        name: formData.name,
+        age: formData.age,
+        gender: formData.gender,
+        url: formData.url,
+        about: formData.about,
+        matches: formData.matches,
+      },
+    };
+    const insertedUser = await users.updateOne(query, updateDocument);
+    res.send(insertedUser);
   } finally {
     await client.close();
   }

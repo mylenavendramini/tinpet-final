@@ -1,12 +1,12 @@
 import logo from '../assets/icon.svg';
 
-const Nav = ({ setShowModal, showModal, setIsSignUp }) => {
+const Nav = ({ setShowModal, showModal, setIsSignUp, authToken }) => {
   const handleClick = () => {
     setShowModal(true);
     setIsSignUp(false);
   };
 
-  const authToken = true;
+  // const authToken = true;
   return (
     <nav>
       <div className='logo-container'>

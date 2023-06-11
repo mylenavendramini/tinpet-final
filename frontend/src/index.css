@@ -313,15 +313,14 @@ nav .btn-nav:disabled {
   cursor: pointer;
 }
 
-.img-container {
-  height: 30px;
-  width: 30px;
+.photo-container {
+  width: 30vw;
   border-radius: 1rem;
   overflow: hidden;
   margin: 10px;
 }
 
-.img-container img {
+.photo-container img {
   width: 100%;
 }
 
