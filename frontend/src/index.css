@@ -128,6 +128,17 @@ nav .btn-nav:disabled {
   font: 1rem;
 }
 
+.photo-container {
+  width: 30vw;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.photo-container img {
+  width: 100%;
+}
+
 
 .btn-secondary:hover {
   color:black;
@@ -313,14 +324,15 @@ nav .btn-nav:disabled {
   cursor: pointer;
 }
 
-.photo-container {
-  width: 30vw;
+.img-container {
+  height: 30px;
+  width: 30px;
   border-radius: 1rem;
   overflow: hidden;
   margin: 10px;
 }
 
-.photo-container img {
+.img-container img {
   width: 100%;
 }
 

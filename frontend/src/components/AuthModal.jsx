@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import axios from 'axios';
@@ -35,14 +37,15 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
         }
       );
 
-
-      setCookies('Authtoken', response.data.token);
+      setCookies('AuthToken', response.data.token);
       setCookies('UserId', response.data.userId);
 
       const success = response.status === 201;
 
       if (success && isSignUp) navigate('/onboarding');
-      if (success && !isSignUp) navigate('/dashboard'); 
+      if (success && !isSignUp) navigate('/dashboard');
+
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }

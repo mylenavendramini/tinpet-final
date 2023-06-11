@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import logo from '../assets/icon.svg';
 
 const Nav = ({ setShowModal, showModal, setIsSignUp, authToken }) => {

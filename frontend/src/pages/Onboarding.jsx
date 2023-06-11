@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -40,7 +41,6 @@ const Onboarding = () => {
       ...prevState,
       [name]: value,
     }));
-    console.log(formData);
   };
 
   return (
