@@ -325,9 +325,9 @@ nav .btn-nav:disabled {
 }
 
 .img-container {
-  height: 30px;
-  width: 30px;
-  border-radius: 1rem;
+  height: 50px;
+  width: 50px;
+  border-radius: 100rem;
   overflow: hidden;
   margin: 10px;
 }
@@ -353,4 +353,15 @@ nav .btn-nav:disabled {
 
 .chat-input textarea {
   padding: 1rem;
+}
+
+.match-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0.5rem;
+  padding: 1rem;
+  background-color: rgba(208, 245, 190, 0.3);
+  border-radius: 1rem;
 }
