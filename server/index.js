@@ -6,20 +6,15 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 
+dotenv.config();
+
 const URI = 'mongodb://127.0.0.1:27017/app-data';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-dotenv.config();
 const PORT = process.env.PORT || 3000;
-
-// import connectDB from './models/dataModel.js';
-
-// connectDB();
-
-// dotenv.config();
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -184,7 +179,6 @@ app.put('/addmatch', async (req, res) => {
 app.get('/matchedusers', async (req, res) => {
   const client = new MongoClient(URI);
   const userIds = JSON.parse(req.query.userIds);
-  // console.log(userIds);
 
   try {
     await client.connect();

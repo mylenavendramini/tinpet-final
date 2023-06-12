@@ -37,8 +37,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser();
-    getAllUsers();
   }, []);
+  
+  useEffect(() => {
+    if (user) {
+      getAllUsers();
+    }
+  }, [user]);
 
   // console.log('users', users);
 
@@ -87,7 +92,7 @@ const Dashboard = () => {
               {users.map((user) => (
                 <TinderCard
                   className='swipe'
-                  key={user.name}
+                  key={user.user_id}
                   onSwipe={(dir) => swiped(dir, user.user_id)}
                   onCardLeftScreen={() => outOfFrame(user.name)}
                 >
