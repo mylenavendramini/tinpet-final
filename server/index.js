@@ -160,6 +160,53 @@ app.get('/user', async (req, res) => {
   }
 });
 
+app.put('/addmatch', async (req, res) => {
+  const client = new MongoClient(URI);
+  const { userId, matchedUserId } = req.body;
+
+  try {
+    await client.connect();
+    const database = client.db('app-data');
+    const users = database.collection('users');
+
+    const query = { user_id: userId };
+    const updateDocument = {
+      $push: { matches: { user_id: matchedUserId } },
+    };
+
+    const user = await users.updateOne(query, updateDocument);
+    res.send(user);
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/matchedusers', async (req, res) => {
+  const client = new MongoClient(URI);
+  const userIds = JSON.parse(req.query.userIds);
+  // console.log(userIds);
+
+  try {
+    await client.connect();
+    const database = client.db('app-data');
+    const users = database.collection('users');
+
+    const pipeline = [
+      {
+        $match: {
+          user_id: {
+            $in: userIds,
+          },
+        },
+      },
+    ];
+    const foundUsers = await users.aggregate(pipeline).toArray();
+    res.send(foundUsers);
+  } finally {
+    await client.close();
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`☕ Express server listening on port: ${PORT}`);
 });

@@ -6,30 +6,10 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 
 const Dashboard = () => {
-  const db = [
-    {
-      name: 'Richard Hendricks',
-      url: 'https://images.pexels.com/photos/7752789/pexels-photo-7752789.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      name: 'Erlich Bachman',
-      url: 'https://images.pexels.com/photos/5046669/pexels-photo-5046669.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      name: 'Monica Hall',
-      url: 'https://images.pexels.com/photos/7514959/pexels-photo-7514959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      name: 'Jared Dunn',
-      url: 'https://images.pexels.com/photos/7112208/pexels-photo-7112208.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      name: 'Dinesh Chugtai',
-      url: 'https://images.pexels.com/photos/7101908/pexels-photo-7101908.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-  ];
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
+  const [users, setUsers] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
+  const [lastDirection, setLastDirection] = useState();
 
   const userId = cookies.UserId;
 
@@ -44,20 +24,42 @@ const Dashboard = () => {
     }
   };
 
-
-
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/users', {
+        params: { userId },
+      });
+      setUsers(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getUser();
+    getAllUsers();
   }, []);
 
-  console.log('user', user);
+  // console.log('users', users);
 
-  const characters = db;
-  const [lastDirection, setLastDirection] = useState();
+  const updateMatches = async (matchedUserId) => {
+    try {
+      await axios.put('http://localhost:3000/addmatch', {
+        userId,
+        matchedUserId,
+      });
+      getUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const swiped = (direction, nameToDelete) => {
-    console.log('removing: ' + nameToDelete);
+  // console.log(user);
+
+  const swiped = (direction, swipedId) => {
+    if (direction === 'right') {
+      updateMatches(swipedId);
+    }
     setLastDirection(direction);
   };
 
@@ -65,6 +67,16 @@ const Dashboard = () => {
     console.log(name + ' left the screen!');
   };
 
+  // const matchedUsersIds = user.matches
+  //   .map(({ user_id }) => user_id)
+  //   .concat(userId);
+
+  // let filteredUsers = [];
+  // if (Array.isArray(getAllUsers)) {
+  //   filteredUsers = getAllUsers.filter(
+  //     (matched) => !matchedUsersIds.includes(matched.user_id)
+  //   );
+  // }
   return (
     <>
       {user && (
@@ -72,18 +84,21 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className='swiper-container'>
             <div className='card-container'>
-              {characters.map((character) => (
+              {users.map((user) => (
                 <TinderCard
                   className='swipe'
-                  key={character.name}
-                  onSwipe={(dir) => swiped(dir, character.name)}
-                  onCardLeftScreen={() => outOfFrame(character.name)}
+                  key={user.name}
+                  onSwipe={(dir) => swiped(dir, user.user_id)}
+                  onCardLeftScreen={() => outOfFrame(user.name)}
                 >
                   <div
-                    style={{ backgroundImage: 'url(' + character.url + ')' }}
+                    style={{ backgroundImage: 'url(' + user.url + ')' }}
                     className='card'
                   >
-                    <h3>{character.name}</h3>
+                    <h3>
+                      {user.name + ', Age: '}
+                      {user.age}
+                    </h3>
                   </div>
                 </TinderCard>
               ))}
