@@ -2,9 +2,11 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const MatchesDisplay = ({ matches, setClickedUser }) => {
-  const [matchedProfiles, setMatchedProfiles] = useState([]);
+  const [matchedProfiles, setMatchedProfiles] = useState(null);
+
 
   const getMatches = async () => {
     const matchedUserIds = matches.map(({ user_id }) => user_id);
@@ -22,7 +24,7 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
     getMatches();
   }, [matches]);
 
-  console.log(matchedProfiles);
+
 
   return (
     <div className='matches-display'>

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import logo from '../assets/icon.svg';
+import logo from '../assets/dog-face-svgrepo-com.svg';
 
 const Nav = ({ setShowModal, showModal, setIsSignUp, authToken }) => {
   const handleClick = () => {

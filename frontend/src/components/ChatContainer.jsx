@@ -6,9 +6,9 @@ import ChatHeader from './ChatHeader';
 import { useState } from 'react';
 
 const ChatContainer = ({ user }) => {
-  const [clickedUser, setClickedUser] = useState('');
+  const [clickedUser, setClickedUser] = useState(null);
 
-  console.log('clickeduser', clickedUser);
+  // console.log('clickeduser', clickedUser);
 
   return (
     <div className='chat-container'>
@@ -20,13 +20,17 @@ const ChatContainer = ({ user }) => {
         >
           Matches
         </button>
+
         <button
           className='option'
           disabled={!clickedUser}
         >
           Chat
         </button>
+
       </div>
+
+      
       {!clickedUser && (
         <MatchesDisplay
           matches={user.matches}

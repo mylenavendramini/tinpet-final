@@ -24,7 +24,7 @@ const Home = () => {
         />
         <div className='home'>
           <h1 className='primary-title'>TinPet</h1>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis, eligendi!</p>
+          <p>Your pet is lonely and has no friends? TinPet is the solution, here you can contact other people who are also looking for friends for their pets, where you can make friends .... among other things...</p>
           <button
             className='btn-primary'
             onClick={handleClick}

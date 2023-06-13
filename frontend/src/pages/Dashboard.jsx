@@ -45,8 +45,6 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  // console.log('users', users);
-
   const updateMatches = async (matchedUserId) => {
     try {
       await axios.put('http://localhost:3000/addmatch', {
@@ -59,7 +57,6 @@ const Dashboard = () => {
     }
   };
 
-  // console.log(user);
 
   const swiped = (direction, swipedId) => {
     if (direction === 'right') {
@@ -72,16 +69,9 @@ const Dashboard = () => {
     console.log(name + ' left the screen!');
   };
 
-  // const matchedUsersIds = user.matches
-  //   .map(({ user_id }) => user_id)
-  //   .concat(userId);
+  
+  const filteredUsers = users.filter(user => user.user_id !== userId);
 
-  // let filteredUsers = [];
-  // if (Array.isArray(getAllUsers)) {
-  //   filteredUsers = getAllUsers.filter(
-  //     (matched) => !matchedUsersIds.includes(matched.user_id)
-  //   );
-  // }
   return (
     <>
       {user && (
@@ -89,7 +79,7 @@ const Dashboard = () => {
           <ChatContainer user={user} />
           <div className='swiper-container'>
             <div className='card-container'>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <TinderCard
                   className='swipe'
                   key={user.user_id}

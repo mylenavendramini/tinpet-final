@@ -19,7 +19,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
     setShowModal(false);
   };
 
-  // console.log(email);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,11 +57,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
         <CloseIcon className='close-icon' />
       </div>
       <h2>{isSignUp ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas,
-        voluptates minima. Amet quod aspernatur doloremque dolorum laborum est
-        laudantium libero!
-      </p>
+
       <form onSubmit={handleSubmit}>
         <input
           type='email'
@@ -86,7 +82,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
             type='password'
             id='password-check'
             name='password-check'
-            placeholder='confirm'
+            placeholder='confirm your password'
             required={true}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />

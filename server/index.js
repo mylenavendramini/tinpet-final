@@ -214,7 +214,7 @@ app.get('/matchedusers', async (req, res) => {
 // Get Messages by from_userId and to_userId
 app.get('/messages', async (req, res) => {
   const {userId, correspondingUserId} = req.query
-  const client = new MongoClient(uri)
+  const client = new MongoClient(URI)
 
   try {
       await client.connect()
@@ -233,7 +233,7 @@ app.get('/messages', async (req, res) => {
 
 // Add a Message to our Database
 app.post('/message', async (req, res) => {
-  const client = new MongoClient(uri)
+  const client = new MongoClient(URI)
   const message = req.body.message
 
   try {
