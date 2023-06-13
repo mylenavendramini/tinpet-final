@@ -76,7 +76,7 @@ app.post('/login', async (req, res) => {
       password,
       user.hashed_password
     );
-    
+
     if (user && correctPassword) {
       const token = jwt.sign(user, email, {
         expiresIn: 60 * 24,
@@ -111,7 +111,6 @@ app.get('/user', async (req, res) => {
   }
 });
 
-
 //update user matched
 app.put('/addmatch', async (req, res) => {
   const client = new MongoClient(URI);
@@ -134,8 +133,6 @@ app.put('/addmatch', async (req, res) => {
   }
 });
 
-
-
 // get all users
 
 app.get('/users', async (req, res) => {
@@ -145,7 +142,7 @@ app.get('/users', async (req, res) => {
     await client.connect();
     const database = client.db('app-data');
     const users = database.collection('users');
-    
+
     const returnedUsers = await users.find().toArray();
     res.status(200).send(returnedUsers);
   } catch (error) {
@@ -159,7 +156,7 @@ app.get('/users', async (req, res) => {
 app.put('/user', async (req, res) => {
   const client = new MongoClient(URI);
   const formData = req.body.formData;
-  
+
   try {
     await client.connect();
     const database = client.db('app-data');
@@ -182,7 +179,6 @@ app.put('/user', async (req, res) => {
     await client.close();
   }
 });
-
 
 app.get('/matchedusers', async (req, res) => {
   const client = new MongoClient(URI);
@@ -209,44 +205,44 @@ app.get('/matchedusers', async (req, res) => {
   }
 });
 
-
 // endpoints for chat
 // Get Messages by from_userId and to_userId
 app.get('/messages', async (req, res) => {
-  const {userId, correspondingUserId} = req.query
-  const client = new MongoClient(URI)
+  const { userId, correspondingUserId } = req.query;
+  const client = new MongoClient(URI);
 
   try {
-      await client.connect()
-      const database = client.db('app-data')
-      const messages = database.collection('messages')
+    await client.connect();
+    const database = client.db('app-data');
+    const messages = database.collection('messages');
 
-      const query = {
-          from_userId: userId, to_userId: correspondingUserId
-      }
-      const foundMessages = await messages.find(query).toArray()
-      res.send(foundMessages)
+    const query = {
+      from_userId: userId,
+      to_userId: correspondingUserId,
+    };
+    const foundMessages = await messages.find(query).toArray();
+    res.send(foundMessages);
   } finally {
-      await client.close()
+    await client.close();
   }
-})
+});
 
 // Add a Message to our Database
 app.post('/message', async (req, res) => {
-  const client = new MongoClient(URI)
-  const message = req.body.message
+  const client = new MongoClient(URI);
+  const message = req.body.message;
 
   try {
-      await client.connect()
-      const database = client.db('app-data')
-      const messages = database.collection('messages')
+    await client.connect();
+    const database = client.db('app-data');
+    const messages = database.collection('messages');
 
-      const insertedMessage = await messages.insertOne(message)
-      res.send(insertedMessage)
+    const insertedMessage = await messages.insertOne(message);
+    res.send(insertedMessage);
   } finally {
-      await client.close()
+    await client.close();
   }
-})
+});
 
 app.listen(PORT, () => {
   console.log(`☕ Express server listening on port: ${PORT}`);
