@@ -12,6 +12,7 @@ import {
   Model,
   NonAttribute,
   Sequelize,
+  CreationOptional,
 } from 'sequelize';
 import { IDog } from './Interfaces';
 import { User } from './User';
@@ -22,7 +23,16 @@ export class Dog extends Model<
   InferAttributes<Dog, { omit: DogAssociations }>,
   InferCreationAttributes<Dog, { omit: DogAssociations }>
 > {
-  declare dog: IDog;
+  // declare dog: IDog;
+  declare id: number;
+  declare name: string;
+  declare age: number | null;
+  declare gender: string | null;
+  declare about: string;
+  declare url: string | null;
+  declare liked_dog: string[] | null;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
   // Dog belongsTo User
   declare user?: NonAttribute<User>;
   declare getUser: BelongsToGetAssociationMixin<User>;

@@ -9,6 +9,7 @@ import {
   Model,
   NonAttribute,
   Sequelize,
+  CreationOptional,
 } from 'sequelize';
 import { IUser } from './Interfaces';
 import { Dog } from './Dog';
@@ -19,7 +20,12 @@ export class User extends Model<
   InferAttributes<User, { omit: UserAssociations }>,
   InferCreationAttributes<User, { omit: UserAssociations }>
 > {
-  declare user: IUser;
+  declare id: number;
+  declare username: string;
+  declare email: string;
+  declare password: string;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   // User hasMany Dog
   declare dogs?: NonAttribute<Dog[]>;

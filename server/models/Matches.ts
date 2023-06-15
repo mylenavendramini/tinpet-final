@@ -4,6 +4,7 @@ import {
   InferAttributes,
   Model,
   Sequelize,
+  CreationOptional,
 } from 'sequelize';
 import { IMatches } from './Interfaces';
 
@@ -11,7 +12,9 @@ export class Matches extends Model<
   InferAttributes<Matches>,
   InferCreationAttributes<Matches>
 > {
-  declare matches: IMatches;
+  declare id: number;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
   static initModel(sequelize: Sequelize): typeof Matches {
     Matches.init(
       {
