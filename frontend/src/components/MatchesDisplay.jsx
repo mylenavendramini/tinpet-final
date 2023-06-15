@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 
 const MatchesDisplay = ({ matches, setClickedUser }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
-
+  console.log(matches)
 
   const getMatches = async () => {
     const matchedUserIds = matches.map(({ user_id }) => user_id);

@@ -38,7 +38,7 @@ const Dashboard = () => {
   useEffect(() => {
     getUser();
   }, []);
-  
+
   useEffect(() => {
     if (user) {
       getAllUsers();
@@ -69,7 +69,7 @@ const Dashboard = () => {
     console.log(name + ' left the screen!');
   };
 
-  
+
   const filteredUsers = users.filter(user => user.user_id !== userId);
 
   return (
@@ -80,7 +80,7 @@ const Dashboard = () => {
           <div className='swiper-container'>
             <div className='card-container'>
               {filteredUsers.map((user) => (
-                <TinderCard
+                <div
                   className='swipe'
                   key={user.user_id}
                   onSwipe={(dir) => swiped(dir, user.user_id)}
@@ -95,7 +95,7 @@ const Dashboard = () => {
                       {user.age}
                     </h3>
                   </div>
-                </TinderCard>
+                </div>
               ))}
               <div className='swipe-info'>
                 {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}

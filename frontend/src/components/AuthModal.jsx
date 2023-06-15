@@ -19,8 +19,6 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
     setShowModal(false);
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

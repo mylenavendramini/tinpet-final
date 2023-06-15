@@ -20,23 +20,21 @@ const ChatContainer = ({ user }) => {
         >
           Matches
         </button>
-
         <button
           className='option'
           disabled={!clickedUser}
         >
           Chat
         </button>
-
       </div>
 
-      
       {!clickedUser && (
         <MatchesDisplay
           matches={user.matches}
           setClickedUser={setClickedUser}
         />
       )}
+
       {clickedUser && <ChatDisplay user={user} clickedUSer={clickedUser} />}
     </div>
   );
