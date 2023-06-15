@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: number;
   username: string;
   email: string;
@@ -7,7 +7,7 @@ interface User {
   updatedAt: Date;
 }
 
-interface Dog {
+export interface Dog {
   id: number;
   name: string;
   age: number;
@@ -19,7 +19,7 @@ interface Dog {
   updatedAt: Date;
 }
 
-interface Matches {
+export interface Matches {
   id: number;
   createdAt: Date;
   updatedAt: Date;
