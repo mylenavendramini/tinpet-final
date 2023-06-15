@@ -1,39 +1,67 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import {
+  Association,
+  DataTypes,
+  HasManyGetAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  InferCreationAttributes,
+  InferAttributes,
+  Model,
+  NonAttribute,
+  Sequelize,
+} from 'sequelize';
 import { IUser } from './Interfaces';
-const sequelize = new Sequelize();
+import { Dog } from './Dog';
 
-class User extends Model<IUser> {}
+type UserAssociations = 'dogs';
 
-User.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    email: {
-      type: DataTypes.STRING,
-    },
-    password: {
-      type: DataTypes.STRING,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-    },
-  },
-  {
-    sequelize,
-    modelName: 'User',
+export class User extends Model<
+  InferAttributes<User, { omit: UserAssociations }>,
+  InferCreationAttributes<User, { omit: UserAssociations }>
+> {
+  declare user: IUser;
+
+  // User hasMany Dog
+  declare dogs?: NonAttribute<Dog[]>;
+  declare getDogs: HasManyGetAssociationsMixin<Dog>;
+  declare setDogs: HasManySetAssociationsMixin<Dog, number>;
+  declare addDog: HasManyAddAssociationMixin<Dog, number>;
+
+  declare static associations: {
+    dogs: Association<User, Dog>;
+  };
+  static initModel(sequelize: Sequelize): typeof User {
+    User.init(
+      {
+        id: {
+          type: DataTypes.INTEGER.UNSIGNED,
+          primaryKey: true,
+          autoIncrement: true,
+          allowNull: false,
+        },
+        username: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        email: {
+          type: DataTypes.STRING,
+        },
+        password: {
+          type: DataTypes.STRING,
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+        },
+      },
+      {
+        sequelize,
+        modelName: 'User',
+      }
+    );
+    return User;
   }
-);
-
-export { User };
+}
