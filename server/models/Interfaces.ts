@@ -1,5 +1,7 @@
+import { CreationOptional } from 'sequelize';
+
 export interface IUser {
-  id: number;
+  id: CreationOptional<number>;
   username: string;
   email: string;
   password: string;
@@ -8,19 +10,19 @@ export interface IUser {
 }
 
 export interface IDog {
-  id: number;
+  id: CreationOptional<number>;
   name: string;
   age: number;
   gender: string;
   about: string;
   url: string;
-  liked_dog: Array<number>;
+  liked_dog: Array<number> | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface IMatches {
-  id: number;
+  id: CreationOptional<number>;
   createdAt: Date;
   updatedAt: Date;
 }
