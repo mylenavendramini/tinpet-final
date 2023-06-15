@@ -24,3 +24,5 @@ Matches.init(
     modelName: 'Matches',
   }
 );
+
+export { Matches };
