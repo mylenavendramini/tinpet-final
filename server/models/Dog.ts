@@ -1,49 +1,88 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import {
+  Association,
+  BelongsToGetAssociationMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToCreateAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+  BelongsToManySetAssociationsMixin,
+  BelongsToManyAddAssociationMixin,
+  DataTypes,
+  InferCreationAttributes,
+  InferAttributes,
+  Model,
+  NonAttribute,
+  Sequelize,
+} from 'sequelize';
 import { IDog } from './Interfaces';
-const sequelize = new Sequelize();
+import { User } from './User';
 
-class Dog extends Model<IDog> {}
+type DogAssociations = 'user' | 'matches' | undefined;
 
-Dog.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    age: {
-      type: DataTypes.INTEGER,
-    },
-    gender: {
-      type: DataTypes.STRING,
-    },
-    about: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    url: {
-      type: DataTypes.STRING,
-    },
-    liked_dog: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-    },
-  },
-  {
-    sequelize,
-    modelName: 'Dog',
+export class Dog extends Model<
+  InferAttributes<Dog, { omit: DogAssociations }>,
+  InferCreationAttributes<Dog, { omit: DogAssociations }>
+> {
+  declare dog: IDog;
+  // Dog belongsTo User
+  declare user?: NonAttribute<User>;
+  declare getUser: BelongsToGetAssociationMixin<User>;
+  declare setUser: BelongsToSetAssociationMixin<User, number>;
+  declare createUser: BelongsToCreateAssociationMixin<User>;
+
+  // Dog belongsToMany Dog (as Matches)
+  declare matches?: NonAttribute<Dog[]>;
+  declare getMatches: BelongsToManyGetAssociationsMixin<Dog>;
+  declare setMatches: BelongsToManySetAssociationsMixin<Dog, number>;
+  declare addMatch: BelongsToManyAddAssociationMixin<Dog, number>;
+
+  declare static associations: {
+    user: Association<Dog, User>;
+    matches: Association<Dog, Dog>;
+  };
+
+  static initModel(sequelize: Sequelize): typeof Dog {
+    Dog.init(
+      {
+        id: {
+          type: DataTypes.INTEGER.UNSIGNED,
+          primaryKey: true,
+          autoIncrement: true,
+          allowNull: false,
+        },
+        name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+        },
+        age: {
+          type: DataTypes.INTEGER,
+        },
+        gender: {
+          type: DataTypes.STRING,
+        },
+        about: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        url: {
+          type: DataTypes.STRING,
+        },
+        liked_dog: {
+          type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
+        },
+        createdAt: {
+          type: DataTypes.DATE,
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+        },
+      },
+      {
+        sequelize,
+        modelName: 'Dog',
+      }
+    );
+
+    return Dog;
   }
-);
-
-export { Dog };
+}
