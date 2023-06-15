@@ -1,7 +1,7 @@
-const Koa = require('koa');
-const cors = require('@koa/cors');
-const router = require('./router');
-const bodyParser = require('koa-bodyparser');
+import Koa from "koa";
+import bodyParser from "koa-bodyparser";
+import cors from "@koa/cors";
+import router from "./routers/router"
 const app = new Koa();
 const PORT = 3001;
 
