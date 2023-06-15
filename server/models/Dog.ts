@@ -45,3 +45,5 @@ Dog.init(
     modelName: 'Dog',
   }
 );
+
+export { Dog };
