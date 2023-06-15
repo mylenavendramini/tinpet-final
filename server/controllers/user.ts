@@ -1,5 +1,5 @@
 // import {User} from '../models/user
-import { Context } from 'koa';
+// import { Context } from 'koa';
 
 
 
@@ -8,7 +8,6 @@ import { Context } from 'koa';
 //     try {
 //         const {id} = ctx.params;
 //         const user = await User.getUser(id);
-
 //     if(!user){
 //     ctx.status= 404;
 //     ctx.body= {error: 'User not found'}
@@ -36,8 +35,4 @@ import { Context } from 'koa';
 // };
 
 
-
-// export {
-//     saveUser,
-//     getUser,
-// };
+// module.exports= {getUser, createUser};
