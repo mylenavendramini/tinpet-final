@@ -7,6 +7,7 @@ import {
   CreationOptional,
 } from 'sequelize';
 import { IMatches } from './Interfaces';
+import db from './db';
 
 export class Matches extends Model<
   InferAttributes<Matches>,

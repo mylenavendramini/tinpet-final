@@ -16,6 +16,7 @@ import {
 } from 'sequelize';
 import { IDog } from './Interfaces';
 import { User } from './User';
+import db from './db';
 
 type DogAssociations = 'user' | 'matches' | undefined;
 

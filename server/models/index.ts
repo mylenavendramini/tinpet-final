@@ -2,6 +2,7 @@ import { Dog } from './Dog';
 import { IUser, IDog } from './Interfaces';
 import { Matches } from './Matches';
 import { User } from './User';
+import db from './db';
 
 async function getUser(userId: number): Promise<User | null | undefined> {
   try {
@@ -32,7 +33,7 @@ async function createUser(user: IUser): Promise<User | undefined> {
   }
 }
 
-async function getAllDogs(): Promise<Dog[] | undefined> {
+async function getAllDogs() {
   try {
     const dogs = await Dog.findAll();
     return dogs;
@@ -84,4 +85,8 @@ async function getMatches(): Promise<Matches[] | undefined> {
   }
 }
 
-export { getUser, createUser, getAllDogs, createDog, putLikeDog, getMatches };
+(async () => {
+  await db.sync();
+})();
+
+export { getUser, createUser, createDog, getAllDogs, putLikeDog, getMatches };

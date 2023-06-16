@@ -12,12 +12,13 @@ import {
   CreationOptional,
 } from 'sequelize';
 import { Dog } from './Dog';
+import db from './db';
 
 type UserAssociations = 'dogs';
 
 export class User extends Model<
-  InferAttributes<User, { omit: UserAssociations }>,
-  InferCreationAttributes<User, { omit: UserAssociations }>
+  InferAttributes<User>,
+  InferCreationAttributes<User>
 > {
   declare id: number;
   declare username: string;
