@@ -6,7 +6,7 @@ class Dog extends sequelize_1.Model {
     static initModel(sequelize) {
         Dog.init({
             id: {
-                type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+                type: sequelize_1.DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false,

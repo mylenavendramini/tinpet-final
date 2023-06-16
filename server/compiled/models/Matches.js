@@ -6,7 +6,7 @@ class Matches extends sequelize_1.Model {
     static initModel(sequelize) {
         Matches.init({
             id: {
-                type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+                type: sequelize_1.DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false,
