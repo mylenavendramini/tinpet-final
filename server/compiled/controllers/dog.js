@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.putLikeDogController = exports.getMatchesController = exports.createDogController = exports.getAllDogsController = void 0;
 const index_1 = require("../models/index");
 function getAllDogsController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -22,6 +23,7 @@ function getAllDogsController(ctx) {
         }
     });
 }
+exports.getAllDogsController = getAllDogsController;
 function createDogController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const dog = ctx.request.body;
@@ -36,6 +38,7 @@ function createDogController(ctx) {
         }
     });
 }
+exports.createDogController = createDogController;
 function getMatchesController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -48,6 +51,7 @@ function getMatchesController(ctx) {
         }
     });
 }
+exports.getMatchesController = getMatchesController;
 function putLikeDogController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const dog = ctx.request.body;
@@ -62,4 +66,4 @@ function putLikeDogController(ctx) {
         }
     });
 }
-module.exports = { getAllDogsController, createDogController, getMatchesController, putLikeDogController };
+exports.putLikeDogController = putLikeDogController;

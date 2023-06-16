@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createUserController = exports.getUserController = void 0;
 const index_1 = require("../models/index");
 function getUserController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -23,12 +24,14 @@ function getUserController(ctx) {
         }
     });
 }
+exports.getUserController = getUserController;
 function createUserController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = ctx.request.body;
             const { id, username, email, password } = user;
             const newUser = yield (0, index_1.createUser)(user);
+            // console.log(newUser);
             ctx.body = newUser;
         }
         catch (error) {
@@ -37,5 +40,4 @@ function createUserController(ctx) {
         }
     });
 }
-;
-module.exports = { getUserController, createUserController };
+exports.createUserController = createUserController;
