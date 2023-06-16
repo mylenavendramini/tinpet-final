@@ -73,6 +73,10 @@ async function putLikeDog(myDogIdObj: {}, likedDogId: number) {
     const likedDog = dog?.liked_dog as number[];
     console.log({ likedDog });
     console.log({ likedDogId });
+
+    // TODO:
+    // if the id coming from the likedDogId already exists, we don't pass to it
+    //if (!likedDog.includes(likedDogId) {})
     const likeDog = await Dog.update(
       {
         liked_dog: [...likedDog, Number(likedDogId)],

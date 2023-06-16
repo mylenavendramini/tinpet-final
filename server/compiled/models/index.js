@@ -99,6 +99,9 @@ function putLikeDog(myDogIdObj, likedDogId) {
             const likedDog = dog === null || dog === void 0 ? void 0 : dog.liked_dog;
             console.log({ likedDog });
             console.log({ likedDogId });
+            // TODO:
+            // if the id coming from the likedDogId already exists, we don't pass to it
+            //if (!likedDog.includes(likedDogId) {})
             const likeDog = yield Dog_1.Dog.update({
                 liked_dog: [...likedDog, Number(likedDogId)],
             }, { where: myDogIdObj });
