@@ -1,7 +1,6 @@
 import {  register } from '../services/APIServices'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 
 function AuthModal () {
   const [email, setEmail] = useState('');

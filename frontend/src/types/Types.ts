@@ -1,6 +1,7 @@
 export type User = {
   email : string ;
   password : string ;
+  id: number
 }
 
 export type Dog = {
@@ -13,4 +14,5 @@ export type Dog = {
   liked_dog: number[],
   createdAt: Date,
   updatedAt: Date,
+  user: number
 }
