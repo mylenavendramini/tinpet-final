@@ -1,38 +1,35 @@
-// import {User} from '../models/user
-// import { Context } from 'koa';
+import { User } from "../models/User"
+import { Context } from 'koa';
+import { IUser } from '../models/Interfaces'
+import { getUser, createUser } from '../models/index'
 
 
 
 
-// async function getUser(ctx: Context){
-//     try {
-//         const {id} = ctx.params;
-//         const user = await User.getUser(id);
-//     if(!user){
-//     ctx.status= 404;
-//     ctx.body= {error: 'User not found'}
-//     }else{
-//     ctx.body = user;
-//     }
-//     }catch (error){
-//     ctx.status = 500;
-//     ctx.body = { error: 'Internal server error' };
-//     }
-// }
+async function getUserController(ctx: Context) {
+    try {
+        const userId: number = parseInt(ctx.params.userId);
+        const user = await getUser(userId);
+        ctx.body = user;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = { error: 'Internal server error' };
+    }
+}
 
 
 
+async function createUserController(ctx: Context) {
+    try {
+        const user: IUser = ctx.request.body as IUser;
+        const { id, username, email, password } = user;
+        const newUser = await createUser(user);
+        ctx.body = newUser;
+    } catch (error) {
+        console.log(error);
+        ctx.status = 500;
+    }
+};
 
-// async function createUser(ctx: Context) {
-//     try {
-//         const userData = ctx.request.body;
-//         const newUser = await User.createUser(userData);
-//         ctx.body = newUser;
-//     } catch (e) {
-//         ctx.status = 500;
-//         ctx.body = { error: 'Internal server error' };
-//     }
-// };
 
-
-// module.exports= {getUser, createUser};
+module.exports = { getUserController, createUserController };

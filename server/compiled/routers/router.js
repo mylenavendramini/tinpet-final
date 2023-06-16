@@ -5,11 +5,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
 const router = new koa_router_1.default();
-router.post('/user',() => {
-    console.log('router')
-});
-// router.post('/dogs');
-// router.get('/user');
-// router.get('dogs');
-// router.put('/dogs');
+router.post('/user');
+router.post('/dogs');
+router.get('/user');
+router.get('dogs');
+router.put('/dogs');
 exports.default = router;

@@ -1,48 +1,53 @@
-// import {Dog} from '../models/dog
-// import { Context } from 'koa';
+import { getAllDogs, createDog, putLikeDog, getMatches } from '../models/index'
+import { Context } from 'koa';
+import { Dog } from '../models/Dog';
+import { IDog } from '../models/Interfaces';
+import { Matches } from '../models/Matches';
+
+async function getAllDogsController(ctx: Context) {
+    try {
+        const dogs = await getAllDogs();
+        ctx.body = dogs;
+    } catch (error) {
+        console.log(error);
+        ctx.status = 500;
+    }
+}
+
+async function createDogController(ctx: Context) {
+    const dog: IDog = ctx.request.body as IDog;
+    try {
+        const { id, name, age, gender, about, url } = dog;
+        const newDog = await createDog(dog);
+    } catch (e) {
+        console.log(e);
+        ctx.status = 500;
+        ctx.body = { error: 'Internal server error' };
+    }
+}
+
+async function getMatchesController(ctx: Context) {
+    try {
+        const matches = await getMatches();
+        ctx.body = matches;
+    } catch (error) {
+        console.log(error);
+        ctx.status = 500;
+    }
+}
+
+async function putLikeDogController(ctx: Context) {
+    const dog: IDog = ctx.request.body as IDog;
+    const id: number = parseInt(ctx.params.id);
+    try {
+        const likedDog = await putLikeDog(dog, id);
+        ctx.body = likedDog;
+    } catch (error) {
+        console.log(error);
+        ctx.status = 500;
+    }
+}
 
 
 
-
-// async function getAllDogs(ctx: Context){
-// try {
-//     const dogs = await Dog.getAllDogs()
-//     ctx.status = 200;
-//     ctx.body = dogs;
-// } catch (error) {
-//     ctx.status = 500;
-//     ctx.body = { error: error.message  };
-// }
-// };
-
-
-
-// async function createDog(ctx: Context) {
-//     try {
-//         const dogData = ctx.request.body;
-//         const newDog = await Dog.createDog(dogData);
-//         ctx.body = newDog;
-//     } catch (e) {
-//         ctx.status = 500;
-//         ctx.body = { error: 'Internal server error' };
-//     }
-// };
-
-
-
-// async function getMatches(ctx: Context){
-// try {
-//     const matches = await Dog.getMatches()
-//     ctx.status = 200;
-//     ctx.body = matches;
-// } catch (error) {
-//     ctx.status = 500;
-//     ctx.body = { error: error.message  };
-// }
-// };
-
-
-
-
-
-// module.exports= {getAllDogs, createDog};
+module.exports = { getAllDogsController, createDogController, getMatchesController, putLikeDogController };
