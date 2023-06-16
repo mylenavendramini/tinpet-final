@@ -1,10 +1,18 @@
-import Router from 'koa-router'
+import Router from 'koa-router';
+import { getUserController, createUserController } from '../controllers/user';
+import {
+  getAllDogsController,
+  createDogController,
+  getMatchesController,
+  putLikeDogController,
+} from '../controllers/dog';
 const router = new Router();
 
-router.post('/user')
-router.post('/dogs')
-router.get('/user')
-router.get('dogs')
-router.put('/dogs')
+router.post('/user', createUserController);
+router.post('/dogs', createDogController);
+router.get('/user', getUserController);
+router.get('/dogs', getAllDogsController);
+router.get('/matches', getMatchesController);
+router.put('/dogs', putLikeDogController);
 
 export default router;
