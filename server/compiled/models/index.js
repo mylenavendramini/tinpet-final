@@ -27,20 +27,24 @@ function getUser(userId) {
 exports.getUser = getUser;
 function createUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(typeof User_1.User);
         try {
             const { id, username, email, password } = user;
-            const newUser = yield User_1.User.create({
+            console.log(id, username, email, password);
+            const newUser = (yield User_1.User.create({
                 id,
                 username,
                 email,
                 password,
                 createdAt: new Date(),
                 updatedAt: new Date(),
-            });
+            }));
+            console.log(newUser);
             return newUser;
         }
         catch (error) {
-            console.log(error);
+            console.error('Error creating user:', error);
+            throw new Error('User creation failed.');
         }
     });
 }

@@ -4,10 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
+const user_1 = require("../controllers/user");
+const dog_1 = require("../controllers/dog");
 const router = new koa_router_1.default();
-router.post('/user');
-router.post('/dogs');
-router.get('/user');
-router.get('dogs');
-router.put('/dogs');
+router.post('/user', user_1.createUserController);
+router.post('/dogs', dog_1.createDogController);
+router.get('/user', user_1.getUserController);
+router.get('/dogs', dog_1.getAllDogsController);
+router.get('/matches', dog_1.getMatchesController);
+router.put('/dogs', dog_1.putLikeDogController);
 exports.default = router;

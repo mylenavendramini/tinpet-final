@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "compiled/index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon compiled/index.js",
     "build": "tsc"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "@types/koa__cors": "^4.0.0",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-router": "^7.4.4",
+    "@types/node": "^20.3.1",
     "@types/sequelize": "^4.28.15",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",

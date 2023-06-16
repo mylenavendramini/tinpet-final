@@ -11,7 +11,6 @@ import {
   Sequelize,
   CreationOptional,
 } from 'sequelize';
-import { IUser } from './Interfaces';
 import { Dog } from './Dog';
 
 type UserAssociations = 'dogs';

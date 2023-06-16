@@ -13,19 +13,22 @@ async function getUser(userId: number): Promise<User | null | undefined> {
 }
 
 async function createUser(user: IUser): Promise<User | undefined> {
+  console.log(typeof User);
   try {
     const { id, username, email, password } = user;
-    const newUser = await User.create({
+    const newUser = (await User.create({
       id,
       username,
       email,
       password,
       createdAt: new Date(),
       updatedAt: new Date(),
-    });
+    })) as User;
+    console.log(newUser);
     return newUser;
   } catch (error) {
-    console.log(error);
+    console.error('Error creating user:', error);
+    throw new Error('User creation failed.');
   }
 }
 
