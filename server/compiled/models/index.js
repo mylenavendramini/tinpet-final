@@ -30,7 +30,6 @@ function createUser(user) {
         console.log(typeof User_1.User);
         try {
             const { id, username, email, password } = user;
-            console.log(id, username, email, password);
             const newUser = (yield User_1.User.create({
                 id,
                 username,
