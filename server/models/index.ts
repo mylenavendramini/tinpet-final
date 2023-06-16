@@ -63,15 +63,23 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
   }
 }
 
-async function putLikeDog(dog: IDog, id: number) {
+async function putLikeDog(myDogIdObj: {}, likedDogId: number) {
+  console.log('before the try');
   try {
-    const likedDog = dog.liked_dog;
+    console.log('inside the try');
+    console.log(myDogIdObj);
+    const dog = await Dog.findOne({ where: myDogIdObj });
+    console.log({ dog });
+    const likedDog = dog?.liked_dog as number[];
+    console.log({ likedDog });
+    console.log({ likedDogId });
     const likeDog = await Dog.update(
       {
-        liked_dog: [...likedDog, id],
+        liked_dog: [...likedDog, Number(likedDogId)],
       },
-      { where: { id: dog.id } }
+      { where: myDogIdObj }
     );
+    console.log({ likeDog });
     return likeDog;
   } catch (error) {
     console.log(error);

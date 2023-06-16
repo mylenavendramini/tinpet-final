@@ -56,10 +56,11 @@ function getMatchesController(ctx) {
 exports.getMatchesController = getMatchesController;
 function putLikeDogController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
-        const dog = ctx.request.body;
-        const id = parseInt(ctx.params.id);
+        const myDogIdObj = ctx.request.body;
+        const likedDogId = ctx.params.id;
         try {
-            const likedDog = yield (0, index_1.putLikeDog)(dog, id);
+            const likedDog = yield (0, index_1.putLikeDog)(myDogIdObj, likedDogId);
+            console.log({ likedDog });
             ctx.body = likedDog;
         }
         catch (error) {

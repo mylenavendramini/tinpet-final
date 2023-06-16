@@ -31,7 +31,7 @@ export class Dog extends Model<
   declare gender: string | null;
   declare about: string;
   declare url: string | null;
-  declare liked_dog: number[] | null;
+  declare liked_dog: number[];
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -80,7 +80,7 @@ export class Dog extends Model<
           type: DataTypes.STRING,
         },
         liked_dog: {
-          type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
+          type: DataTypes.ARRAY(DataTypes.INTEGER),
         },
         createdAt: {
           type: DataTypes.DATE,

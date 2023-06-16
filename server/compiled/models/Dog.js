@@ -30,7 +30,7 @@ class Dog extends sequelize_1.Model {
                 type: sequelize_1.DataTypes.STRING,
             },
             liked_dog: {
-                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER.UNSIGNED),
+                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER),
             },
             createdAt: {
                 type: sequelize_1.DataTypes.DATE,

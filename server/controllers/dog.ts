@@ -39,10 +39,11 @@ async function getMatchesController(ctx: Context) {
 }
 
 async function putLikeDogController(ctx: Context) {
-  const dog = ctx.request.body as IDog;
-  const id: number = parseInt(ctx.params.id);
+  const myDogIdObj = ctx.request.body as number;
+  const likedDogId = ctx.params.id;
   try {
-    const likedDog = await putLikeDog(dog, id);
+    const likedDog = await putLikeDog(myDogIdObj, likedDogId);
+    console.log({ likedDog });
     ctx.body = likedDog;
   } catch (error) {
     console.log(error);

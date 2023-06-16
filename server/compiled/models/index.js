@@ -88,13 +88,21 @@ function createDog(dog, userId) {
     });
 }
 exports.createDog = createDog;
-function putLikeDog(dog, id) {
+function putLikeDog(myDogIdObj, likedDogId) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('before the try');
         try {
-            const likedDog = dog.liked_dog;
+            console.log('inside the try');
+            console.log(myDogIdObj);
+            const dog = yield Dog_1.Dog.findOne({ where: myDogIdObj });
+            console.log({ dog });
+            const likedDog = dog === null || dog === void 0 ? void 0 : dog.liked_dog;
+            console.log({ likedDog });
+            console.log({ likedDogId });
             const likeDog = yield Dog_1.Dog.update({
-                liked_dog: [...likedDog, id],
-            }, { where: { id: dog.id } });
+                liked_dog: [...likedDog, Number(likedDogId)],
+            }, { where: myDogIdObj });
+            console.log({ likeDog });
             return likeDog;
         }
         catch (error) {

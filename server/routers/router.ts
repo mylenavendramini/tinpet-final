@@ -13,6 +13,6 @@ router.post('/dogs/:id', createDogController);
 router.get('/user/:id', getUserController);
 router.get('/dogs', getAllDogsController);
 router.get('/matches', getMatchesController);
-router.put('/dogs', putLikeDogController);
+router.put('/dogs/:id', putLikeDogController);
 
 export default router;
