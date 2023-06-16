@@ -1,5 +1,7 @@
 
 const PORT = 'http://localhost:3000/'
+import { Dog, User } from "../types/Types"
+// import axios from 'axios';
 
 
 // router.post('/user', createUserController);
@@ -21,7 +23,7 @@ const register = async (email:string, password:string) => {
 }
 
 
-const createDog = async (user_id:number, dog) => {
+const createDog = async (user_id:number, dog):Promise<Dog> => {
   return fetch(`${PORT}/dogs/${user_id}`, {
     method: "POST",
     body: JSON.stringify(dog),
@@ -42,7 +44,7 @@ const getUser = async (user_id:number) => {
   }).then(res => res.json()).then(parsedRes => parsedRes)
 }
 
-const getDogs = async () => {
+const getDogs = async ():Promise<Dog[]> => {
   return fetch(`${PORT}/dogs/`, {
     method: "GET",
     headers: {
