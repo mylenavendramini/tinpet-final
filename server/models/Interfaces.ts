@@ -14,7 +14,7 @@ export interface IDog {
   gender: string;
   about: string;
   url: string;
-  liked_dog: Array<number> | any[];
+  liked_dog: number[];
   createdAt: Date;
   updatedAt: Date;
 }

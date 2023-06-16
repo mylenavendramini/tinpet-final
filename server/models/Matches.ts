@@ -34,6 +34,7 @@ export class Matches extends Model<
       },
       {
         sequelize,
+        modelName: 'matches',
       }
     );
 

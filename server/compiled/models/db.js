@@ -24,7 +24,6 @@ const db = new sequelize_1.Sequelize('dog', 'postgres', `${process.env.POSTGRES_
 (function authenticate() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log('PLEASEEEE');
             (0, associations_1.initModels)(db);
             yield db.sync();
             yield db.authenticate();

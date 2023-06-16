@@ -9,8 +9,8 @@ import {
 const router = new Router();
 
 router.post('/user', createUserController);
-router.post('/dogs', createDogController);
-router.get('/user', getUserController);
+router.post('/dogs/:id', createDogController);
+router.get('/user/:id', getUserController);
 router.get('/dogs', getAllDogsController);
 router.get('/matches', getMatchesController);
 router.put('/dogs', putLikeDogController);

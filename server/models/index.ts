@@ -5,6 +5,7 @@ import { User } from './User';
 import db from './db';
 
 async function getUser(userId: number): Promise<User | null | undefined> {
+  // console.log({ userId });
   try {
     const user = await User.findOne({ where: { id: userId } });
     return user;
@@ -14,7 +15,6 @@ async function getUser(userId: number): Promise<User | null | undefined> {
 }
 
 async function createUser(user: IUser): Promise<User | undefined> {
-  console.log(typeof User);
   try {
     const { id, username, email, password } = user;
     const newUser = (await User.create({
@@ -25,7 +25,6 @@ async function createUser(user: IUser): Promise<User | undefined> {
       createdAt: new Date(),
       updatedAt: new Date(),
     })) as User;
-    console.log(newUser);
     return newUser;
   } catch (error) {
     console.error('Error creating user:', error);
@@ -42,9 +41,10 @@ async function getAllDogs() {
   }
 }
 
-async function createDog(dog: IDog): Promise<Dog | undefined> {
+async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
   try {
     const { id, name, age, gender, about, url } = dog;
+    const user_id = Number(userId);
     const newDog = await Dog.create({
       id,
       name,
@@ -52,9 +52,11 @@ async function createDog(dog: IDog): Promise<Dog | undefined> {
       gender,
       about,
       url,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      liked_dog: [],
     });
+    const user = await User.findOne({ where: { id: user_id } });
+    user?.addDog(newDog);
+    console.log(newDog, 'model');
     return newDog;
   } catch (error) {
     console.log(error);

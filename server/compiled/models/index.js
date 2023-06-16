@@ -19,6 +19,7 @@ const User_1 = require("./User");
 const db_1 = __importDefault(require("./db"));
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
+        // console.log({ userId });
         try {
             const user = yield User_1.User.findOne({ where: { id: userId } });
             return user;
@@ -31,7 +32,6 @@ function getUser(userId) {
 exports.getUser = getUser;
 function createUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(typeof User_1.User);
         try {
             const { id, username, email, password } = user;
             const newUser = (yield User_1.User.create({
@@ -42,7 +42,6 @@ function createUser(user) {
                 createdAt: new Date(),
                 updatedAt: new Date(),
             }));
-            console.log(newUser);
             return newUser;
         }
         catch (error) {
@@ -64,10 +63,11 @@ function getAllDogs() {
     });
 }
 exports.getAllDogs = getAllDogs;
-function createDog(dog) {
+function createDog(dog, userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { id, name, age, gender, about, url } = dog;
+            const user_id = Number(userId);
             const newDog = yield Dog_1.Dog.create({
                 id,
                 name,
@@ -75,9 +75,11 @@ function createDog(dog) {
                 gender,
                 about,
                 url,
-                createdAt: new Date(),
-                updatedAt: new Date(),
+                liked_dog: [],
             });
+            const user = yield User_1.User.findOne({ where: { id: user_id } });
+            user === null || user === void 0 ? void 0 : user.addDog(newDog);
+            console.log(newDog, 'model');
             return newDog;
         }
         catch (error) {

@@ -31,9 +31,10 @@ export class Dog extends Model<
   declare gender: string | null;
   declare about: string;
   declare url: string | null;
-  declare liked_dog: string[] | null;
+  declare liked_dog: number[] | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+
   // Dog belongsTo User
   declare user?: NonAttribute<User>;
   declare getUser: BelongsToGetAssociationMixin<User>;
@@ -90,7 +91,7 @@ export class Dog extends Model<
       },
       {
         sequelize,
-        modelName: 'Dog',
+        modelName: 'dog',
       }
     );
 

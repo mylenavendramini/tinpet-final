@@ -17,8 +17,8 @@ import db from './db';
 type UserAssociations = 'dogs';
 
 export class User extends Model<
-  InferAttributes<User>,
-  InferCreationAttributes<User>
+  InferAttributes<User, { omit: UserAssociations }>,
+  InferCreationAttributes<User, { omit: UserAssociations }>
 > {
   declare id: number;
   declare username: string;
@@ -65,7 +65,7 @@ export class User extends Model<
       },
       {
         sequelize,
-        modelName: 'User',
+        modelName: 'user',
       }
     );
     return User;

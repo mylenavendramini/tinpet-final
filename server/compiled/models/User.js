@@ -30,7 +30,7 @@ class User extends sequelize_1.Model {
             },
         }, {
             sequelize,
-            modelName: 'User',
+            modelName: 'user',
         });
         return User;
     }

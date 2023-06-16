@@ -40,7 +40,7 @@ class Dog extends sequelize_1.Model {
             },
         }, {
             sequelize,
-            modelName: 'Dog',
+            modelName: 'dog',
         });
         return Dog;
     }

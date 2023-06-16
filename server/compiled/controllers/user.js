@@ -14,7 +14,7 @@ const index_1 = require("../models/index");
 function getUserController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = parseInt(ctx.params.userId);
+            const userId = parseInt(ctx.params.id);
             const user = yield (0, index_1.getUser)(userId);
             ctx.body = user;
         }
@@ -31,7 +31,6 @@ function createUserController(ctx) {
             const user = ctx.request.body;
             const { id, username, email, password } = user;
             const newUser = yield (0, index_1.createUser)(user);
-            // console.log(newUser);
             ctx.body = newUser;
         }
         catch (error) {

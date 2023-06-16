@@ -19,6 +19,7 @@ class Matches extends sequelize_1.Model {
             },
         }, {
             sequelize,
+            modelName: 'matches',
         });
         return Matches;
     }

@@ -27,9 +27,11 @@ exports.getAllDogsController = getAllDogsController;
 function createDogController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const dog = ctx.request.body;
+        const user_id = ctx.params.id;
         try {
             const { id, name, age, gender, about, url } = dog;
-            const newDog = yield (0, index_1.createDog)(dog);
+            const newDog = yield (0, index_1.createDog)(dog, user_id);
+            console.log(newDog, 'controller');
         }
         catch (e) {
             console.log(e);

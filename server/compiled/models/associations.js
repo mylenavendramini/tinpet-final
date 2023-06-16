@@ -8,20 +8,21 @@ function initModels(sequelize) {
     Dog_1.Dog.initModel(sequelize);
     User_1.User.initModel(sequelize);
     Matches_1.Matches.initModel(sequelize);
+    // User.hasMany(Dog);
     Dog_1.Dog.belongsTo(User_1.User, {
         as: 'user',
-        foreignKey: 'user_id',
+        foreignKey: 'id',
     });
     Dog_1.Dog.belongsToMany(Dog_1.Dog, {
         as: 'matches',
         through: Matches_1.Matches,
-        foreignKey: 'dog_id',
+        foreignKey: 'id',
         otherKey: 'matches_id',
         onDelete: 'CASCADE',
     });
     User_1.User.hasMany(Dog_1.Dog, {
         as: 'dogs',
-        foreignKey: 'user_id',
+        foreignKey: 'id',
     });
     return {
         Dog: Dog_1.Dog,
