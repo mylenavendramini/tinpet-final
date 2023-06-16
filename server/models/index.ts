@@ -74,23 +74,31 @@ async function putLikeDog(myDogIdObj: {}, likedDogId: number) {
     const myDogArray = myDog?.liked_dog as number[];
     const theOtherDogArray = theOtherDog?.liked_dog as number[];
     const theOtherDogId: number = Number(theOtherDog?.id);
-    // if (theOtherDogArray.includes(theOtherDogId)) {
-    //   // there is a match!!!!
-    //   const match = await Matches.create({ // what to pass? });
-    //     // match?.addMatch(Dog, number // or maybe not);
-    //   }
+    if (theOtherDogArray.includes(myDog!.id)) {
+      // there is a match!!!!
+      // const match = await Matches.create({ // what to pass? });
+      //   // match?.addMatch(Dog, number // or maybe not);
+      // }
+      const match = await myDog?.addMatch(theOtherDogId)
+      const newMatch = await Matches.create() //do we need to create a match or just save the dog???
+      await newMatch.save()
 
     // TODO:
+    //done???
     // if the id coming from the likedDogId already exists, we don't pass to it
     //if (!likedDog.includes(likedDogId) {})
-    const likeDog = await Dog.update(
-      {
-        liked_dog: [...myDogArray, Number(likedDogId)],
-      },
-      { where: myDogIdObj }
-    );
-    console.log({ likeDog });
-    return likeDog;
+    }
+
+    if(!myDogArray.includes(likedDogId)) {
+      const likeDog = await Dog.update(
+        {
+          liked_dog: [...myDogArray, Number(likedDogId)],
+        },
+        { where: myDogIdObj }
+      );
+      return likeDog;
+    }
+    
   } catch (error) {
     console.log(error);
   }
