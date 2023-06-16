@@ -17,7 +17,7 @@ function initModels(sequelize) {
         as: 'matches',
         through: Matches_1.Matches,
         foreignKey: 'id',
-        otherKey: 'matches_id',
+        otherKey: 'id',
         onDelete: 'CASCADE',
     });
     User_1.User.hasMany(Dog_1.Dog, {

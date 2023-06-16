@@ -68,18 +68,24 @@ async function putLikeDog(myDogIdObj: {}, likedDogId: number) {
   try {
     console.log('inside the try');
     console.log(myDogIdObj);
-    const dog = await Dog.findOne({ where: myDogIdObj });
-    console.log({ dog });
-    const likedDog = dog?.liked_dog as number[];
-    console.log({ likedDog });
-    console.log({ likedDogId });
+    const myDog = await Dog.findOne({ where: myDogIdObj });
+    const theOtherDog = await Dog.findOne({ where: { id: likedDogId } });
+    console.log({ myDog });
+    const myDogArray = myDog?.liked_dog as number[];
+    const theOtherDogArray = theOtherDog?.liked_dog as number[];
+    const theOtherDogId: number = Number(theOtherDog?.id);
+    // if (theOtherDogArray.includes(theOtherDogId)) {
+    //   // there is a match!!!!
+    //   const match = await Matches.create({ // what to pass? });
+    //     // match?.addMatch(Dog, number // or maybe not);
+    //   }
 
     // TODO:
     // if the id coming from the likedDogId already exists, we don't pass to it
     //if (!likedDog.includes(likedDogId) {})
     const likeDog = await Dog.update(
       {
-        liked_dog: [...likedDog, Number(likedDogId)],
+        liked_dog: [...myDogArray, Number(likedDogId)],
       },
       { where: myDogIdObj }
     );

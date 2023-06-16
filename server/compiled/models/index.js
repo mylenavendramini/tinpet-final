@@ -94,16 +94,22 @@ function putLikeDog(myDogIdObj, likedDogId) {
         try {
             console.log('inside the try');
             console.log(myDogIdObj);
-            const dog = yield Dog_1.Dog.findOne({ where: myDogIdObj });
-            console.log({ dog });
-            const likedDog = dog === null || dog === void 0 ? void 0 : dog.liked_dog;
-            console.log({ likedDog });
-            console.log({ likedDogId });
+            const myDog = yield Dog_1.Dog.findOne({ where: myDogIdObj });
+            const theOtherDog = yield Dog_1.Dog.findOne({ where: { id: likedDogId } });
+            console.log({ myDog });
+            const myDogArray = myDog === null || myDog === void 0 ? void 0 : myDog.liked_dog;
+            const theOtherDogArray = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.liked_dog;
+            const theOtherDogId = Number(theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.id);
+            // if (theOtherDogArray.includes(theOtherDogId)) {
+            //   // there is a match!!!!
+            //   const match = await Matches.create({ // what to pass? });
+            //     // match?.addMatch(Dog, number // or maybe not);
+            //   }
             // TODO:
             // if the id coming from the likedDogId already exists, we don't pass to it
             //if (!likedDog.includes(likedDogId) {})
             const likeDog = yield Dog_1.Dog.update({
-                liked_dog: [...likedDog, Number(likedDogId)],
+                liked_dog: [...myDogArray, Number(likedDogId)],
             }, { where: myDogIdObj });
             console.log({ likeDog });
             return likeDog;
