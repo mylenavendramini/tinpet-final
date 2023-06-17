@@ -14,14 +14,11 @@ async function getUser(userId: number): Promise<User | null | undefined> {
 
 async function createUser(user: IUser): Promise<User | undefined> {
   try {
-    const { id, username, email, password } = user;
+    const { username, email, password } = user;
     const newUser = (await User.create({
-      id,
       username,
       email,
       password,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     })) as User;
     return newUser;
   } catch (error) {
@@ -92,7 +89,7 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
     const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
 
     // Check if it's a match and add to matches_dogs:
-    if (theOtherDogArray.includes(myDog!.id)) {
+    if (theOtherDogArray.includes(myDog?.id as number)) {
       const newMatch = await Dog.update(
         {
           matches_dogs: [...myDogMatches, Number(theOtherDogId)],
@@ -106,8 +103,8 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
         { where: { id: theOtherDogId } }
       );
 
-      filterDogArray(myDogArray, myDog!.id, theOtherDogId);
-      filterDogArray(theOtherDogArray, theOtherDogId, myDog!.id);
+      filterDogArray(myDogArray, myDog?.id as number, theOtherDogId);
+      filterDogArray(theOtherDogArray, theOtherDogId, myDog?.id as number);
 
       return newMatch;
     }

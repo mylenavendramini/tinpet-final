@@ -27,14 +27,11 @@ exports.getUser = getUser;
 function createUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { id, username, email, password } = user;
+            const { username, email, password } = user;
             const newUser = (yield User_1.User.create({
-                id,
                 username,
                 email,
                 password,
-                createdAt: new Date(),
-                updatedAt: new Date(),
             }));
             return newUser;
         }
@@ -107,15 +104,15 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
             const myDogMatches = myDog === null || myDog === void 0 ? void 0 : myDog.matches_dogs;
             const theOtherDogMatches = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.matches_dogs;
             // Check if it's a match and add to matches_dogs:
-            if (theOtherDogArray.includes(myDog.id)) {
+            if (theOtherDogArray.includes(myDog === null || myDog === void 0 ? void 0 : myDog.id)) {
                 const newMatch = yield Dog_1.Dog.update({
                     matches_dogs: [...myDogMatches, Number(theOtherDogId)],
                 }, { where: myDogIdObj });
                 yield Dog_1.Dog.update({
                     matches_dogs: [...theOtherDogMatches, Number(myDog.id)],
                 }, { where: { id: theOtherDogId } });
-                filterDogArray(myDogArray, myDog.id, theOtherDogId);
-                filterDogArray(theOtherDogArray, theOtherDogId, myDog.id);
+                filterDogArray(myDogArray, myDog === null || myDog === void 0 ? void 0 : myDog.id, theOtherDogId);
+                filterDogArray(theOtherDogArray, theOtherDogId, myDog === null || myDog === void 0 ? void 0 : myDog.id);
                 return newMatch;
             }
             // Add the dog that my dog like:

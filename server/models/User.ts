@@ -20,7 +20,7 @@ export class User extends Model<
   InferAttributes<User, { omit: UserAssociations }>,
   InferCreationAttributes<User, { omit: UserAssociations }>
 > {
-  declare id: number;
+  declare id?: number;
   declare username: string;
   declare email: string;
   declare password: string;

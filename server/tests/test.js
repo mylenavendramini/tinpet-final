@@ -2,7 +2,9 @@
 const { describe, expect, test } = require('@jest/globals')
 const { Sequelize } = require('sequelize');
 const { initModels } = require('../compiled/models/associations');
+const { MockDog, MockAnotherDog, MockAnotherOneDog, MockUser, MockAnotherUser } = require('./mocks')
 const { getUser, createUser, getAllDogs, createDog, putAndCheckMatch, getDogMatchesArray } = require('../compiled/models/index');
+const { User } = require('../compiled/models/User')
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -41,9 +43,52 @@ describe('database is connected', () => {
 })
 
 describe('get user', () => {
-  test('should return user', async () => {
+  it('should return the user', async () => {
 
   });
+
+  it('should have an user id as a parameter', async () => {
+
+  });
+
+})
+
+describe('create user', () => {
+  it('should create a new user', async () => {
+    User.create = jest.fn().mockResolvedValueOnce(MockUser);
+
+    // input user object:
+    const user = {
+      username: 'Mike',
+      email: 'mike@example.com',
+      password: 'mockpassword',
+    };
+
+    // create user with createUser function (models/index)
+    const newUser = await createUser(user);
+
+    // check the parameters
+    expect(User.create).toHaveBeenCalledWith({
+      id: 1,
+      username: 'Mike',
+      email: 'mike@example.com',
+      password: 'mockpassword',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    // check the returned user
+    expect(newUser).toEqual({
+      id: 1,
+      username: 'Mike',
+      email: 'mike@example.com',
+      password: 'mockpassword',
+      createdAt: expect.any(Date),
+      updatedAt: expect.any(Date),
+    });
+  })
+
+
 
 })
 

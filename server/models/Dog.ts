@@ -30,7 +30,7 @@ export class Dog extends Model<
   InferCreationAttributes<Dog, { omit: DogAssociations }>
 > {
   // declare dog: IDog;
-  declare id: number;
+  declare id?: number;
   declare name: string;
   declare age: number | null;
   declare gender: string | null;

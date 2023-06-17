@@ -1,14 +1,14 @@
 export interface IUser {
-  id: number;
+  id?: number;
   username: string;
   email: string;
   password: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IDog {
-  id: number;
+  id?: number;
   name: string;
   age: number;
   gender: string;
@@ -16,12 +16,6 @@ export interface IDog {
   url: string;
   liked_dog: number[];
   matches_dogs: number[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface IMatches {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
