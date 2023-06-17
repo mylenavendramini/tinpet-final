@@ -1,6 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const Chat = () => {
-  return (
-    <>
+    return (<>
       <div className='chat-display'>
         {/*descendingOrderMessages.map((message, _index) => (
           <div key={_index}>
@@ -14,8 +15,6 @@ const Chat = () => {
           </div>
         ))*/}
       </div>
-    </>
-  );
+    </>);
 };
-
-export default Chat;
+exports.default = Chat;

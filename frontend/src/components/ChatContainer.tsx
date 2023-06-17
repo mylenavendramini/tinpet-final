@@ -3,14 +3,19 @@
 import ChatDisplay from './ChatDisplay';
 import MatchesDisplay from './MatchesDisplay';
 import ChatHeader from './ChatHeader';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { User } from '../types/Types';
+import { Context } from '../Context/Contex';
 
-//TODO:
+interface ChatContainerProps {
+  user: User;
+}
 
-const ChatContainer = ({ user }) => {
+const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
   const [clickedUser, setClickedUser] = useState(null);
-
-  // console.log('clickeduser', clickedUser);
+  const context = useContext(Context);
+  const dogs = context?.dogs;
+  const dogsMatches = dogs?.map((dog) => dog.matches_dogs);
 
   return (
     <div className='chat-container'>
@@ -25,10 +30,7 @@ const ChatContainer = ({ user }) => {
       </div>
 
       {!clickedUser && (
-        <MatchesDisplay
-          matches={user.matches}
-          setClickedUser={setClickedUser}
-        />
+        <MatchesDisplay matches={dogsMatches} setClickedUser={setClickedUser} />
       )}
 
       {clickedUser && <ChatDisplay user={user} clickedUSer={clickedUser} />}

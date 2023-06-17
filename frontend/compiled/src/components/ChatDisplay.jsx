@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-const Chat_tsx_1 = __importDefault(require("./Chat.tsx"));
+const Chat_1 = __importDefault(require("./Chat"));
 const ChatInput_1 = __importDefault(require("./ChatInput"));
 const axios_1 = __importDefault(require("axios"));
 const react_1 = require("react");
@@ -67,9 +67,12 @@ const ChatDisplay = ({ user, clickedUSer }) => {
         formattedMessage['timestamp'] = message.timestamp;
         messages.push(formattedMessage);
     });
-    const descendingOrderMessages = messages === null || messages === void 0 ? void 0 : messages.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+    // const descendingOrderMessages = messages?.sort((a, b) =>
+    //   a.timestamp.localeCompare(b.timestamp)
+    // );
     return (<>
-      <Chat_tsx_1.default descendingOrderMessages={descendingOrderMessages}/>
+      {/*<Chat descendingOrderMessages={descendingOrderMessages} />*/}
+      <Chat_1.default />
       <ChatInput_1.default user={user} clickedUser={clickedUSer} getUserMessages={getUsersMessages} getClickedUsersMessages={getClickedUsersMessages}/>
     </>);
 };
