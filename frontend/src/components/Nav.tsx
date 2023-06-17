@@ -1,14 +1,14 @@
 import { useContext } from 'react';
-//TODO:
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 const Nav = () => {
   const contexts = useContext(Context);
-  const handleClick = () => {
+  const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
     contexts?.updateAuthenticated()
   };
+  
   // const authToken = true;
   return (
     <nav>
@@ -19,7 +19,7 @@ const Nav = () => {
         (<button
           id='login'
           className='btn-nav'
-          onClick={handleClick}
+          onClick={}//handleClick
           disabled={contexts?.showModal}
         >
           Log In
@@ -27,7 +27,7 @@ const Nav = () => {
           <button
           id='logout'
           className='btn-nav'
-          onClick={handleClick}
+          onClick={logout}
           disabled={contexts?.showModal}
         >
           Log Out

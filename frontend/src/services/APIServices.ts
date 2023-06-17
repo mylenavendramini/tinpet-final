@@ -16,6 +16,19 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
+  login: async (email:string, password:string) => {
+    return fetch(`${PORT}/login`, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((parsedRes) => parsedRes);
+  },
+
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'POST',
