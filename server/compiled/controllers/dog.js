@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putLikeDogController = exports.createDogController = exports.getAllDogsController = void 0;
+exports.getAllDogMatches = exports.putLikeDogController = exports.createDogController = exports.getAllDogsController = void 0;
 const index_1 = require("../models/index");
 function getAllDogsController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -57,3 +57,17 @@ function putLikeDogController(ctx) {
     });
 }
 exports.putLikeDogController = putLikeDogController;
+function getAllDogMatches(ctx) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const dogId = ctx.params.id;
+        try {
+            const matches = yield (0, index_1.getDogMatchesArray)(dogId);
+            ctx.body = matches;
+        }
+        catch (error) {
+            console.log(error);
+            ctx.status = 500;
+        }
+    });
+}
+exports.getAllDogMatches = getAllDogMatches;

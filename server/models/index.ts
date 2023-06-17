@@ -120,8 +120,25 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
   }
 }
 
+async function getDogMatchesArray(dogId: number) {
+  try {
+    const dog = await Dog.findOne({ where: { id: dogId } });
+    const matches = dog?.matches_dogs;
+    return matches;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 (async () => {
   await db.sync();
 })();
 
-export { getUser, createUser, createDog, getAllDogs, putAndCheckMatch };
+export {
+  getUser,
+  createUser,
+  createDog,
+  getAllDogs,
+  putAndCheckMatch,
+  getDogMatchesArray,
+};

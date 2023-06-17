@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putAndCheckMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
+exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Dog_1 = require("./Dog");
 const User_1 = require("./User");
 const db_1 = __importDefault(require("./db"));
@@ -132,6 +132,19 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
     });
 }
 exports.putAndCheckMatch = putAndCheckMatch;
+function getDogMatchesArray(dogId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const dog = yield Dog_1.Dog.findOne({ where: { id: dogId } });
+            const matches = dog === null || dog === void 0 ? void 0 : dog.matches_dogs;
+            return matches;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getDogMatchesArray = getDogMatchesArray;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield db_1.default.sync();
 }))();
