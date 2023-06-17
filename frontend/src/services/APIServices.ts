@@ -53,8 +53,8 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getMatches: async () => {
-    return fetch(`${PORT}/matches`, {
+  getMatches: async (id:number) => {
+    return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

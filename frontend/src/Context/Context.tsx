@@ -6,10 +6,14 @@ interface ContextType {
   dogs: Dog[] | null;
   showModal: boolean;
   isSignUp: boolean;
+  matchedDogs:Dog[];
+  authenticated:boolean;
   updateUser: (newUser: User | null) => void;
   updateDog: (newDog: Dog[] | null) => void;
   updateModal: () => void;
   updateSignUp: () => void;
+  updateMatches: (matchedDogs:Dog[]) => void
+  updateAuthenticated: () => void
 }
 interface MyProviderProps {
   children: ReactNode;
@@ -20,6 +24,8 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const [dogs, setDogs] = useState<Dog[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
+  const [matchedDogs, setMatchedDogs] = useState<Dog[]>([]);
+  const [authenticated, setAuthenticated] = useState<boolean>(false);
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
   };
@@ -32,6 +38,12 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateSignUp = () => {
     setIsSignUp(!isSignUp);
   };
+  const updateMatches = (matchedDogs:Dog[]) => {
+    setMatchedDogs(matchedDogs)
+  }
+  const updateAuthenticated = () => {
+    setAuthenticated(!authenticated)
+  }
   return (
     <Context.Provider
       value={{
@@ -43,6 +55,10 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
         updateModal,
         isSignUp,
         updateSignUp,
+        matchedDogs,
+        updateMatches,
+        authenticated,
+        updateAuthenticated
       }}
     >
       {children}

@@ -7,6 +7,7 @@ const Nav = () => {
   const handleClick = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
+    contexts?.updateAuthenticated()
   };
   // const authToken = true;
   return (
@@ -14,14 +15,24 @@ const Nav = () => {
       <div className='logo-container'>
         <img className='logo' src={logo} />
       </div>
-      {
-        <button
+      {contexts?.authenticated?
+        (<button
+          id='login'
           className='btn-nav'
           onClick={handleClick}
           disabled={contexts?.showModal}
         >
           Log In
+        </button>) : (
+          <button
+          id='logout'
+          className='btn-nav'
+          onClick={handleClick}
+          disabled={contexts?.showModal}
+        >
+          Log Out
         </button>
+        )
       }
     </nav>
   );
