@@ -38,6 +38,12 @@ describe('database is connected', () => {
     };
     await testConnection();
   });
+})
+
+describe('get user', () => {
+  test('should return user', async () => {
+
+  });
 
 })
 
