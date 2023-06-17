@@ -3,17 +3,23 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-
+import {Dog} from '../types/Types'
 //TODO:
 
-const ChatHeader = ({ user }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
+interface ChatHeaderProps {
+dog: Dog;
+}
+
+
+const ChatHeader: React.FC<ChatHeaderProps> = ({ dog }) => {
+  // const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
   const navigate = useNavigate();
 
   const logout = () => {
-    removeCookie('UserId', cookies.UserId);
-    removeCookie('AuthToken', cookies.Authtoken);
+    // removeCookie('UserId', cookies.UserId);
+    // removeCookie('AuthToken', cookies.Authtoken);
     navigate('/');
   };
 
@@ -21,9 +27,9 @@ const ChatHeader = ({ user }) => {
     <div className='chat-container-header'>
       <div className='profile'>
         <div className='img-container'>
-          <img src={user.url} alt='user photo' />
+          <img src={dog.url} alt='user photo' />
         </div>
-        <h3>{user.name}</h3>
+        <h3>{dog.name}</h3>
       </div>
       <i className='logout-icon' onClick={logout}>
         <LogoutIcon />
