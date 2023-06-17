@@ -12,7 +12,6 @@ import {
   CreationOptional,
 } from 'sequelize';
 import { Dog } from './Dog';
-import db from './db';
 
 type UserAssociations = 'dogs';
 

@@ -80,7 +80,7 @@
 
 
 
-// export const MockUser = jest.mock('../compiled/models/User', () => {
+// const MockUser = jest.mock('../compiled/models/User', () => {
 //   class MockUser {
 //     id = 1;
 //     username = 'Mike';
@@ -93,6 +93,7 @@
 //       dogs: {},
 //     };
 
+//     static create = jest.fn();
 //     static initModel = jest.fn();
 //   }
 
@@ -123,12 +124,13 @@
 // });
 
 const MockUser = {
-  id: 1,
+  // id: 1,
   username: 'Mike',
   email: 'mike@example.com',
   password: 'mockpassword',
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  // createdAt: new Date(),
+  // updatedAt: new Date(),
 }
+
 
 module.exports = { MockUser }

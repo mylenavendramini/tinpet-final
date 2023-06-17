@@ -33,6 +33,7 @@ function createUser(user) {
                 email,
                 password,
             }));
+            console.log(newUser);
             return newUser;
         }
         catch (error) {

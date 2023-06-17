@@ -20,6 +20,7 @@ async function createUser(user: IUser): Promise<User | undefined> {
       email,
       password,
     })) as User;
+    console.log(newUser);
     return newUser;
   } catch (error) {
     console.error('Error creating user:', error);
