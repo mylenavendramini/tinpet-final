@@ -1,8 +1,6 @@
-import { getAllDogs, createDog, putLikeDog, getMatches } from '../models/index';
+import { getAllDogs, createDog, putAndCheckMatch } from '../models/index';
 import { Context } from 'koa';
-import { Dog } from '../models/Dog';
 import { IDog } from '../models/Interfaces';
-import { Matches } from '../models/Matches';
 
 async function getAllDogsController(ctx: Context) {
   try {
@@ -28,21 +26,11 @@ async function createDogController(ctx: Context) {
   }
 }
 
-async function getMatchesController(ctx: Context) {
-  try {
-    const matches = await getMatches();
-    ctx.body = matches;
-  } catch (error) {
-    console.log(error);
-    ctx.status = 500;
-  }
-}
-
 async function putLikeDogController(ctx: Context) {
   const myDogIdObj = ctx.request.body as number;
   const likedDogId = ctx.params.id;
   try {
-    const likedDog = await putLikeDog(myDogIdObj, likedDogId);
+    const likedDog = await putAndCheckMatch(myDogIdObj, likedDogId);
     console.log({ likedDog });
     ctx.body = likedDog;
   } catch (error) {
@@ -51,9 +39,4 @@ async function putLikeDogController(ctx: Context) {
   }
 }
 
-export {
-  getAllDogsController,
-  createDogController,
-  getMatchesController,
-  putLikeDogController,
-};
+export { getAllDogsController, createDogController, putLikeDogController };

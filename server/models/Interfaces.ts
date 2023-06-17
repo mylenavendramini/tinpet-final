@@ -15,6 +15,7 @@ export interface IDog {
   about: string;
   url: string;
   liked_dog: number[];
+  matches_dogs: number[];
   createdAt: Date;
   updatedAt: Date;
 }

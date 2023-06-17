@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putLikeDogController = exports.getMatchesController = exports.createDogController = exports.getAllDogsController = void 0;
+exports.putLikeDogController = exports.createDogController = exports.getAllDogsController = void 0;
 const index_1 = require("../models/index");
 function getAllDogsController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -41,25 +41,12 @@ function createDogController(ctx) {
     });
 }
 exports.createDogController = createDogController;
-function getMatchesController(ctx) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const matches = yield (0, index_1.getMatches)();
-            ctx.body = matches;
-        }
-        catch (error) {
-            console.log(error);
-            ctx.status = 500;
-        }
-    });
-}
-exports.getMatchesController = getMatchesController;
 function putLikeDogController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const myDogIdObj = ctx.request.body;
         const likedDogId = ctx.params.id;
         try {
-            const likedDog = yield (0, index_1.putLikeDog)(myDogIdObj, likedDogId);
+            const likedDog = yield (0, index_1.putAndCheckMatch)(myDogIdObj, likedDogId);
             console.log({ likedDog });
             ctx.body = likedDog;
         }

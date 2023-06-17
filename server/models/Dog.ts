@@ -6,19 +6,24 @@ import {
   BelongsToManyGetAssociationsMixin,
   BelongsToManySetAssociationsMixin,
   BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
+  BelongsToManyCreateAssociationMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManyRemoveAssociationsMixin,
+  BelongsToManyHasAssociationMixin,
+  BelongsToManyHasAssociationsMixin,
+  BelongsToManyCountAssociationsMixin,
+  CreationOptional,
   DataTypes,
   InferCreationAttributes,
   InferAttributes,
   Model,
   NonAttribute,
   Sequelize,
-  CreationOptional,
 } from 'sequelize';
-import { IDog } from './Interfaces';
 import { User } from './User';
-import db from './db';
 
-type DogAssociations = 'user' | 'matches' | undefined;
+type DogAssociations = 'user' | 'dogs';
 
 export class Dog extends Model<
   InferAttributes<Dog, { omit: DogAssociations }>,
@@ -32,6 +37,7 @@ export class Dog extends Model<
   declare about: string;
   declare url: string | null;
   declare liked_dog: number[];
+  declare matches_dogs: number[];
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -42,10 +48,17 @@ export class Dog extends Model<
   declare createUser: BelongsToCreateAssociationMixin<User>;
 
   // Dog belongsToMany Dog (as Matches)
-  declare matches?: NonAttribute<Dog[]>;
-  declare getMatches: BelongsToManyGetAssociationsMixin<Dog>;
-  declare setMatches: BelongsToManySetAssociationsMixin<Dog, number>;
-  declare addMatch: BelongsToManyAddAssociationMixin<Dog, number>;
+  declare dogs?: NonAttribute<Dog[]>;
+  declare getDogs: BelongsToManyGetAssociationsMixin<Dog>;
+  declare setDogs: BelongsToManySetAssociationsMixin<Dog, number>;
+  declare addDog: BelongsToManyAddAssociationMixin<Dog, number>;
+  declare addDogs: BelongsToManyAddAssociationsMixin<Dog, number>;
+  declare createDog: BelongsToManyCreateAssociationMixin<Dog>;
+  declare removeDog: BelongsToManyRemoveAssociationMixin<Dog, number>;
+  declare removeDogs: BelongsToManyRemoveAssociationsMixin<Dog, number>;
+  declare hasDog: BelongsToManyHasAssociationMixin<Dog, number>;
+  declare hasDogs: BelongsToManyHasAssociationsMixin<Dog, number>;
+  declare countDogs: BelongsToManyCountAssociationsMixin;
 
   declare static associations: {
     user: Association<Dog, User>;
@@ -80,6 +93,9 @@ export class Dog extends Model<
           type: DataTypes.STRING,
         },
         liked_dog: {
+          type: DataTypes.ARRAY(DataTypes.INTEGER),
+        },
+        matches_dogs: {
           type: DataTypes.ARRAY(DataTypes.INTEGER),
         },
         createdAt: {

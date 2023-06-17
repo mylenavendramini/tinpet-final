@@ -1,11 +1,9 @@
 import { Dog } from './Dog';
 import { IUser, IDog } from './Interfaces';
-import { Matches } from './Matches';
 import { User } from './User';
 import db from './db';
 
 async function getUser(userId: number): Promise<User | null | undefined> {
-  // console.log({ userId });
   try {
     const user = await User.findOne({ where: { id: userId } });
     return user;
@@ -53,6 +51,7 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
       about,
       url,
       liked_dog: [],
+      matches_dogs: [],
     });
     const user = await User.findOne({ where: { id: user_id } });
     user?.addDog(newDog);
@@ -63,51 +62,59 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
   }
 }
 
-async function putLikeDog(myDogIdObj: {}, likedDogId: number) {
+async function filterDogArray(
+  array: number[],
+  myDogId: number,
+  theOtherDogId: number
+) {
+  const filteredDog = array.filter((el) => el !== theOtherDogId);
+  await Dog.update(
+    {
+      liked_dog: [...filteredDog],
+    },
+    { where: { id: myDogId } }
+  );
+}
+
+async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
   console.log('before the try');
   try {
     console.log('inside the try');
     console.log(myDogIdObj);
     const myDog = await Dog.findOne({ where: myDogIdObj });
-    const theOtherDog = await Dog.findOne({ where: { id: likedDogId } });
+    const theOtherDog = await Dog.findOne({
+      where: { id: Number(theOtherDogId) },
+    });
     console.log({ myDog });
     const myDogArray = myDog?.liked_dog as number[];
     const theOtherDogArray = theOtherDog?.liked_dog as number[];
-    const theOtherDogId: number = Number(theOtherDog?.id);
-    if (theOtherDogArray.includes(myDog!.id)) {
-      // there is a match!!!!
-      // const match = await Matches.create({ // what to pass? });
-      //   // match?.addMatch(Dog, number // or maybe not);
-      // }
-      const match = await myDog?.addMatch(theOtherDogId)
-      const newMatch = await Matches.create() //do we need to create a match or just save the dog???
-      await newMatch.save()
+    const myDogMatches = myDog?.matches_dogs as number[];
 
-    // TODO:
-    //done???
-    // if the id coming from the likedDogId already exists, we don't pass to it
-    //if (!likedDog.includes(likedDogId) {})
+    // Check if it's a match and add to matches_dogs:
+    if (theOtherDogArray.includes(myDog!.id)) {
+      const newMatch = await Dog.update(
+        {
+          matches_dogs: [...myDogMatches, Number(theOtherDogId)],
+        },
+        { where: myDogIdObj }
+      );
+
+      filterDogArray(myDogArray, myDog!.id, theOtherDogId);
+      filterDogArray(theOtherDogArray, theOtherDogId, myDog!.id);
+
+      return newMatch;
     }
 
-    if(!myDogArray.includes(likedDogId)) {
+    // Add the dog that my dog like:
+    if (!myDogArray.includes(theOtherDogId)) {
       const likeDog = await Dog.update(
         {
-          liked_dog: [...myDogArray, Number(likedDogId)],
+          liked_dog: [...myDogArray, Number(theOtherDogId)],
         },
         { where: myDogIdObj }
       );
       return likeDog;
     }
-    
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getMatches(): Promise<Matches[] | undefined> {
-  try {
-    const matches = await Matches.findAll();
-    return matches;
   } catch (error) {
     console.log(error);
   }
@@ -117,4 +124,4 @@ async function getMatches(): Promise<Matches[] | undefined> {
   await db.sync();
 })();
 
-export { getUser, createUser, createDog, getAllDogs, putLikeDog, getMatches };
+export { getUser, createUser, createDog, getAllDogs, putAndCheckMatch };
