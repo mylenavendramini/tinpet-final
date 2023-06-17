@@ -137,9 +137,9 @@ async function getDogMatchesArray(dogId: number) {
   }
 }
 
-(async () => {
-  await db.sync();
-})();
+// (async () => {
+//   await db.sync();
+// })();
 
 export {
   getUser,

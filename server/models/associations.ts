@@ -7,11 +7,11 @@ export function initModels(sequelize: Sequelize) {
   User.initModel(sequelize);
 
   Dog.belongsTo(User, {
-    as: 'user',
+    as: 'owner',
     foreignKey: 'id',
   });
   Dog.belongsToMany(Dog, {
-    as: 'dog',
+    as: 'likedDogs',
     through: Dog,
     foreignKey: 'id',
     otherKey: 'id',

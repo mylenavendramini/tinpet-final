@@ -8,14 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Dog_1 = require("./Dog");
 const User_1 = require("./User");
-const db_1 = __importDefault(require("./db"));
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -149,6 +145,3 @@ function getDogMatchesArray(dogId) {
     });
 }
 exports.getDogMatchesArray = getDogMatchesArray;
-(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield db_1.default.sync();
-}))();
