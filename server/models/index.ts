@@ -89,6 +89,7 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
     const myDogArray = myDog?.liked_dog as number[];
     const theOtherDogArray = theOtherDog?.liked_dog as number[];
     const myDogMatches = myDog?.matches_dogs as number[];
+    const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
 
     // Check if it's a match and add to matches_dogs:
     if (theOtherDogArray.includes(myDog!.id)) {
@@ -97,6 +98,12 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
           matches_dogs: [...myDogMatches, Number(theOtherDogId)],
         },
         { where: myDogIdObj }
+      );
+      await Dog.update(
+        {
+          matches_dogs: [...theOtherDogMatches, Number(myDog!.id)],
+        },
+        { where: { id: theOtherDogId } }
       );
 
       filterDogArray(myDogArray, myDog!.id, theOtherDogId);

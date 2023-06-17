@@ -1,12 +1,10 @@
 import type { Sequelize } from 'sequelize';
 import { Dog } from './Dog';
 import { User } from './User';
-import { Matches } from './Matches';
 
 export function initModels(sequelize: Sequelize) {
   Dog.initModel(sequelize);
   User.initModel(sequelize);
-  Matches.initModel(sequelize);
 
   Dog.belongsTo(User, {
     as: 'user',
@@ -27,6 +25,5 @@ export function initModels(sequelize: Sequelize) {
   return {
     Dog,
     User,
-    Matches,
   };
 }

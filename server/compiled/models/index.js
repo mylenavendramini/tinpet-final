@@ -109,11 +109,15 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
             const myDogArray = myDog === null || myDog === void 0 ? void 0 : myDog.liked_dog;
             const theOtherDogArray = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.liked_dog;
             const myDogMatches = myDog === null || myDog === void 0 ? void 0 : myDog.matches_dogs;
+            const theOtherDogMatches = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.matches_dogs;
             // Check if it's a match and add to matches_dogs:
             if (theOtherDogArray.includes(myDog.id)) {
                 const newMatch = yield Dog_1.Dog.update({
                     matches_dogs: [...myDogMatches, Number(theOtherDogId)],
                 }, { where: myDogIdObj });
+                yield Dog_1.Dog.update({
+                    matches_dogs: [...theOtherDogMatches, Number(myDog.id)],
+                }, { where: { id: theOtherDogId } });
                 filterDogArray(myDogArray, myDog.id, theOtherDogId);
                 filterDogArray(theOtherDogArray, theOtherDogId, myDog.id);
                 return newMatch;
