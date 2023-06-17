@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+//TODO:
+
 const MatchesDisplay = ({ matches, setClickedUser }) => {
   const [matchedProfiles, setMatchedProfiles] = useState(null);
-  console.log(matches)
+  console.log(matches);
 
   const getMatches = async () => {
     const matchedUserIds = matches.map(({ user_id }) => user_id);
@@ -24,8 +26,6 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
     getMatches();
   }, [matches]);
 
-
-
   return (
     <div className='matches-display'>
       {matchedProfiles?.map((match) => (
@@ -35,10 +35,7 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
           onClick={() => setClickedUser(match)}
         >
           <div className='img-container'>
-            <img
-              src={match?.url}
-              alt='matched photo'
-            />
+            <img src={match?.url} alt='matched photo' />
           </div>
           <h3>{match?.name}</h3>
         </div>

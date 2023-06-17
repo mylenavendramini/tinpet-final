@@ -5,6 +5,8 @@ import ChatInput from './ChatInput';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+//TODO:
+
 const ChatDisplay = ({ user, clickedUSer }) => {
   const userId = user?.user_id;
   const clickedUserId = clickedUSer?.user_id;

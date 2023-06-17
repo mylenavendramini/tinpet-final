@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+//TODO:
+
 const ChatInput = ({
   user,
   clickedUser,
@@ -36,10 +38,7 @@ const ChatInput = ({
         value={textArea}
         onChange={(e) => setTextArea(e.target.value)}
       ></textarea>
-      <button
-        className='btn-secondary'
-        onClick={addMessage}
-      >
+      <button className='btn-secondary' onClick={addMessage}>
         Submit
       </button>
     </div>

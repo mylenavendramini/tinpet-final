@@ -4,6 +4,8 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
+//TODO:
+
 const ChatHeader = ({ user }) => {
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
@@ -19,17 +21,11 @@ const ChatHeader = ({ user }) => {
     <div className='chat-container-header'>
       <div className='profile'>
         <div className='img-container'>
-          <img
-            src={user.url}
-            alt='user photo'
-          />
+          <img src={user.url} alt='user photo' />
         </div>
         <h3>{user.name}</h3>
       </div>
-      <i
-        className='logout-icon'
-        onClick={logout}
-      >
+      <i className='logout-icon' onClick={logout}>
         <LogoutIcon />
       </i>
     </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+//TODO:
 
 const UploadPic = () => {
   const [files, setFiles] = useState([]);
