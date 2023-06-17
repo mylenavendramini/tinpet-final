@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
+import { useNavigate } from 'react-router-dom';
 const Nav = () => {
   const contexts = useContext(Context);
   const logout = () => {
@@ -8,6 +9,11 @@ const Nav = () => {
     contexts?.updateSignUp();
     contexts?.updateAuthenticated()
   };
+
+  const login = () => {
+    navigate('/login')
+  }
+  const navigate = useNavigate();
   
   // const authToken = true;
   return (
@@ -19,8 +25,7 @@ const Nav = () => {
         (<button
           id='login'
           className='btn-nav'
-          onClick={}//handleClick
-          disabled={contexts?.showModal}
+          onClick={login}
         >
           Log In
         </button>) : (

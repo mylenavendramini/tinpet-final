@@ -5,7 +5,8 @@ export type User = {
 };
 
 export type Dog = {
-  id?: number;
+  // id?: number; changed it cause MatchedDogs is complaining
+  id: number;
   name: string;
   age: number;
   gender: string;
