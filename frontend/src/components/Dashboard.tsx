@@ -1,18 +1,14 @@
-import { useEffect, useState } from "react";
-import { getDogs } from "../services/APIServices";
-import { Dog } from "../types/Types";
+import { useEffect, useState } from 'react';
+import apiService from '../services/APIServices';
+import { Dog } from '../types/Types';
 
-//TODO:
-
-function Dashboard () {
-  const [myDogs, setMyDogs] = useState(Dog[])
-  const [otherDogs, setOtherDogs] = useState([])
+function Dashboard() {
+  const [myDogs, setMyDogs] = useState<Dog[]>([]);
+  const [otherDogs, setOtherDogs] = useState([]);
 
   useEffect(() => {
-    getDogs().then((res) => {
-      setMyDogs(res.filter((el:Dog):Dog[] => {
-
-      }))
-    })
-  },[])
+    apiService.getDogs().then((res) => {
+      setMyDogs(res.filter((el: Dog) => {}));
+    });
+  }, []);
 }

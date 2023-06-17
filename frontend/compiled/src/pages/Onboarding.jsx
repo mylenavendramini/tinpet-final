@@ -16,44 +16,38 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Nav_1 = __importDefault(require("../components/Nav"));
 const react_1 = require("react");
 const react_cookie_1 = require("react-cookie");
-const axios_1 = __importDefault(require("axios"));
 const react_router_dom_1 = require("react-router-dom");
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Onboarding = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
+    const { id } = (0, react_router_dom_1.useParams)();
+    const parsedId = Number(id);
     const [cookies, setCookies, removeCookies] = (0, react_cookie_1.useCookies)(['user']);
     const [formData, setFormData] = (0, react_1.useState)({
-        user_id: cookies.UserId,
         name: '',
-        age: '',
+        age: 0,
         gender: '',
         url: '',
         about: '',
-        matches: [],
+        liked_dog: [],
+        matches_dogs: [],
     });
     const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
         console.log('Submited');
-        try {
-            const response = yield axios_1.default.put('http://localhost:3000/user', {
-                formData,
-            });
-            const success = response.status === 200;
-            if (success)
-                navigate('/dashboard');
-        }
-        catch (err) {
-            console.log(err);
-        }
+        APIServices_1.default
+            .createDog(parsedId, formData)
+            .then((data) => navigate('/dashboard'));
     });
     const handleChange = (e) => {
-        const value = e.target.value;
+        const value = e === null || e === void 0 ? void 0 : e.target.value;
         const name = e.target.name;
         setFormData((prevState) => (Object.assign(Object.assign({}, prevState), { [name]: value })));
     };
     return (<>
-      <Nav_1.default setShowModal={() => { }} showModal={false}/>
+      <Nav_1.default />
       <div className='onboarding'>
-        <h2>CREATE ACCOUNT</h2>
+        <h2>Creare a dog</h2>
 
         <form onSubmit={handleSubmit}>
           <section>
@@ -79,7 +73,7 @@ const Onboarding = () => {
             <label htmlFor='about'>Profile Picture</label>
             <input id='url' type='url' name='url' required={true} onChange={handleChange}/>
             <div className='photo-container'>
-              {formData.url && (<img src={formData.url} alt='profile picture'/>)}
+              {formData.url && <img src={formData.url} alt='profile picture'/>}
             </div>
           </section>
         </form>

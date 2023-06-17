@@ -12,13 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 const axios_1 = __importDefault(require("axios"));
 const react_1 = require("react");
-//TODO:
-const MatchesDisplay = ({ matches, setClickedUser }) => {
-    const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)(null);
+const react_2 = require("react");
+const Context_1 = require("../Context/Context");
+const MatchesDisplay = ({ matches, setClickedUser, }) => {
+    const context = (0, react_2.useContext)(Context_1.Context);
+    const dogs = context === null || context === void 0 ? void 0 : context.dogs;
+    const updateDog = context === null || context === void 0 ? void 0 : context.updateDog;
+    const dogName = dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => dog.name);
+    const dogUrl = dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => dog.url);
     console.log(matches);
     const getMatches = () => __awaiter(void 0, void 0, void 0, function* () {
         const matchedUserIds = matches.map(({ user_id }) => user_id);
@@ -26,6 +29,7 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
             const response = yield axios_1.default.get('http://localhost:3000/matchedusers', {
                 params: { userIds: JSON.stringify(matchedUserIds) },
             });
+            //TODO:
             setMatchedProfiles(response.data);
         }
         catch (error) {

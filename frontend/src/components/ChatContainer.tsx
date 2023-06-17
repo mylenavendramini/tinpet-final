@@ -5,7 +5,7 @@ import MatchesDisplay from './MatchesDisplay';
 import ChatHeader from './ChatHeader';
 import { useContext, useState } from 'react';
 import { User } from '../types/Types';
-import { Context } from '../Context/Contex';
+import { Context } from '../Context/Context';
 
 interface ChatContainerProps {
   user: User;
@@ -19,6 +19,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
 
   return (
     <div className='chat-container'>
+      {/*TODO:*/}
       <ChatHeader user={user} />
       <div>
         <button className='option' onClick={() => setClickedUser(null)}>

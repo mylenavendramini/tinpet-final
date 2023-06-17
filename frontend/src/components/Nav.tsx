@@ -1,26 +1,29 @@
-/* eslint-disable react/prop-types */
-import logo from '../assets/dog-face-svgrepo-com.svg';
+import { useContext } from 'react';
 //TODO:
-
-const Nav = ({ setShowModal, showModal, setIsSignUp, authToken }) => {
+import logo from '../assets/dog-face-svgrepo-com.svg';
+import { Context } from '../Context/Context';
+const Nav = () => {
+  const contexts = useContext(Context);
   const handleClick = () => {
-    setShowModal(true);
-    setIsSignUp(false);
+    contexts?.updateModal();
+    contexts?.updateSignUp();
   };
-
   // const authToken = true;
   return (
     <nav>
       <div className='logo-container'>
         <img className='logo' src={logo} />
       </div>
-      {!authToken && (
-        <button className='btn-nav' onClick={handleClick} disabled={showModal}>
+      {
+        <button
+          className='btn-nav'
+          onClick={handleClick}
+          disabled={contexts?.showModal}
+        >
           Log In
         </button>
-      )}
+      }
     </nav>
   );
 };
-
 export default Nav;

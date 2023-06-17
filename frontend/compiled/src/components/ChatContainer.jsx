@@ -9,13 +9,14 @@ const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const MatchesDisplay_1 = __importDefault(require("./MatchesDisplay"));
 const ChatHeader_1 = __importDefault(require("./ChatHeader"));
 const react_1 = require("react");
-const Contex_1 = require("../Context/Contex");
+const Context_1 = require("../Context/Context");
 const ChatContainer = ({ user }) => {
     const [clickedUser, setClickedUser] = (0, react_1.useState)(null);
-    const context = (0, react_1.useContext)(Contex_1.Context);
+    const context = (0, react_1.useContext)(Context_1.Context);
     const dogs = context === null || context === void 0 ? void 0 : context.dogs;
     const dogsMatches = dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => dog.matches_dogs);
     return (<div className='chat-container'>
+      {/*TODO:*/}
       <ChatHeader_1.default user={user}/>
       <div>
         <button className='option' onClick={() => setClickedUser(null)}>

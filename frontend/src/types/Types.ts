@@ -5,7 +5,7 @@ export type User = {
 };
 
 export type Dog = {
-  id: number;
+  id?: number;
   name: string;
   age: number;
   gender: string;
@@ -13,7 +13,6 @@ export type Dog = {
   url: string;
   liked_dog: number[];
   matches_dogs: number[];
-  createdAt: Date;
-  updatedAt: Date;
-  user: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

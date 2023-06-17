@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import axios from 'axios';
