@@ -1,8 +1,6 @@
-
-const PORT = 'http://localhost:3000/'
-import { Dog, User } from "../types/Types"
+const PORT = 'http://localhost:3000/';
+import { Dog, User } from '../types/Types';
 // import axios from 'axios';
-
 
 // router.post('/user', createUserController);
 // router.post('/dogs/:id', createDogController);
@@ -11,75 +9,79 @@ import { Dog, User } from "../types/Types"
 // router.get('/matches', getMatchesController);
 // router.put('/dogs/:id', putLikeDogController);
 
-const register = async (email:string, password:string) => {
+const register = async (email: string, password: string) => {
   return fetch(`${PORT}/user`, {
-    method: "POST",
-    body: JSON.stringify({email, password}),
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
-
-const createDog = async (user_id:number, dog):Promise<Dog> => {
+const createDog = async (user_id: number, dog: Dog): Promise<Dog> => {
   return fetch(`${PORT}/dogs/${user_id}`, {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(dog),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
-const getUser = async (user_id:number) => {
+const getUser = async (user_id: number): Promise<User> => {
   return fetch(`${PORT}/user/${user_id}`, {
-    method: "GET",
+    method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
-const getDogs = async ():Promise<Dog[]> => {
+const getDogs = async (): Promise<Dog[]> => {
   return fetch(`${PORT}/dogs/`, {
-    method: "GET",
+    method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
 const getMatches = async () => {
   return fetch(`${PORT}/matches`, {
-    method: "GET",
+    method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
-const addMatch = async (id:number, dog) => {
+const addMatch = async (id: number, dog: Dog) => {
   return fetch(`${PORT}/dogs/${id}`, {
-    method: "PUT",
+    method: 'PUT',
     body: JSON.stringify(dog),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
-    credentials: "include"
-  }).then(res => res.json()).then(parsedRes => parsedRes)
-}
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .then((parsedRes) => parsedRes);
+};
 
-export {
-  register,
-  createDog,
-  getUser,
-  getDogs,
-  getMatches,
-  addMatch
-}
+export { register, createDog, getUser, getDogs, getMatches, addMatch };
