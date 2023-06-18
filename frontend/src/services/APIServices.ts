@@ -1,5 +1,5 @@
 const PORT = 'http://localhost:3000/';
-import { Dog, User } from '../types/Types';
+import { Dog, User, Message } from '../types/Types';
 // import axios from 'axios';
 
 const apiService = {
@@ -102,6 +102,31 @@ const apiService = {
       .then((res) => res.json())
       .then((parsedRes) => parsedRes);
   },
+
+  sendMessage: (id:number, body:Message): Promise<Message> => {
+    return fetch(`${PORT}/messages/${id}`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((parsedRes) => parsedRes);
+  },
+
+  getMessages: (id:number): Promise<Message[]> => {
+    return fetch(`${PORT}/messages/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      credentials: 'include',
+    })
+      .then((res) => res.json())
+      .then((parsedRes) => parsedRes);
+  }
 };
 
 export default apiService;

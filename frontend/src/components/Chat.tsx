@@ -1,4 +1,11 @@
+import { useState, useEffect, useContext } from 'react';
+import apiService from '../services/APIServices';
+import { Context } from '../Context/Context';
+
+
 const Chat = () => {
+  const contexts = useContext(Context);
+  
   return (
     <>
       <div className='chat-display'>

@@ -9,7 +9,7 @@ async function createMessageController(ctx: Context) {
     ctx.body = newMessage;
   } catch (error) {
     ctx.status = 500;
-    ctx.body = { error: 'Its funny cause it failed' };
+    ctx.body = { error: 'Its funny cause it failed...' };
   }
 }
 

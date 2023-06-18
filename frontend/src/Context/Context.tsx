@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
-import { Dog, User } from '../types/Types';
+import { Dog, User, Message } from '../types/Types';
 
 interface ContextType {
   user: User | null;
@@ -10,6 +10,8 @@ interface ContextType {
   myDogs: Dog[];
   matchedDogs: Dog[];
   authenticated: boolean;
+  selectedDog:Dog | null;
+  messages:Message[];
   updateUser: (newUser: User | null) => void;
   updateDog: (newDog: Dog[] | null) => void;
   updateModal: () => void;
@@ -18,6 +20,8 @@ interface ContextType {
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
   updateAuthenticated: () => void;
+  updateSelectedDog: (selectedDog:Dog) => void;
+  updateMessages: (messages: Message[]) => void;
 }
 interface MyProviderProps {
   children: ReactNode;
@@ -32,6 +36,8 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const [myDogs, setMyDogs] = useState<Dog[]>([]);
   const [currentDog, setCurrentDog] = useState<Dog | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
+  const [selectedDog, setSelectedDog] = useState<Dog | null>(null)
+  const [messages, setMessages] = useState<Message[]>([])
 
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
@@ -51,13 +57,18 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateMatches = (matchedDogs: Dog[]) => {
     setMatchedDogs(matchedDogs);
   };
-
   const updateCurrentDog = (dog: Dog | null) => {
     setCurrentDog(dog);
   };
   const updateAuthenticated = () => {
     setAuthenticated(!authenticated);
   };
+  const updateSelectedDog = (dog: Dog) => {
+    setSelectedDog(dog)
+  }
+  const updateMessages = (messages:Message[]) => {
+    setMessages(messages)
+  }
   return (
     <Context.Provider
       value={{
@@ -77,6 +88,10 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
         updateCurrentDog,
         authenticated,
         updateAuthenticated,
+        selectedDog,
+        updateSelectedDog,
+        messages,
+        updateMessages
       }}
     >
       {children}

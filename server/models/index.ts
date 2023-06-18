@@ -160,12 +160,12 @@ async function getDogMatchesArray(dogId: number) {
 }
 
 async function createMessage(body:{}) {
-  const {content, sender, reciever} = body as Message
+  const {content, sender, receiver} = body as Message
   try{
     const newMessage = await Message.create({
       content,
       sender,
-      reciever
+      receiver
     })
     return newMessage
   } catch(e) {

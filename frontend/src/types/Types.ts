@@ -17,3 +17,12 @@ export type Dog = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type Message = {
+  id?: number,
+  content: string,
+  sender: number,
+  receiver: number,
+  createdAt?: Date
+  updatedAt?: Date
+}
