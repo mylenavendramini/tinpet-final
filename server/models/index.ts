@@ -54,9 +54,32 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
     const user = await User.findOne({ where: { id: user_id } });
     user?.addDog(newDog);
     console.log(newDog, 'model');
+    console.log(user?.dogs);
     return newDog;
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function getDogsByUserId(userId: number): Promise<Dog[] | undefined> {
+  try {
+    const user = await User.findOne({
+      where: { id: userId },
+      include: { model: Dog, as: 'dogs' },
+    });
+    console.log({ user });
+    console.log(user?.dogs);
+    if (user && user.dogs) {
+      const dogs = user.dogs;
+      console.log(dogs, 'model');
+      return dogs;
+    } else {
+      console.log('Dogs not found');
+      return undefined;
+    }
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
 }
 
@@ -144,6 +167,7 @@ export {
   createUser,
   createDog,
   getAllDogs,
+  getDogsByUserId,
   putAndCheckMatch,
   getDogMatchesArray,
 };
