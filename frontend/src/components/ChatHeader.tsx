@@ -21,6 +21,8 @@ const ChatHeader: React.FC = () => {
     <div className='chat-container-header'>
       <div className='profile'>
         <div className='img-container'>
+          {/* something tells me this will not work - Harold
+          img src takes in a string and would be an array of string */}
           <img src={`${dogUrl}`} alt='user photo' />
         </div>
         <h3>{dogName}</h3>

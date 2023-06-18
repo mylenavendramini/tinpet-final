@@ -6,7 +6,7 @@ import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
 interface MatchesDisplayProps {
-  matches: number[];
+  matches: Dog[];
   setClickedDog: (dog: Dog) => void;
 }
 const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
