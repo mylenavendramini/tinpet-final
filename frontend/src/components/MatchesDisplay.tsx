@@ -7,6 +7,7 @@ import { Dog } from '../types/Types';
 
 interface MatchesDisplayProps {
   matches: Dog[];
+  // setClickedDog: Function;
   setClickedDog: (dog: Dog) => void;
 }
 const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
