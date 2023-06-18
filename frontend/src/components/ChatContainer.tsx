@@ -12,29 +12,29 @@ interface ChatContainerProps {
 }
 
 const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
-  const [clickedUser, setClickedUser] = useState(null);
+  const [clickedDog, setClickedDog] = useState(null);
   const context = useContext(Context);
-  const dogs = context?.dogs;
-  const dogsMatches = dogs?.map((dog) => dog.matches_dogs);
+  const myDogs = context?.myDogs;
+  const dogsMatches = myDogs?.map((dog) => dog.matches_dogs);
 
   return (
     <div className='chat-container'>
       {/*TODO:*/}
       <ChatHeader user={user} />
       <div>
-        <button className='option' onClick={() => setClickedUser(null)}>
+        <button className='option' onClick={() => setClickedDog(null)}>
           Matches
         </button>
-        <button className='option' disabled={!clickedUser}>
+        <button className='option' disabled={!clickedDog}>
           Chat
         </button>
       </div>
 
-      {!clickedUser && (
-        <MatchesDisplay matches={dogsMatches} setClickedUser={setClickedUser} />
+      {!clickedDog && (
+        <MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />
       )}
 
-      {clickedUser && <ChatDisplay user={user} clickedUSer={clickedUser} />}
+      {clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />}
     </div>
   );
 };

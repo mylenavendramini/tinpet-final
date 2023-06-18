@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
+import { Dog } from '../types/Types';
 const Nav = () => {
   const [open, setOpen] = useState(false);
 
@@ -9,6 +10,7 @@ const Nav = () => {
     setOpen(!open);
   };
   const contexts = useContext(Context);
+  const myDogs = contexts?.myDogs;
   const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
@@ -19,6 +21,10 @@ const Nav = () => {
     navigate('/login');
   };
   const navigate = useNavigate();
+
+  const handleClickDog = (dogId: number) => {
+    setCurrentDog(dogId);
+  };
 
   // const authToken = true;
   return (
@@ -41,6 +47,14 @@ const Nav = () => {
                 Log Out
               </button>
             )}
+            {myDogs?.map((dog) => (
+              <button
+                className='btn-nav'
+                onClick={() => handleClickDog(dog.id)}
+              >
+                {dog.name}
+              </button>
+            ))}
             <button className='btn-nav' onClick={() => navigate('/dashboard')}>
               Start chat
             </button>

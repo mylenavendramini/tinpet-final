@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiService from '../services/APIServices';
@@ -39,6 +39,14 @@ const Onboarding = () => {
       [name]: value,
     }));
   };
+
+  function getMyDogs() {
+    apiService.getDogsofUSer(parsedId).then((data) => setMyDogs(data));
+  }
+
+  useEffect(() => {
+    getMyDogs();
+  }, []);
 
   return (
     <>
