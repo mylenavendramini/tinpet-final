@@ -25,6 +25,7 @@ export class User extends Model<
   declare password: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
+  // declare messages: number[]//for messages might not be needed depends on the message model
 
   // User hasMany Dog
   declare dogs?: NonAttribute<Dog[]>;
@@ -61,6 +62,9 @@ export class User extends Model<
         updatedAt: {
           type: DataTypes.DATE,
         },
+        // messages: {
+        //   type: DataTypes.ARRAY(DataTypes.INTEGER) //for messages might not be needed depends on the message model
+        // }
       },
       {
         sequelize,

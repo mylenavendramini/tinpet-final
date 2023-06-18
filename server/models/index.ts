@@ -1,6 +1,7 @@
 import { Dog } from './Dog';
 import { IUser, IDog } from './Interfaces';
 import { User } from './User';
+import { Message } from './Messages';
 import db from './db';
 
 async function getUser(userId: number): Promise<User | null | undefined> {
@@ -135,6 +136,29 @@ async function getDogMatchesArray(dogId: number) {
   }
 }
 
+async function createMessage(body:{}) {
+  const {content, sender, reciever} = body as Message
+  try{
+    const newMessage = await Message.create({
+      content,
+      sender,
+      reciever
+    })
+    return newMessage
+  } catch(e) {
+    console.log('DAWG this function is simple are you that stupid not to make it work???')
+  }
+}
+
+async function getMessages(id:number) {
+  try{
+    const messages = Message.findAll({ where: { id }} )
+    return messages
+  } catch(e) {
+    console.log('Yo open your eyes Im sure you can find those messages')
+  }
+}
+
 // (async () => {
 //   await db.sync();
 // })();
@@ -146,4 +170,6 @@ export {
   getAllDogs,
   putAndCheckMatch,
   getDogMatchesArray,
+  createMessage,
+  getMessages
 };
