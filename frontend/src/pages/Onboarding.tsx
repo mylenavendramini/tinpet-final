@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiService from '../services/APIServices';
@@ -40,11 +40,19 @@ const Onboarding = () => {
     }));
   };
 
+  function getMyDogs() {
+    apiService.getDogsofUSer(parsedId).then((data) => setMyDogs(data));
+  }
+
+  useEffect(() => {
+    getMyDogs();
+  }, []);
+
   return (
     <>
       <Nav />
       <div className='onboarding'>
-        <h2>Creare a dog</h2>
+        <h2>Create a dog</h2>
 
         <form onSubmit={handleSubmit}>
           <section>
