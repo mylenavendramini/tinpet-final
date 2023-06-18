@@ -44,7 +44,7 @@ const Onboarding = () => {
     <>
       <Nav />
       <div className='onboarding'>
-        <h2>Creare a dog</h2>
+        <h2>Create a dog</h2>
 
         <form onSubmit={handleSubmit}>
           <section>
