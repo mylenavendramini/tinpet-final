@@ -1,12 +1,13 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { FormEvent, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { Context } from '../Context/Context';
 const AuthModal = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   // const [cookies, setCookies, removeCookies] = useCookies(['user']);
   // const {showModal, updateModal, isSignUp, updateSignUp} = useContext(Context)
@@ -21,7 +22,7 @@ const AuthModal = () => {
       setError('Passwords needs to match!');
     } else {
       try {
-        apiService.register(email, password).then((res) => {
+        apiService.register(username, email, password).then((res) => {
           if (res.username) {
             navigate('/dashboard');
           } else {
@@ -64,6 +65,14 @@ const AuthModal = () => {
       </div>
       <h2>{contexts?.isSignUp ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
       <form onSubmit={(e) => handleRegister(e)}>
+        <input
+          type='text'
+          id='username'
+          name='username'
+          placeholder='username'
+          required={true}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <input
           type='email'
           id='email'

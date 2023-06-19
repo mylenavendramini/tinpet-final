@@ -17,13 +17,17 @@ const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 const cors_1 = __importDefault(require("@koa/cors"));
 const router_1 = __importDefault(require("./routers/router"));
 const db_1 = __importDefault(require("./models/db"));
+const corsConfig = {
+    origin: 'http://localhost:5173',
+    credentials: true,
+};
 const app = new koa_1.default();
 const PORT = 3001;
 (() => __awaiter(void 0, void 0, void 0, function* () {
     yield db_1.default.sync();
 }))();
 app
-    .use((0, cors_1.default)())
+    .use((0, cors_1.default)(corsConfig))
     .use((0, koa_bodyparser_1.default)())
     .use(router_1.default.routes())
     .use(router_1.default.allowedMethods());

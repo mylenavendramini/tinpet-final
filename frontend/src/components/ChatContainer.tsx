@@ -42,8 +42,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
       </div>
 
       {!clickedDog && (
-      <MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />
-         {/*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/}
+        <MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />
+        /*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/
       )}
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}

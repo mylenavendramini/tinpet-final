@@ -3,10 +3,10 @@ import { Dog, User, Message } from '../types/Types';
 // import axios from 'axios';
 
 const apiService = {
-  register: async (email: string, password: string) => {
+  register: async (username: string, email: string, password: string) => {
     return fetch(`${PORT}/user`, {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, email, password }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
@@ -17,6 +17,7 @@ const apiService = {
   },
 
   login: async (email: string, password: string) => {
+    console.log(email);
     return fetch(`${PORT}/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
