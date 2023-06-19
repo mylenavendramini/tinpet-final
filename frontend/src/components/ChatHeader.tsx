@@ -1,4 +1,4 @@
-import LogoutIcon from '@mui/icons-material/Logout';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -12,13 +12,7 @@ const ChatHeader: React.FC = () => {
   const dogName = dogs?.map((dog) => dog.name);
   const dogUrl = dogs?.map((dog) => dog.url);
   const navigate = useNavigate();
-  const logout = (): void => {
-    contexts?.updateModal();
-    contexts?.updateSignUp();
-    contexts?.updateAuthenticated(false);
-    localStorage.clear()
-    navigate('/');
-  };
+
   return (
     <div className='chat-container-header'>
       <div className='profile'>
@@ -27,8 +21,8 @@ const ChatHeader: React.FC = () => {
         </div>
         <h3>{dogName}</h3>
       </div>
-      <i className='logout-icon' onClick={logout}>
-        <LogoutIcon />
+      <i className='logout-icon' onClick={() => navigate('/')}>
+        <ArrowCircleLeftIcon />
       </i>
     </div>
   );
