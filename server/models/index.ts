@@ -1,8 +1,12 @@
-import { Dog } from './Dog';
+// import { Dog } from './Dog';
 import { IUser, IDog } from './Interfaces';
-import { User } from './User';
+// import { User } from './User';
 import { Message } from './Messages';
-import db from './db';
+
+import db from './db'
+
+const User =db.User
+const Dog = db.Dog
 
 async function getUser(userId: number): Promise<User | null | undefined> {
   try {
@@ -51,10 +55,9 @@ async function getAllDogs() {
 
 async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
   try {
-    const { id, name, age, gender, about, url } = dog;
+    const { name, age, gender, about, url } = dog;
     const user_id = Number(userId);
     const newDog = await Dog.create({
-      id,
       name,
       age,
       gender,
@@ -63,9 +66,11 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
       liked_dog: [],
       matches_dogs: [],
     });
+    // console.log(newDog)
     const user = await User.findOne({ where: { id: user_id } });
-    user?.addDog(newDog);
-    console.log(newDog, 'model');
+    // user?.addDog(newDog);
+    await newDog.setUser(user_id);
+    console.log(newDog, 'MODEL');
     console.log(user?.dogs);
     return newDog;
   } catch (error) {
@@ -79,11 +84,11 @@ async function getDogsByUserId(userId: number): Promise<Dog[] | undefined> {
       where: { id: userId },
       include: { model: Dog, as: 'dogs' },
     });
-    console.log({ user });
+    // console.log({ user });
     console.log(user?.dogs);
     if (user && user.dogs) {
       const dogs = user.dogs;
-      console.log(dogs, 'model');
+      // console.log(dogs, 'model');
       return dogs;
     } else {
       console.log('Dogs not found');

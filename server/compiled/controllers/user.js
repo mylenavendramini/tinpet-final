@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUserController = exports.getUserController = void 0;
+exports.loginController = exports.createUserController = exports.getUserController = void 0;
 const index_1 = require("../models/index");
 function getUserController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -40,3 +40,17 @@ function createUserController(ctx) {
     });
 }
 exports.createUserController = createUserController;
+function loginController(ctx) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const user = ctx.request.body;
+            const res = yield (0, index_1.login)(user);
+            ctx.body = res;
+        }
+        catch (error) {
+            ctx.status = 500;
+            ctx.body = JSON.stringify('Unable to find user');
+        }
+    });
+}
+exports.loginController = loginController;

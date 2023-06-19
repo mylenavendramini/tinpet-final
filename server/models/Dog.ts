@@ -77,7 +77,7 @@ export class Dog extends Model<
         name: {
           type: DataTypes.STRING,
           allowNull: false,
-          unique: true,
+          unique: false,
         },
         age: {
           type: DataTypes.INTEGER,
