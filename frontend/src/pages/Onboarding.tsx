@@ -12,6 +12,7 @@ const Onboarding = () => {
   const { id } = useParams();
   const parsedId = Number(id);
   const contexts = useContext(Context);
+  const myDogs = contexts?.myDogs;
 
   const [cookies, setCookies, removeCookies] = useCookies(['user']);
   // const [formData, setFormData] = useState<Dog>({
@@ -45,13 +46,11 @@ const Onboarding = () => {
     const id = contexts?.user?.id as number;
     console.log(id);
     console.log(contexts?.user);
-    apiService
-      .createDog(id, newDog)
-      // .createDog(contexts?.user, newDog)
-      .then((data) => {
-        console.log(data);
-        navigate('/dashboard');
-      });
+    apiService.createDog(id, newDog).then((data) => {
+      console.log(data);
+      contexts?.myDogs.push(data);
+      navigate('/dashboard');
+    });
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,16 +63,6 @@ const Onboarding = () => {
   //     [name]: value,
   //   }));
   // };
-
-  function getMyDogs() {
-    apiService
-      .getDogsofUSer(parsedId)
-      .then((data) => contexts?.updateMyDogs(data));
-  }
-
-  useEffect(() => {
-    getMyDogs();
-  }, []);
 
   return (
     <>

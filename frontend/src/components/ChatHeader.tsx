@@ -8,7 +8,6 @@ const ChatHeader: React.FC = () => {
   // const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const contexts = useContext(Context);
   const dogs = contexts?.dogs;
-  const updateDog = contexts?.updateDog;
   const dogName = dogs?.map((dog) => dog.name);
   const dogUrl = dogs?.map((dog) => dog.url);
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const ChatHeader: React.FC = () => {
         <div className='img-container'>
           <img src={contexts?.currentDog?.url} alt='user photo' />
         </div>
-        <h3>{dogName}</h3>
+        <h3>{contexts?.currentDog?.name}</h3>
       </div>
       <i className='logout-icon' onClick={() => navigate('/')}>
         <ArrowCircleLeftIcon />

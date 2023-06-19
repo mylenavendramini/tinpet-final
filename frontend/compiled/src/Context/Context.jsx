@@ -17,7 +17,7 @@ const MyProvider = ({ children }) => {
     const updateUser = (newUser) => {
         setUser(newUser);
     };
-    const updateDog = (newDog) => {
+    const updateDogs = (newDog) => {
         setDogs(newDog);
     };
     const updateModal = () => {
@@ -48,7 +48,7 @@ const MyProvider = ({ children }) => {
             user,
             updateUser,
             dogs,
-            updateDog,
+            updateDogs,
             myDogs,
             updateMyDogs,
             showModal,
@@ -64,7 +64,7 @@ const MyProvider = ({ children }) => {
             selectedDog,
             updateSelectedDog,
             messages,
-            updateMessages
+            updateMessages,
         }}>
       {children}
     </exports.Context.Provider>);

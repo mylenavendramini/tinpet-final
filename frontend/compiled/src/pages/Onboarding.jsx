@@ -24,6 +24,7 @@ const Onboarding = () => {
     const { id } = (0, react_router_dom_1.useParams)();
     const parsedId = Number(id);
     const contexts = (0, react_1.useContext)(Context_1.Context);
+    const myDogs = contexts === null || contexts === void 0 ? void 0 : contexts.myDogs;
     const [cookies, setCookies, removeCookies] = (0, react_cookie_1.useCookies)(['user']);
     // const [formData, setFormData] = useState<Dog>({
     //   name: '',
@@ -56,11 +57,9 @@ const Onboarding = () => {
         const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
         console.log(id);
         console.log(contexts === null || contexts === void 0 ? void 0 : contexts.user);
-        apiservices_1.default
-            .createDog(id, newDog)
-            // .createDog(contexts?.user, newDog)
-            .then((data) => {
+        apiservices_1.default.createDog(id, newDog).then((data) => {
             console.log(data);
+            contexts === null || contexts === void 0 ? void 0 : contexts.myDogs.push(data);
             navigate('/dashboard');
         });
     });
@@ -73,14 +72,6 @@ const Onboarding = () => {
     //     [name]: value,
     //   }));
     // };
-    function getMyDogs() {
-        apiservices_1.default
-            .getDogsofUSer(parsedId)
-            .then((data) => contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(data));
-    }
-    (0, react_1.useEffect)(() => {
-        getMyDogs();
-    }, []);
     return (<>
       <Nav_1.default />
       <div className='onboarding'>

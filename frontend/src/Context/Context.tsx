@@ -10,17 +10,17 @@ interface ContextType {
   myDogs: Dog[];
   matchedDogs: Dog[];
   authenticated: boolean;
-  selectedDog:Dog | null;
-  messages:Message[];
+  selectedDog: Dog | null;
+  messages: Message[];
   updateUser: (newUser: User | null) => void;
-  updateDog: (newDog: Dog[] | null) => void;
+  updateDogs: (newDog: Dog[] | null) => void;
   updateModal: () => void;
   updateSignUp: () => void;
-  updateMyDogs: (myDog: Dog[]) => void;
+  updateMyDogs: (myDog: Dog[]) => Dog[];
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
-  updateAuthenticated: (auth:boolean) => void;
-  updateSelectedDog: (selectedDog:Dog) => void;
+  updateAuthenticated: (auth: boolean) => void;
+  updateSelectedDog: (selectedDog: Dog) => void;
   updateMessages: (messages: Message[]) => void;
 }
 interface MyProviderProps {
@@ -36,13 +36,13 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const [myDogs, setMyDogs] = useState<Dog[]>([]);
   const [currentDog, setCurrentDog] = useState<Dog | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
-  const [selectedDog, setSelectedDog] = useState<Dog | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
+  const [selectedDog, setSelectedDog] = useState<Dog | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
   };
-  const updateDog = (newDog: Dog[] | null) => {
+  const updateDogs = (newDog: Dog[] | null) => {
     setDogs(newDog);
   };
   const updateModal = () => {
@@ -60,22 +60,22 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateCurrentDog = (dog: Dog | null) => {
     setCurrentDog(dog);
   };
-  const updateAuthenticated = (auth:boolean) => {
+  const updateAuthenticated = (auth: boolean) => {
     setAuthenticated(auth);
   };
   const updateSelectedDog = (dog: Dog) => {
-    setSelectedDog(dog)
-  }
-  const updateMessages = (messages:Message[]) => {
-    setMessages(messages)
-  }
+    setSelectedDog(dog);
+  };
+  const updateMessages = (messages: Message[]) => {
+    setMessages(messages);
+  };
   return (
     <Context.Provider
       value={{
         user,
         updateUser,
         dogs,
-        updateDog,
+        updateDogs,
         myDogs,
         updateMyDogs,
         showModal,
@@ -91,7 +91,7 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
         selectedDog,
         updateSelectedDog,
         messages,
-        updateMessages
+        updateMessages,
       }}
     >
       {children}

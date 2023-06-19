@@ -25,6 +25,12 @@ const App = () => {
       console.log('no users');
     }
   }, []);
+
+  useEffect(() => {
+    apiService.getDogs().then((data) => {
+      contexts?.updateDogs(data);
+    });
+  }, []);
   // useEffect(() => {
   //   const user = localStorage.getItem('user')
   //   const parsedUser =  JSON.parse(user)
