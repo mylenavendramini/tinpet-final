@@ -16,7 +16,8 @@ const sequelize_1 = require("sequelize");
 const associations_1 = require("./associations");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const db = new sequelize_1.Sequelize('dog', 'postgres', `${process.env.POSTGRES_DB_PASSWORD}`, {
+const dbName = process.env.JEST_WORKER_ID ? 'dog_test' : 'dog';
+const db = new sequelize_1.Sequelize(dbName, 'postgres', `${process.env.POSTGRES_DB_PASSWORD}`, {
     host: 'localhost',
     port: 5432,
     dialect: 'postgres',

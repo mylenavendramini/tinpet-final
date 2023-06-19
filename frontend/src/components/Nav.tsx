@@ -16,12 +16,9 @@ const Nav = () => {
   const myDogs = contexts?.myDogs;
 
   const getAllTheDogs = async () => {
-    apiService
-      // .getDogsofUSer(userId)
-      .getDogsofUSer(3)
-      .then((data) => {
-        contexts?.updateMyDogs(data);
-      });
+    apiService.getDogsofUSer(userId).then((data) => {
+      contexts?.updateMyDogs(data);
+    });
   };
 
   useEffect(() => {
