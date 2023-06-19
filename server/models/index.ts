@@ -187,6 +187,17 @@ async function getMessages(id: number) {
 // })();
 
 
+async function postImage(id: number){
+try{
+const dog = await Dog.findByPk(id);
+return dog;
+}catch(error){
+console.log(error);
+}
+}
+
+
+
 
 export {
   getUser,
@@ -198,4 +209,5 @@ export {
   getDogMatchesArray,
   createMessage,
   getMessages,
+  postImage
 };

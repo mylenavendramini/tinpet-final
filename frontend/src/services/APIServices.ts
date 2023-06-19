@@ -125,6 +125,30 @@ const apiService = {
       .then((res) => res.json())
       .then((parsedRes) => parsedRes);
   },
+
+
+
+
+ postImage: async (id: number, formData: FormData): Promise<void> => {
+  try {
+    const response = await fetch(`/image/${id}`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (!response.ok) {
+      throw new Error('Error uploading image');
+    }
+    console.log('Image uploaded successfully');
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    throw error;
+  }
+ },
 };
+
+
+
+
+
 
 export default apiService;

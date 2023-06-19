@@ -42,7 +42,7 @@ router.get('/dogs', getAllDogsController);
 router.get('/dogs/:id', getDogsOfUser);
 router.get('/matches/:id', getAllDogMatches);
 router.put('/dogs/:id', putLikeDogController);
-router.post("/api/upload", uploadMiddleware, postImageController);
+router.post("/image/:id", uploadMiddleware, postImageController);
 
 
 export default router;
