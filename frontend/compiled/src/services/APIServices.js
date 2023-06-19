@@ -96,10 +96,12 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    addMatch: (myDogId, otherDog) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/dogs/${myDogId}`, {
+    addMatch: (myDog, otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(myDog);
+        console.log(otherDogId);
+        return fetch(`${PORT}/dogs/${otherDogId}`, {
             method: 'PUT',
-            body: JSON.stringify(otherDog),
+            body: JSON.stringify(myDog),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },

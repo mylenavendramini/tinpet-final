@@ -25,6 +25,7 @@ const Dashboard = () => {
     const parsedId = Number(id);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const currentUser = contexts === null || contexts === void 0 ? void 0 : contexts.user;
+    const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
     const currentDogId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
     // function getUser() {
     //   apiService.getUser(parsedId).then((data) => {
@@ -40,12 +41,17 @@ const Dashboard = () => {
     //     getAllUsers();
     //   }
     // }, [user]);
-    const updateMatches = (otherDog) => __awaiter(void 0, void 0, void 0, function* () {
-        apiservices_1.default.addMatch(currentDogId, otherDog);
+    const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
+        apiservices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
+            if (theOtherDog.matches_dogs.includes(currentDog.id)) {
+                alert('Its a maaaatch');
+            }
+        });
     });
-    const swiped = (direction, otherDog) => {
-        if (direction === 'right') {
-            updateMatches(otherDog);
+    const swiped = (direction, otherDogId) => {
+        console.log(direction);
+        if (direction == 'right') {
+            updateMatches(otherDogId);
         }
         setLastDirection(direction);
     };
@@ -62,14 +68,20 @@ const Dashboard = () => {
           <ChatContainer_1.default user={currentUser}/>
           <div className='swiper-container'>
             {<div className='card-container'>
-                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog)} onCardLeftScreen={() => outOfFrame(dog.name)}>
-                    <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card'>
-                      <h3>
-                        {dog.name + ', Age: '}
-                        {dog.age}
-                      </h3>
-                    </div>
-                  </react_tinder_card_1.default>))}
+                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<>
+                    <react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog.id)} onCardLeftScreen={() => outOfFrame(dog.name)}>
+                      <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card' onClick={() => swiped('right', dog.id)}>
+                        <h3>
+                          {dog.name + ', Age: '}
+                          {dog.age}
+                        </h3>
+                      </div>
+                    </react_tinder_card_1.default>
+                    {/*<button onClick={() => swiped('right', dog)}>
+                      IOAUSHDOUISAHDUIAD
+                </button>*/}
+                  </>))}
+
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>

@@ -12,6 +12,7 @@ const Dashboard: React.FC = () => {
   const parsedId = Number(id);
   const contexts = useContext(Context);
   const currentUser = contexts?.user;
+  const currentDog = contexts?.currentDog as Dog;
   const currentDogId = contexts?.currentDog?.id as number;
 
   // function getUser() {
@@ -31,18 +32,24 @@ const Dashboard: React.FC = () => {
   //   }
   // }, [user]);
 
-  const updateMatches = async (otherDog: Dog) => {
-    apiService.addMatch(currentDogId, otherDog);
+  const updateMatches = async (otherDogId: number) => {
+    apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
+      if (theOtherDog.matches_dogs.includes(currentDog.id)) {
+        alert('Its a maaaatch');
+      }
+    });
   };
 
-  const swiped = (direction: string, otherDog: Dog) => {
-    if (direction === 'right') {
-      updateMatches(otherDog);
+  const swiped = (direction: string, otherDogId: number) => {
+    console.log(direction);
+    if (direction == 'right') {
+      updateMatches(otherDogId);
     }
+
     setLastDirection(direction);
   };
 
-  const outOfFrame = (name) => {
+  const outOfFrame = (name: string) => {
     console.log(name + ' left the screen!');
   };
 
@@ -62,23 +69,32 @@ const Dashboard: React.FC = () => {
             {
               <div className='card-container'>
                 {otherDogs?.map((dog, idx) => (
-                  <TinderCard
-                    className='swipe'
-                    key={idx}
-                    onSwipe={(direction) => swiped(direction, dog)}
-                    onCardLeftScreen={() => outOfFrame(dog.name)}
-                  >
-                    <div
-                      style={{ backgroundImage: 'url(' + dog.url + ')' }}
-                      className='card'
+                  <>
+                    <TinderCard
+                      className='swipe'
+                      key={idx}
+                      onSwipe={(direction) =>
+                        swiped(direction, dog.id as number)
+                      }
+                      onCardLeftScreen={() => outOfFrame(dog.name)}
                     >
-                      <h3>
-                        {dog.name + ', Age: '}
-                        {dog.age}
-                      </h3>
-                    </div>
-                  </TinderCard>
+                      <div
+                        style={{ backgroundImage: 'url(' + dog.url + ')' }}
+                        className='card'
+                        onClick={() => swiped('right', dog.id as number)}
+                      >
+                        <h3>
+                          {dog.name + ', Age: '}
+                          {dog.age}
+                        </h3>
+                      </div>
+                    </TinderCard>
+                    {/*<button onClick={() => swiped('right', dog)}>
+                      IOAUSHDOUISAHDUIAD
+                </button>*/}
+                  </>
                 ))}
+
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>
