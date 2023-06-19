@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import AuthModal from '../components/AuthModal';
 import Nav from '../components/Nav';
+import { useNavigate } from 'react-router';
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
 
-  const authToken = false;
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log('Click!!');
+    console.log('Create account clicked');
     setShowModal(true);
     setIsSignUp(true);
   };
@@ -26,7 +27,10 @@ const Home = () => {
             their pets, where you can make friends .... among other things...
           </p>
           <button className='btn-primary' onClick={handleClick}>
-            {authToken ? 'Sign Out' : 'Create Account'}
+            Create Account
+          </button>
+          <button className='btn-primary' onClick={() => navigate('/login')}>
+            Login
           </button>
 
           {showModal && <AuthModal />}
