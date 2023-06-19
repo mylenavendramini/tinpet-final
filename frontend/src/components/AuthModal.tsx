@@ -22,7 +22,7 @@ const AuthModal = () => {
       try {
         apiService.register(username, email, password).then((res) => {
           if (res.username) {
-            localStorage.setItem('user', JSON.stringify(res))
+            localStorage.setItem('user', JSON.stringify(res));
             navigate('/dashboard');
           } else {
             setError('Unable to login');
@@ -58,51 +58,53 @@ const AuthModal = () => {
   //   }
   // };
   return (
-    <div className='auth-modal'>
-      <div onClick={handleClick}>
-        <CloseIcon className='close-icon' />
-      </div>
-      <h2>{contexts?.isSignUp ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
-      <form onSubmit={(e) => handleRegister(e)}>
-        <input
-          type='text'
-          id='username'
-          name='username'
-          placeholder='username'
-          required={true}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type='email'
-          id='email'
-          name='email'
-          placeholder='email'
-          required={true}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          id='password'
-          name='password'
-          placeholder='password'
-          required={true}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {contexts?.isSignUp && (
+    <div className='overlay'>
+      <div className='auth-modal'>
+        <div onClick={() => navigate('/')}>
+          <CloseIcon className='close-icon' />
+        </div>
+        <h2>{contexts?.isSignUp ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
+        <form onSubmit={(e) => handleRegister(e)}>
+          <input
+            type='text'
+            id='username'
+            name='username'
+            placeholder='username'
+            required={true}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type='email'
+            id='email'
+            name='email'
+            placeholder='email'
+            required={true}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <input
             type='password'
-            id='password-check'
-            name='password-check'
-            placeholder='confirm your password'
+            id='password'
+            name='password'
+            placeholder='password'
             required={true}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
-        )}
-        <input type='submit' className='btn-secondary' />
-        <p>{error}</p>
-      </form>
-      <hr />
-      <h2>GET THE APP</h2>
+          {contexts?.isSignUp && (
+            <input
+              type='password'
+              id='password-check'
+              name='password-check'
+              placeholder='confirm your password'
+              required={true}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          )}
+          <input type='submit' className='btn-secondary' />
+          <p>{error}</p>
+        </form>
+        <hr />
+        <h2>GET THE APP</h2>
+      </div>
     </div>
   );
 };

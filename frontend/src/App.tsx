@@ -7,6 +7,7 @@ import Login from './components/Login';
 import { useEffect, useContext } from 'react';
 import { Context } from './Context/Context';
 import apiService from './services/apiservices';
+import AuthModal from './components/AuthModal';
 
 const App = () => {
   const contexts = useContext(Context);
@@ -42,6 +43,7 @@ const App = () => {
           {<Route path='/dashboard' element={<Dashboard />} />}
           {<Route path='/onboarding/:id' element={<Onboarding />} />}
           {<Route path='/login' element={<Login />} />}
+          {<Route path='/register' element={<AuthModal />} />}
         </Routes>
       </BrowserRouter>
     </>

@@ -9,9 +9,9 @@ const Login = () => {
   const [error, setError] = useState('');
   const contexts = useContext(Context);
   const navigate = useNavigate();
-  const handleClick = () => {
-    contexts?.updateModal();
-  };
+  // const handleClick = () => {
+  //   contexts?.updateModal();
+  // };
   function login(e: FormEvent) {
     e.preventDefault();
     if (!password || !email) {
@@ -36,30 +36,32 @@ const Login = () => {
   }
 
   return (
-    <div className='auth-modal'>
-      <div onClick={handleClick}>
-        <CloseIcon className='close-icon' />
+    <div className='overlay'>
+      <div className='auth-modal'>
+        <div onClick={() => navigate('/')}>
+          <CloseIcon className='close-icon' />
+        </div>
+        <h2>LOG IN</h2>
+        <form onSubmit={(e) => login(e)}>
+          <input
+            type='email'
+            id='email'
+            name='email'
+            placeholder='email'
+            required={true}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type='password'
+            id='password'
+            name='password'
+            placeholder='password'
+            required={true}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input type='submit' className='btn-secondary' />
+        </form>
       </div>
-      <h2>LOG IN</h2>
-      <form onSubmit={(e) => login(e)}>
-        <input
-          type='email'
-          id='email'
-          name='email'
-          placeholder='email'
-          required={true}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          id='password'
-          name='password'
-          placeholder='password'
-          required={true}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input type='submit' className='btn-secondary' />
-      </form>
     </div>
   );
 };

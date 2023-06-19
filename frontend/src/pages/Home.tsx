@@ -26,7 +26,7 @@ const Home = () => {
             you can contact other people who are also looking for friends for
             their pets, where you can make friends .... among other things...
           </p>
-          <button className='btn-primary' onClick={handleClick}>
+          <button className='btn-primary' onClick={() => navigate('/register')}>
             Create Account
           </button>
           <button className='btn-primary' onClick={() => navigate('/login')}>
