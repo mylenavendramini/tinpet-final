@@ -11,7 +11,7 @@ const Onboarding = () => {
   const { id } = useParams();
   const parsedId = Number(id);
 
-  const [cookies, setCookies, removeCookies] = useCookies(['user']);
+  // const [cookies, setCookies, removeCookies] = useCookies(['user']);
   const [formData, setFormData] = useState<Dog>({
     name: '',
     age: 0,

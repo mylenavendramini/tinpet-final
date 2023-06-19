@@ -1,12 +1,11 @@
 export type User = {
   email: string;
   password: string;
-  id: number;
+  id?: number;
 };
 
 export type Dog = {
-  // id?: number; changed it cause MatchedDogs is complaining
-  id: number;
+  id?: number;
   name: string;
   age: number;
   gender: string;
