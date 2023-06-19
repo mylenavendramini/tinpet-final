@@ -11,7 +11,7 @@ const Nav = () => {
     setOpen(!open);
   };
   const contexts = useContext(Context);
-  console.log(contexts?.user);
+  // console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
   const myDogs = contexts?.myDogs;
 

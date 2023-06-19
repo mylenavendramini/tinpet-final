@@ -142,6 +142,7 @@ const apiService = {
     if (!response.ok) {
       throw new Error('Error uploading image');
     }
+    console.log(formData, 'image service')
     console.log('Image uploaded successfully');
   } catch (error) {
     console.error('Error uploading image:', error);

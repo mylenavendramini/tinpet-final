@@ -25,11 +25,11 @@ const Dashboard: React.FC = () => {
   }, []);
 
 
-  useEffect(() => {
-    if (user) {
-      getAllUsers();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     getAllUsers();
+  //   }
+  // }, [user]);
 
   // const updateMatches = async (matchedUserId) => {
   //   try {

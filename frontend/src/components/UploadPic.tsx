@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useDropzone, FileWithPath , DropzoneRootProps, DropzoneInputProps, DropzoneOptions } from 'react-dropzone';
+import { useDropzone, FileWithPath } from 'react-dropzone';
 import apiService from '../services/APIServices';
+
 
 const UploadPic = () => {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
-
- 
 
 
   const onDrop = async (acceptedFiles: FileWithPath[]) =>{

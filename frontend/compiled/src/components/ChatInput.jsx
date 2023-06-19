@@ -26,11 +26,12 @@ const ChatInput = () => {
     // const clickedUserId = clickedUser?.user_id;
     const addMessage = () => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
-        const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
+        const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
+        // const sender = contexts?.currentDog?.name as string
         const newMessage = {
             content: message,
             sender: id,
-            receiver: (_b = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _b === void 0 ? void 0 : _b.id,
+            receiver: (_b = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _b === void 0 ? void 0 : _b.name,
         };
         APIServices_1.default.sendMessage(id, newMessage).then((res) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateMessages([...contexts.messages, res]);

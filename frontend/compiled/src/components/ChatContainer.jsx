@@ -3,9 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
+const MatchesDisplay_1 = __importDefault(require("./MatchesDisplay"));
 const ChatHeader_1 = __importDefault(require("./ChatHeader"));
 const react_1 = require("react");
 const Context_1 = require("../Context/Context");
@@ -37,10 +36,9 @@ const ChatContainer = ({ user }) => {
         </button>
       </div>
 
-      {/* {!clickedDog && (
-          {/*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/}
-         {/*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/}
-      
+      {!clickedDog && (<MatchesDisplay_1.default />
+        //  <MatchesDisplay matches={contexts?.matchedDogs as Dog[]} setClickedDog={contexts?.updateSelectedDog as Function} />
+        )}
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
       {clickedDog && <ChatDisplay_1.default />}
@@ -48,3 +46,6 @@ const ChatContainer = ({ user }) => {
     </div>);
 };
 exports.default = ChatContainer;
+{
+    /*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/
+}

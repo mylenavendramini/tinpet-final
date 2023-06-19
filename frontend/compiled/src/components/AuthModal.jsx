@@ -12,6 +12,7 @@ const AuthModal = () => {
     const [email, setEmail] = (0, react_1.useState)('');
     const [password, setPassword] = (0, react_1.useState)('');
     const [confirmPassword, setConfirmPassword] = (0, react_1.useState)('');
+    const [username, setUsername] = (0, react_1.useState)('');
     const [error, setError] = (0, react_1.useState)('');
     // const [cookies, setCookies, removeCookies] = useCookies(['user']);
     // const {showModal, updateModal, isSignUp, updateSignUp} = useContext(Context)
@@ -27,7 +28,7 @@ const AuthModal = () => {
         }
         else {
             try {
-                APIServices_1.default.register(email, password).then((res) => {
+                APIServices_1.default.register(username, email, password).then((res) => {
                     if (res.username) {
                         navigate('/dashboard');
                     }
@@ -71,6 +72,7 @@ const AuthModal = () => {
       </div>
       <h2>{(contexts === null || contexts === void 0 ? void 0 : contexts.isSignUp) ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
       <form onSubmit={(e) => handleRegister(e)}>
+        <input type='text' id='username' name='username' placeholder='username' required={true} onChange={(e) => setUsername(e.target.value)}/>
         <input type='email' id='email' name='email' placeholder='email' required={true} onChange={(e) => setEmail(e.target.value)}/>
         <input type='password' id='password' name='password' placeholder='password' required={true} onChange={(e) => setPassword(e.target.value)}/>
         {(contexts === null || contexts === void 0 ? void 0 : contexts.isSignUp) && (<input type='password' id='password-check' name='password-check' placeholder='confirm your password' required={true} onChange={(e) => setConfirmPassword(e.target.value)}/>)}

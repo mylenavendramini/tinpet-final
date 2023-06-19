@@ -25,6 +25,7 @@ const Login = () => {
         else {
             try {
                 APIServices_1.default.login(email, password).then((res) => {
+                    console.log(res);
                     if (res.username) {
                         contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated();
                         contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(res.username);
