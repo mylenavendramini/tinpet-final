@@ -14,8 +14,8 @@ export class Message extends Model<
 > {
   declare id?: CreationOptional<number>
   declare content: string
-  declare sender: number
-  declare receiver: number
+  declare sender: string
+  declare receiver: string
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
   
@@ -33,11 +33,11 @@ export class Message extends Model<
         unique: true,
       },
       sender: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       receiver: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        type: DataTypes.STRING,
         allowNull: false
       },
       createdAt: {

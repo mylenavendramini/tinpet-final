@@ -16,15 +16,17 @@ const sequelize_1 = require("sequelize");
 const associations_1 = require("./associations");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const db = new sequelize_1.Sequelize('dog', 'postgres', `${process.env.POSTGRES_DB_PASSWORD}`, {
+const db = new sequelize_1.Sequelize('dog', 'postgres', 'youlittleshit', 
+// `${process.env.POSTGRES_DB_PASSWORD}`,
+{
     host: 'localhost',
     port: 5432,
     dialect: 'postgres',
 });
+const { Dog, User } = (0, associations_1.initModels)(db);
 (function authenticate() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            (0, associations_1.initModels)(db);
             yield db.sync();
             yield db.authenticate();
             console.log('Connection has been established successfully.');
@@ -34,4 +36,4 @@ const db = new sequelize_1.Sequelize('dog', 'postgres', `${process.env.POSTGRES_
         }
     });
 })();
-exports.default = db;
+exports.default = { db, Dog, User };

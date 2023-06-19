@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import ChatDisplay from './ChatDisplay';
 import MatchesDisplay from './MatchesDisplay';
 import ChatHeader from './ChatHeader';
@@ -42,8 +40,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
       </div>
 
       {!clickedDog && (
-        <MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />
-        /*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/
+        <MatchesDisplay />
+        //  <MatchesDisplay matches={contexts?.matchedDogs as Dog[]} setClickedDog={contexts?.updateSelectedDog as Function} />
       )}
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
@@ -54,3 +52,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
 };
 
 export default ChatContainer;
+
+{
+  /*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/
+}

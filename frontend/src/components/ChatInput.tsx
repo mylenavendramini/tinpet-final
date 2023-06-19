@@ -13,11 +13,12 @@ const ChatInput = () => {
   // const clickedUserId = clickedUser?.user_id;
 
   const addMessage = async () => {
-    const id = contexts?.user?.id as number
+    const id = contexts?.currentDog?.id as number
+    // const sender = contexts?.currentDog?.name as string
     const newMessage = {
       content: message,
       sender: id,
-      receiver: contexts?.selectedDog?.id as number,
+      receiver: contexts?.selectedDog?.name as string,
     };
     apiService.sendMessage(id, newMessage).then((res) => {
       contexts?.updateMessages([...contexts.messages, res])
