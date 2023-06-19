@@ -1,13 +1,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { useContext } from 'react';
+import { Context } from './Context/Context';
 
-//TODO:
+interface Match {
+  user_id: string;
+  url: string;
+  name: string;
+}
 
-const MatchesDisplay = ({ matches, setClickedUser }) => {
-  const [matchedProfiles, setMatchedProfiles] = useState(null);
+interface MatchesDisplayProps {
+  matches: Match[];
+  setClickedUser: (user: Match) => void;
+}
+
+const MatchesDisplay: React.FC<MatchesDisplayProps> = ({ matches, setClickedUser }) => {
+  const context = useContext(Context);
+  const dogs = context?.dogs;
+  const updateDog = context?.updateDog;
+  const dogName = dogs?.map((dog) => dog.name);
+  const dogUrl = dogs?.map((dog) => dog.url);
+
   console.log(matches);
 
   const getMatches = async () => {
@@ -22,6 +38,7 @@ const MatchesDisplay = ({ matches, setClickedUser }) => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getMatches();
   }, [matches]);

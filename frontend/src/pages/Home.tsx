@@ -33,14 +33,11 @@ const Home = () => {
           </button>
 
           {showModal && (
-            <AuthModal
-              setShowModal={setShowModal}
-              isSignUp={isSignUp}
-            />
-          )}
-        </div>
-      </div>
-    </>
+        <AuthModal setShowModal={setShowModal} isSignUp={isSignUp} />
+      )}
+    </div>
+  </div>
+</>
   );
 };
 

@@ -1,7 +1,7 @@
 export type User = {
   email : string ;
   password : string ;
-  id: number
+  id: number;
 }
 
 export type Dog = {
