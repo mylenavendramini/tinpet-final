@@ -1,42 +1,34 @@
-/* eslint-disable react/prop-types */
-import { useState } from 'react';
-import axios from 'axios';
+import { useState,useContext } from 'react';
+import apiService from '../services/APIServices';
+import { Context } from '../Context/Context';
 
-//TODO:
-
-const ChatInput = ({
-  user,
-  clickedUser,
-  getUserMessages,
-  getClickedUsersMessages,
-}) => {
-  const [textArea, setTextArea] = useState('');
-  const userId = user?.user_id;
-  const clickedUserId = clickedUser?.user_id;
+const ChatInput = () => {
+  // user={user} i think must be changed to current dog
+  // clickedUser={clickedUSer} must be changed to clicked/selected dog to message
+  // getUserMessages={getUsersMessages}
+  // getClickedUsersMessages={getClickedUsersMessages}
+  const [message, setMessage] = useState('');
+  const contexts = useContext(Context);
+  // const userId = user?.user_id;
+  // const clickedUserId = clickedUser?.user_id;
 
   const addMessage = async () => {
-    const message = {
-      timestamp: new Date().toISOString(),
-      from_userId: userId,
-      to_userId: clickedUserId,
-      message: textArea,
+    const id = contexts?.user?.id as number
+    const newMessage = {
+      content: message,
+      sender: id,
+      receiver: contexts?.selectedDog?.id as number,
     };
-
-    try {
-      await axios.post('http://localhost:3000/message', { message });
-      getUserMessages();
-      getClickedUsersMessages();
-      setTextArea('');
-    } catch (error) {
-      console.log(error);
-    }
+    apiService.sendMessage(id, newMessage).then((res) => {
+      contexts?.updateMessages([...contexts.messages, res])
+    })
   };
 
   return (
     <div className='chat-input'>
       <textarea
-        value={textArea}
-        onChange={(e) => setTextArea(e.target.value)}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       ></textarea>
       <button className='btn-secondary' onClick={addMessage}>
         Submit

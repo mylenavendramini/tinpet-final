@@ -3,6 +3,7 @@ import {
   createDog,
   putAndCheckMatch,
   getDogMatchesArray,
+  getDogsByUserId,
 } from '../models/index';
 import { Context } from 'koa';
 import { IDog } from '../models/Interfaces';
@@ -10,6 +11,20 @@ import { IDog } from '../models/Interfaces';
 async function getAllDogsController(ctx: Context) {
   try {
     const dogs = await getAllDogs();
+    ctx.body = dogs;
+  } catch (error) {
+    console.log(error);
+    ctx.status = 500;
+  }
+}
+
+async function getDogsOfUser(ctx: Context) {
+  console.log('working');
+  const user_id = ctx.params.id;
+  console.log(user_id);
+  try {
+    const dogs = await getDogsByUserId(user_id);
+    console.log({ dogs });
     ctx.body = dogs;
   } catch (error) {
     console.log(error);
@@ -57,6 +72,7 @@ async function getAllDogMatches(ctx: Context) {
 
 export {
   getAllDogsController,
+  getDogsOfUser,
   createDogController,
   putLikeDogController,
   getAllDogMatches,

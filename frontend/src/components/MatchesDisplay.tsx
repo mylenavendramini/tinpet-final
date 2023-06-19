@@ -1,64 +1,76 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import { Context } from './Context/Context';
-
-interface Match {
-  user_id: string;
-  url: string;
-  name: string;
-}
+import { Context } from '../Context/Context';
+import apiService from '../services/APIServices';
+import { Dog } from '../types/Types';
 
 interface MatchesDisplayProps {
-  matches: Match[];
-  setClickedUser: (user: Match) => void;
+  matches: Dog[];
+  // setClickedDog: Function;
+  setClickedDog: (dog: Dog) => void;
 }
-
-const MatchesDisplay: React.FC<MatchesDisplayProps> = ({ matches, setClickedUser }) => {
+const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
+  matches,
+  setClickedDog,
+}) => {
+  const [matchedIds, setMatchedIds] = useState<number[]>([]);
+  const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
+  const [matchedDog, setMatchedDog] = useState<Dog>();
   const context = useContext(Context);
-  const dogs = context?.dogs;
   const updateDog = context?.updateDog;
-  const dogName = dogs?.map((dog) => dog.name);
-  const dogUrl = dogs?.map((dog) => dog.url);
+  const currentDog = context?.currentDog;
+  const myDogs = context?.myDogs;
+  const dogName = myDogs?.map((dog) => dog.name);
+  const dogUrl = myDogs?.map((dog) => dog.url);
+  const currentDogId = Number(currentDog?.id);
 
-  console.log(matches);
+  console.log({ matches });
 
-  const getMatches = async () => {
-    const matchedUserIds = matches.map(({ user_id }) => user_id);
+  const getDogMatchesIds = async () => {
+    const matchesDogs = apiService
+      .getMatches(currentDogId)
+      .then((data) => {
+        setMatchedIds(data);
+      })
+      .catch((error) => console.log(error));
+  };
 
-    try {
-      const response = await axios.get('http://localhost:3000/matchedusers', {
-        params: { userIds: JSON.stringify(matchedUserIds) },
+  const getDogMatches = () => {
+    apiService.getDogs().then((data) => {
+      console.log(data);
+      // TODO:
+      // get only the dogs that the id is === the ids matchedProfiles
+      const matchedDogs: Dog[] = [];
+      matchedIds.forEach((matchId) => {
+        data.filter((dog) => {
+          if (dog.id === matchId) matchedDogs.push(dog);
+        });
       });
-      setMatchedProfiles(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+      setMatchedProfiles(matchedDogs);
+    });
   };
 
   useEffect(() => {
-    getMatches();
+    getDogMatchesIds();
+    getDogMatches();
   }, [matches]);
 
   return (
     <div className='matches-display'>
-      {matchedProfiles?.map((match) => (
+      {matchedProfiles?.map((matchProfile, idx) => (
         <div
-          key={match.user_id}
+          key={idx}
           className='match-card'
-          onClick={() => setClickedUser(match)}
+          onClick={() => setClickedDog(matchProfile)}
         >
           <div className='img-container'>
-            <img src={match?.url} alt='matched photo' />
+            <img src={matchProfile?.url} alt='matched photo' />
           </div>
-          <h3>{match?.name}</h3>
+          <h3>{matchProfile?.name}</h3>
         </div>
       ))}
     </div>
   );
 };
-
 export default MatchesDisplay;

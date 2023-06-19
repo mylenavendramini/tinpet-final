@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
+exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Dog_1 = require("./Dog");
 const User_1 = require("./User");
 function getUser(userId) {
@@ -73,6 +73,7 @@ function createDog(dog, userId) {
             const user = yield User_1.User.findOne({ where: { id: user_id } });
             user === null || user === void 0 ? void 0 : user.addDog(newDog);
             console.log(newDog, 'model');
+            console.log(user === null || user === void 0 ? void 0 : user.dogs);
             return newDog;
         }
         catch (error) {
@@ -81,6 +82,32 @@ function createDog(dog, userId) {
     });
 }
 exports.createDog = createDog;
+function getDogsByUserId(userId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const user = yield User_1.User.findOne({
+                where: { id: userId },
+                include: { model: Dog_1.Dog, as: 'dogs' },
+            });
+            console.log({ user });
+            console.log(user === null || user === void 0 ? void 0 : user.dogs);
+            if (user && user.dogs) {
+                const dogs = user.dogs;
+                console.log(dogs, 'model');
+                return dogs;
+            }
+            else {
+                console.log('Dogs not found');
+                return undefined;
+            }
+        }
+        catch (error) {
+            console.log(error);
+            return undefined;
+        }
+    });
+}
+exports.getDogsByUserId = getDogsByUserId;
 function filterDogArray(array, myDogId, theOtherDogId) {
     return __awaiter(this, void 0, void 0, function* () {
         const filteredDog = array.filter((el) => el !== theOtherDogId);

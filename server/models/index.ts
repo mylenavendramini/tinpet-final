@@ -1,6 +1,7 @@
 import { Dog } from './Dog';
 import { IUser, IDog } from './Interfaces';
 import { User } from './User';
+import { Message } from './Messages';
 import db from './db';
 
 async function getUser(userId: number): Promise<User | null | undefined> {
@@ -54,9 +55,32 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
     const user = await User.findOne({ where: { id: user_id } });
     user?.addDog(newDog);
     console.log(newDog, 'model');
+    console.log(user?.dogs);
     return newDog;
   } catch (error) {
     console.log(error);
+  }
+}
+
+async function getDogsByUserId(userId: number): Promise<Dog[] | undefined> {
+  try {
+    const user = await User.findOne({
+      where: { id: userId },
+      include: { model: Dog, as: 'dogs' },
+    });
+    console.log({ user });
+    console.log(user?.dogs);
+    if (user && user.dogs) {
+      const dogs = user.dogs;
+      console.log(dogs, 'model');
+      return dogs;
+    } else {
+      console.log('Dogs not found');
+      return undefined;
+    }
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
 }
 
@@ -135,15 +159,43 @@ async function getDogMatchesArray(dogId: number) {
   }
 }
 
+async function createMessage(body: {}) {
+  const { content, sender, receiver } = body as Message
+  try {
+    const newMessage = await Message.create({
+      content,
+      sender,
+      receiver
+    })
+    return newMessage
+  } catch (e) {
+    console.log('DAWG this function is simple are you that stupid not to make it work???')
+  }
+}
+
+async function getMessages(id: number) {
+  try {
+    const messages = Message.findAll({ where: { id } })
+    return messages
+  } catch (e) {
+    console.log('Yo open your eyes Im sure you can find those messages')
+  }
+}
+
 // (async () => {
 //   await db.sync();
 // })();
+
+
 
 export {
   getUser,
   createUser,
   createDog,
   getAllDogs,
+  getDogsByUserId,
   putAndCheckMatch,
   getDogMatchesArray,
+  createMessage,
+  getMessages,
 };

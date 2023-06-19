@@ -1,40 +1,37 @@
 /* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
-import { useState } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import apiService from '../services/APIServices';
+import { Dog } from '../types/Types';
 
 const Onboarding = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const parsedId = Number(id);
 
-  const [cookies, setCookies, removeCookies] = useCookies(['user']);
-  const [formData, setFormData] = useState({
-    user_id: cookies.UserId,
+  // const [cookies, setCookies, removeCookies] = useCookies(['user']);
+  const [formData, setFormData] = useState<Dog>({
     name: '',
-    age: '',
+    age: 0,
     gender: '',
     url: '',
     about: '',
-    matches: [],
+    liked_dog: [],
+    matches_dogs: [],
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log('Submited');
-    try {
-      const response = await axios.put('http://localhost:3000/user', {
-        formData,
-      });
-      const success = response.status === 200;
-      if (success) navigate('/dashboard');
-    } catch (err) {
-      console.log(err);
-    }
+    apiService
+      .createDog(parsedId, formData)
+      .then((data) => navigate('/dashboard'));
   };
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e?.target.value;
     const name = e.target.name;
 
     setFormData((prevState) => ({
@@ -43,14 +40,19 @@ const Onboarding = () => {
     }));
   };
 
+  function getMyDogs() {
+    apiService.getDogsofUSer(parsedId).then((data) => setMyDogs(data));
+  }
+
+  useEffect(() => {
+    getMyDogs();
+  }, []);
+
   return (
     <>
-      <Nav
-        setShowModal={() => {}}
-        showModal={false}
-      />
+      <Nav />
       <div className='onboarding'>
-        <h2>CREATE ACCOUNT</h2>
+        <h2>Create a dog</h2>
 
         <form onSubmit={handleSubmit}>
           <section>
@@ -109,10 +111,7 @@ const Onboarding = () => {
               value={formData.about}
               onChange={handleChange}
             />
-            <input
-              type='submit'
-              value='Submit'
-            />
+            <input type='submit' value='Submit' />
           </section>
 
           <section>
@@ -125,12 +124,7 @@ const Onboarding = () => {
               onChange={handleChange}
             />
             <div className='photo-container'>
-              {formData.url && (
-                <img
-                  src={formData.url}
-                  alt='profile picture'
-                />
-              )}
+              {formData.url && <img src={formData.url} alt='profile picture' />}
             </div>
           </section>
         </form>

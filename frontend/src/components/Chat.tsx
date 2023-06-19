@@ -1,19 +1,23 @@
-/* eslint-disable react/prop-types */
+import { useState, useEffect, useContext } from 'react';
+import apiService from '../services/APIServices';
+import { Context } from '../Context/Context';
 
-//TODO:
-const Chat = ({ descendingOrderMessages }) => {
+
+const Chat = () => {
+  const contexts = useContext(Context);
+  
   return (
     <>
       <div className='chat-display'>
-        {descendingOrderMessages.map((message, _index) => (
-          <div key={_index}>
+        {contexts?.messages.map((message) => (
+          <div key={message.id}>
             <div className='chat-message-header'>
               <div className='img-container'>
-                <img src={message.img} alt={message.name + ' profile'} />
+                <img src={contexts?.selectedDog?.url} alt={message.receiver + ' profile'} /> {/*contexts?.selectedDog?.url} is subject to change */}
               </div>
-              <p>{message.name}</p>
+              <p>{message.receiver}</p>
             </div>
-            <p>{message.message}</p>
+            <p>{message.content}</p>
           </div>
         ))}
       </div>
