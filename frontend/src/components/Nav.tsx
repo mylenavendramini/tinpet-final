@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { User } from '../types/Types';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
@@ -17,22 +18,32 @@ const Nav = () => {
 
   const getAllTheDogs = async () => {
     apiService
-      // .getDogsofUSer(userId)
-      .getDogsofUSer(3)
+      .getDogsofUSer(userId)
       .then((data) => {
         contexts?.updateMyDogs(data);
       });
   };
 
   useEffect(() => {
-    getAllTheDogs();
+    const user = localStorage.getItem('user')as unknown as User
+    console.log(JSON.parse(user))
+    if(user) {
+      contexts?.updateAuthenticated();
+      contexts?.updateUser(user)
+      getAllTheDogs();
+    } else {
+      console.log('no users')
+    }
+    
   }, []);
 
   const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
     contexts?.updateAuthenticated();
+    localStorage.clear()
   };
+  console.log(contexts?.user!.id)
 
   const login = () => {
     navigate('/login');
@@ -43,6 +54,8 @@ const Nav = () => {
     contexts?.updateCurrentDog(dog);
     navigate('/dashboard');
   };
+
+  console.log(contexts?.authenticated )
 
   // const authToken = true;
   return (

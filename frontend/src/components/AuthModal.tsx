@@ -9,8 +9,6 @@ const AuthModal = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
-  // const [cookies, setCookies, removeCookies] = useCookies(['user']);
-  // const {showModal, updateModal, isSignUp, updateSignUp} = useContext(Context)
   const contexts = useContext(Context);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -24,13 +22,14 @@ const AuthModal = () => {
       try {
         apiService.register(username, email, password).then((res) => {
           if (res.username) {
+            localStorage.setItem('user', JSON.stringify(res))
             navigate('/dashboard');
           } else {
             setError('Unable to login');
           }
         });
       } catch (e) {
-        console.log('OMEGA LUL your function failed');
+        console.log('OMEGA LUL your authentication failed');
       }
     }
   }

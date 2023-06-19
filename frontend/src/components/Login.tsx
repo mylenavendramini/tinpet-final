@@ -23,6 +23,7 @@ const Login = () => {
           if (res.username) {
             contexts?.updateAuthenticated();
             contexts?.updateUser(res.username);
+            localStorage.setItem('user', JSON.stringify(res))
             navigate('/dashboard');
           } else {
             setError('Unable to login');

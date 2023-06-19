@@ -6,15 +6,17 @@ import { Context } from '../Context/Context';
 
 const ChatHeader: React.FC = () => {
   // const [cookies, setCookie, removeCookie] = useCookies(['user']);
-  const context = useContext(Context);
-  const dogs = context?.dogs;
-  const updateDog = context?.updateDog;
+  const contexts = useContext(Context);
+  const dogs = contexts?.dogs;
+  const updateDog = contexts?.updateDog;
   const dogName = dogs?.map((dog) => dog.name);
   const dogUrl = dogs?.map((dog) => dog.url);
   const navigate = useNavigate();
   const logout = (): void => {
-    // removeCookie('UserId', cookies.UserId);
-    // removeCookie('AuthToken', cookies.Authtoken);
+    contexts?.updateModal();
+    contexts?.updateSignUp();
+    contexts?.updateAuthenticated();
+    localStorage.clear()
     navigate('/');
   };
   return (

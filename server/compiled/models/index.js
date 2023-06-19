@@ -40,7 +40,7 @@ function login(body) {
             }
         }
         catch (error) {
-            console.log('Well thats funny cause something went wrong.');
+            console.log('Well thats funny cause something went wrong while logging in.');
         }
     });
 }
