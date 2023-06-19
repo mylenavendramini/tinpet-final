@@ -33,7 +33,8 @@ exports.getUser = getUser;
 function login(body) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield User.findOne({ where: { id: body.id } });
+            console.log(body);
+            const user = yield User.findOne({ where: { email: body.email } });
             if ((user === null || user === void 0 ? void 0 : user.password) == body.password) {
                 return user;
             }
@@ -198,7 +199,7 @@ function createMessage(body) {
             const newMessage = yield Messages_1.Message.create({
                 content,
                 sender,
-                receiver
+                receiver,
             });
             return newMessage;
         }

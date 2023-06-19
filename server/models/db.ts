@@ -6,8 +6,7 @@ dotenv.config();
 const db = new Sequelize(
   'dog',
   'postgres',
-  'youlittleshit',
-  // `${process.env.POSTGRES_DB_PASSWORD}`,
+  `${process.env.POSTGRES_DB_PASSWORD}`,
   {
     host: 'localhost',
     port: 5432,
@@ -15,7 +14,7 @@ const db = new Sequelize(
   }
 );
 
-const { Dog, User} = initModels(db);
+const { Dog, User } = initModels(db);
 
 (async function authenticate() {
   try {
@@ -27,4 +26,4 @@ const { Dog, User} = initModels(db);
   }
 })();
 
-export default {db, Dog, User};
+export default { db, Dog, User };

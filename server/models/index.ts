@@ -3,10 +3,10 @@ import { IUser, IDog } from './Interfaces';
 // import { User } from './User';
 import { Message } from './Messages';
 
-import db from './db'
+import db from './db';
 
-const User =db.User
-const Dog = db.Dog
+const User = db.User;
+const Dog = db.Dog;
 
 async function getUser(userId: number): Promise<User | null | undefined> {
   try {
@@ -17,14 +17,15 @@ async function getUser(userId: number): Promise<User | null | undefined> {
   }
 }
 
-async function login(body:IUser) {
+async function login(body: IUser) {
   try {
-    const user = await User.findOne({ where: { id: body.id } });
-    if(user?.password == body.password) {
-      return user
+    console.log(body);
+    const user = await User.findOne({ where: { email: body.email } });
+    if (user?.password == body.password) {
+      return user;
     }
-  } catch(error) {
-    console.log('Well thats funny cause something went wrong.')
+  } catch (error) {
+    console.log('Well thats funny cause something went wrong.');
   }
 }
 
@@ -175,26 +176,28 @@ async function getDogMatchesArray(dogId: number) {
   }
 }
 
-async function createMessage(body:{}) {
-  const {content, sender, receiver} = body as Message
-  try{
+async function createMessage(body: {}) {
+  const { content, sender, receiver } = body as Message;
+  try {
     const newMessage = await Message.create({
       content,
       sender,
-      receiver
-    })
-    return newMessage
-  } catch(e) {
-    console.log('DAWG this function is simple are you that stupid not to make it work???')
+      receiver,
+    });
+    return newMessage;
+  } catch (e) {
+    console.log(
+      'DAWG this function is simple are you that stupid not to make it work???'
+    );
   }
 }
 
-async function getMessages(id:number) {
-  try{
-    const messages = Message.findAll({ where: { sender:id }} )
-    return messages
-  } catch(e) {
-    console.log('Yo open your eyes Im sure you can find those messages')
+async function getMessages(id: number) {
+  try {
+    const messages = Message.findAll({ where: { sender: id } });
+    return messages;
+  } catch (e) {
+    console.log('Yo open your eyes Im sure you can find those messages');
   }
 }
 
@@ -212,5 +215,5 @@ export {
   getDogMatchesArray,
   createMessage,
   getMessages,
-  login
+  login,
 };
