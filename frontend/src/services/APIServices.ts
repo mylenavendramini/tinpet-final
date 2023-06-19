@@ -103,7 +103,7 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  sendMessage: (id:number, body:Message): Promise<Message> => {
+  sendMessage: async (id: number, body: Message): Promise<Message> => {
     return fetch(`${PORT}/messages/${id}`, {
       method: 'POST',
       body: JSON.stringify(body),
@@ -116,7 +116,7 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getMessages: (id:number): Promise<Message[]> => {
+  getMessages: async (id: number): Promise<Message[]> => {
     return fetch(`${PORT}/messages/${id}`, {
       method: 'GET',
       headers: {
@@ -126,7 +126,7 @@ const apiService = {
     })
       .then((res) => res.json())
       .then((parsedRes) => parsedRes);
-  }
+  },
 };
 
 export default apiService;
