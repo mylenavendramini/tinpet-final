@@ -31,7 +31,7 @@ const Onboarding = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submited');
+    console.log('Submitted');
     const newDog = {
       name,
       age,
@@ -41,11 +41,16 @@ const Onboarding = () => {
       liked_dog: [],
       matches_dogs: [],
     };
-    console.log({ newDog });
+    // console.log({ newDog });
+    const id = contexts?.user?.id as number
+    console.log(id);
+    console.log(contexts?.user);
     apiService
-      // .createDog(parsedId, newDog)
-      .createDog(1, newDog)
-      .then((data) => navigate('/dashboard'));
+      .createDog(id , newDog)
+      // .createDog(contexts?.user, newDog)
+      .then((data) => {
+        console.log(data)
+        navigate('/dashboard')});
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

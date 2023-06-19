@@ -21,7 +21,7 @@ const Login = () => {
         apiService.login(email, password).then((res) => {
           console.log(res);
           if (res.username) {
-            contexts?.updateAuthenticated();
+            contexts?.updateAuthenticated(true);
             contexts?.updateUser(res.username);
             localStorage.setItem('user', JSON.stringify(res))
             navigate('/dashboard');
@@ -30,7 +30,7 @@ const Login = () => {
           }
         });
       } catch (e) {
-        console.log('OMEGA LUL your function failed');
+        console.log('OMEGA LUL your login function failed');
       }
     }
   }

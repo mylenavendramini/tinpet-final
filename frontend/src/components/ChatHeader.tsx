@@ -15,7 +15,7 @@ const ChatHeader: React.FC = () => {
   const logout = (): void => {
     contexts?.updateModal();
     contexts?.updateSignUp();
-    contexts?.updateAuthenticated();
+    contexts?.updateAuthenticated(false);
     localStorage.clear()
     navigate('/');
   };
@@ -23,9 +23,7 @@ const ChatHeader: React.FC = () => {
     <div className='chat-container-header'>
       <div className='profile'>
         <div className='img-container'>
-          {/* something tells me this will not work - Harold
-          img src takes in a string and would be an array of string */}
-          <img src={`${dogUrl}`} alt='user photo' />
+          <img src={contexts?.currentDog?.url} alt='user photo' />
         </div>
         <h3>{dogName}</h3>
       </div>

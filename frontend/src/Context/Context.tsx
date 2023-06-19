@@ -19,7 +19,7 @@ interface ContextType {
   updateMyDogs: (myDog: Dog[]) => void;
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
-  updateAuthenticated: () => void;
+  updateAuthenticated: (auth:boolean) => void;
   updateSelectedDog: (selectedDog:Dog) => void;
   updateMessages: (messages: Message[]) => void;
 }
@@ -60,8 +60,8 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateCurrentDog = (dog: Dog | null) => {
     setCurrentDog(dog);
   };
-  const updateAuthenticated = () => {
-    setAuthenticated(!authenticated);
+  const updateAuthenticated = (auth:boolean) => {
+    setAuthenticated(auth);
   };
   const updateSelectedDog = (dog: Dog) => {
     setSelectedDog(dog)

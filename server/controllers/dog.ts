@@ -37,6 +37,7 @@ async function createDogController(ctx: Context) {
   const user_id = ctx.params.id;
   try {
     const newDog = await createDog(dog, user_id);
+    ctx.body = newDog;
     console.log(newDog, 'controller');
   } catch (e) {
     console.log(e);

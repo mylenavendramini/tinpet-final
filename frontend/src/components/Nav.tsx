@@ -24,12 +24,11 @@ const Nav = () => {
       });
   };
 
+  console.log(contexts?.user, 'NAV')
+
   useEffect(() => {
-    const user = localStorage.getItem('user')as unknown as User
-    console.log(JSON.parse(user))
-    if(user) {
-      contexts?.updateAuthenticated();
-      contexts?.updateUser(user)
+    if(contexts?.authenticated) {
+      console.log(contexts?.user)
       getAllTheDogs();
     } else {
       console.log('no users')
@@ -40,10 +39,9 @@ const Nav = () => {
   const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
-    contexts?.updateAuthenticated();
+    contexts?.updateAuthenticated(false);
     localStorage.clear()
   };
-  console.log(contexts?.user!.id)
 
   const login = () => {
     navigate('/login');
@@ -55,9 +53,8 @@ const Nav = () => {
     navigate('/dashboard');
   };
 
-  console.log(contexts?.authenticated )
+  console.log(contexts?.authenticated ,'auth')
 
-  // const authToken = true;
   return (
     <nav>
       <div className='logo-container'>
