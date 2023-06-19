@@ -1,5 +1,5 @@
 export type User = {
-  username:string;
+  username: string;
   email: string;
   password: string;
   id?: number;
@@ -17,6 +17,7 @@ export type Dog = {
   matches_dogs: number[];
   createdAt?: Date;
   updatedAt?: Date;
+  userId: number;
 };
 
 export type Message = {

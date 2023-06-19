@@ -7,24 +7,20 @@ import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
 
 const Dashboard: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState<User>({
-    email: '',
-    password: '',
-    id: 0,
-  });
   const { id } = useParams<{ id: string }>();
   const parsedId = Number(id);
   const contexts = useContext(Context);
+  const currentUser = contexts?.user;
 
-  function getUser() {
-    apiService.getUser(parsedId).then((data) => {
-      setCurrentUser(data);
-    });
-  }
+  // function getUser() {
+  //   apiService.getUser(parsedId).then((data) => {
+  //     contexts?.updateUser(data);
+  //   });
+  // }
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
   //NOT USE:
   // useEffect(() => {
@@ -56,15 +52,9 @@ const Dashboard: React.FC = () => {
     console.log(name + ' left the screen!');
   };
 
-  const otherDogs: Dog[] = [];
-  contexts?.myDogs.forEach((myDog) => {
-    console.log(contexts.myDogs);
-    console.log(contexts.dogs);
-    console.log({ myDog });
-    contexts?.dogs?.filter((dog) => {
-      if (dog.id === myDog.id) otherDogs.push(dog);
-    });
-    console.log({ myDog });
+  console.log({ currentUser });
+  const otherDogs = contexts?.dogs?.filter((dog) => {
+    return dog?.userId !== currentUser?.id;
   });
 
   console.log({ otherDogs });
@@ -77,7 +67,7 @@ const Dashboard: React.FC = () => {
           <div className='swiper-container'>
             {
               <div className='card-container'>
-                {otherDogs.map((dog, idx) => (
+                {otherDogs?.map((dog, idx) => (
                   <TinderCard
                     className='swipe'
                     key={idx}
