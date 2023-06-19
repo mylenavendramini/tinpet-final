@@ -1,4 +1,4 @@
-const PORT = 'http://localhost:3000/';
+const PORT = 'http://localhost:3001';
 import { Dog, User, Message } from '../types/Types';
 // import axios from 'axios';
 
@@ -30,6 +30,7 @@ const apiService = {
   },
 
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
+    console.log(user_id);
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'POST',
       body: JSON.stringify(dog),
@@ -79,6 +80,8 @@ const apiService = {
   },
 
   getMatches: async (id: number) => {
+    console.log('GET MATCHEEES');
+    console.log({ id });
     return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',
       headers: {

@@ -25,10 +25,8 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
   const dogUrl = myDogs?.map((dog) => dog.url);
   const currentDogId = Number(currentDog?.id);
 
-  console.log({ matches });
-
   const getDogMatchesIds = async () => {
-    const matchesDogs = apiService
+    apiService
       .getMatches(currentDogId)
       .then((data) => {
         setMatchedIds(data);
@@ -38,10 +36,8 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
 
   const getDogMatches = () => {
     apiService.getDogs().then((data) => {
-      console.log(data);
-      // TODO:
-      // get only the dogs that the id is === the ids matchedProfiles
       const matchedDogs: Dog[] = [];
+      console.log({ matchedIds });
       matchedIds.forEach((matchId) => {
         data.filter((dog) => {
           if (dog.id === matchId) matchedDogs.push(dog);

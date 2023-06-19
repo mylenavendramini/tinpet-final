@@ -6,7 +6,7 @@ export type User = {
 
 export type Dog = {
   // id?: number; changed it cause MatchedDogs is complaining
-  id: number;
+  id?: number;
   name: string;
   age: number;
   gender: string;
@@ -19,10 +19,10 @@ export type Dog = {
 };
 
 export type Message = {
-  id?: number,
-  content: string,
-  sender: number,
-  receiver: number,
-  createdAt?: Date
-  updatedAt?: Date
-}
+  id?: number;
+  content: string;
+  sender: number;
+  receiver: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

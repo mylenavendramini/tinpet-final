@@ -18,19 +18,19 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
   const context = useContext(Context);
   const myDogs = context?.myDogs;
   const dogsMatches = myDogs?.map((dog) => dog.matches_dogs); //TODO:something tells me this will not work because MatchesDisplay is expecting an array of Dogs but will will be an
-                                                              //array of numbers... - Harold
-                                                              // would make more sense to use the matches in the context...
+  //array of numbers... - Harold
+  // would make more sense to use the matches in the context...
   //i think this would make more sense then map over the context.matchedDogs
   useEffect(() => {
     apiService.getMatches(context?.currentDog?.id as number).then((res) => {
-      context?.updateMatches(res)
-    })
-  }, [])
+      context?.updateMatches(res);
+    });
+  }, []);
 
   return (
     <div className='chat-container'>
       {/*TODO:*/}
-      <ChatHeader/>
+      <ChatHeader />
       {/* <ChatHeader user={user} /> */}
       <div>
         <button className='option' onClick={() => setClickedDog(null)}>
@@ -42,8 +42,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
       </div>
 
       {!clickedDog && (
-        {/*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/ }
-         <MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />
+        <MatchesDisplay
+          matches={context?.matchedDogs as Dog[]}
+          setClickedDog={context?.updateSelectedDog as Function}
+        />
       )}
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
