@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const ChatContainer_1 = __importDefault(require("../components/ChatContainer"));
-const APIServices_1 = __importDefault(require("../services/APIServices"));
+const apiservices_1 = __importDefault(require("../services/apiservices"));
 const react_router_1 = require("react-router");
 const Dashboard = () => {
     const [currentUser, setCurrentUser] = (0, react_1.useState)({
@@ -16,7 +16,7 @@ const Dashboard = () => {
     const { id } = (0, react_router_1.useParams)();
     const parsedId = Number(id);
     function getUser() {
-        APIServices_1.default.getUser(parsedId).then((data) => {
+        apiservices_1.default.getUser(parsedId).then((data) => {
             setCurrentUser(data);
         });
     }
@@ -54,29 +54,31 @@ const Dashboard = () => {
       {currentUser && (<div className='dashboard'>
           <ChatContainer_1.default user={currentUser}/>
           <div className='swiper-container'>
-            {/* <div className='card-container'>
-              {filteredUsers.map((user) => (
-                <div
-                  className='swipe'
-                  key={user.user_id}
-                  onSwipe={(dir) => swiped(dir, user.user_id)}
-                  onCardLeftScreen={() => outOfFrame(user.name)}
-                >
-                  <div
-                    style={{ backgroundImage: 'url(' + user.url + ')' }}
-                    className='card'
+            {/*
+              <div className='card-container'>
+                {filteredUsers.map((user) => (
+                  <TinderCard
+                    className='swipe'
+                    key={user.user_id}
+                    onSwipe={(dir) => swiped(dir, user.user_id)}
+                    onCardLeftScreen={() => outOfFrame(user.name)}
                   >
-                    <h3>
-                      {user.name + ', Age: '}
-                      {user.age}
-                    </h3>
-                  </div>
+                    <div
+                      style={{ backgroundImage: 'url(' + user.url + ')' }}
+                      className='card'
+                    >
+                      <h3>
+                        {user.name + ', Age: '}
+                        {user.age}
+                      </h3>
+                    </div>
+                  </TinderCard>
+                ))}
+                <div className='swipe-info'>
+                  {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
                 </div>
-              ))}
-              <div className='swipe-info'>
-                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
               </div>
-            </div> */}
+                */}
           </div>
         </div>)}
     </>);

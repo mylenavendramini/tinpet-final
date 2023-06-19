@@ -11,9 +11,11 @@ const AuthModal = () => {
   const [error, setError] = useState('');
   const contexts = useContext(Context);
   const navigate = useNavigate();
+  const userId = Number(contexts?.user?.id) as number;
   const handleClick = () => {
     contexts?.updateModal();
   };
+
   function handleRegister(e: FormEvent) {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -23,7 +25,9 @@ const AuthModal = () => {
         apiService.register(username, email, password).then((res) => {
           if (res.username) {
             localStorage.setItem('user', JSON.stringify(res));
-            navigate('/dashboard');
+            contexts?.updateAuthenticated(true);
+            contexts?.updateUser(res);
+            navigate(`/onboarding/${res.id}`);
           } else {
             setError('Unable to login');
           }

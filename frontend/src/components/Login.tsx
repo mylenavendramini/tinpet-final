@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const contexts = useContext(Context);
+  const userId = Number(contexts?.user?.id) as number;
   const navigate = useNavigate();
   // const handleClick = () => {
   //   contexts?.updateModal();
@@ -22,9 +23,10 @@ const Login = () => {
           console.log(res);
           if (res.username) {
             contexts?.updateAuthenticated(true);
-            contexts?.updateUser(res.username);
+            contexts?.updateUser(res);
             localStorage.setItem('user', JSON.stringify(res));
-            navigate('/dashboard');
+            if (contexts?.myDogs && contexts?.myDogs.length > 0) navigate('/');
+            else navigate(`/onboarding/${res.id}`);
           } else {
             setError('Unable to login');
           }

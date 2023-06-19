@@ -14,6 +14,7 @@ const Nav = () => {
   const contexts = useContext(Context);
   console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
+  console.log(userId);
   const myDogs = contexts?.myDogs;
 
   const getAllTheDogs = async () => {
@@ -38,6 +39,7 @@ const Nav = () => {
     contexts?.updateSignUp();
     contexts?.updateAuthenticated(false);
     localStorage.clear();
+    navigate('/');
   };
 
   const login = () => {
@@ -58,17 +60,12 @@ const Nav = () => {
         <img className='logo' src={logo} onClick={handleOpen} />
         {open && (
           <div className='dropdown-btns'>
-            {contexts?.authenticated ? (
+            {!contexts?.authenticated ? (
               <button id='login' className='btn-nav' onClick={login}>
                 Log In
               </button>
             ) : (
-              <button
-                id='logout'
-                className='btn-nav'
-                onClick={logout}
-                disabled={contexts?.showModal}
-              >
+              <button id='logout' className='btn-nav' onClick={logout}>
                 Log Out
               </button>
             )}

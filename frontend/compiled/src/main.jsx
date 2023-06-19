@@ -5,9 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const client_1 = __importDefault(require("react-dom/client"));
-const App_js_1 = __importDefault(require("./App.js"));
+const App_jsx_1 = __importDefault(require("./App.jsx"));
 require("./index.css");
-const rootElement = document.getElementById('root');
-client_1.default.createRoot(rootElement).render(<react_1.default.StrictMode>
-    <App_js_1.default />
+const Context_1 = require("./Context/Context");
+const root = client_1.default.createRoot(document.getElementById('root'));
+root.render(<react_1.default.StrictMode>
+    <Context_1.MyProvider>
+      <App_jsx_1.default />
+    </Context_1.MyProvider>
   </react_1.default.StrictMode>);
