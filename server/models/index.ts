@@ -13,6 +13,17 @@ async function getUser(userId: number): Promise<User | null | undefined> {
   }
 }
 
+async function login(body:IUser) {
+  try {
+    const user = await User.findOne({ where: { id: body.id } });
+    if(user?.password == body.password) {
+      return user
+    }
+  } catch(error) {
+    console.log('Well thats funny cause something went wrong.')
+  }
+}
+
 async function createUser(user: IUser): Promise<User | undefined> {
   try {
     const { username, email, password } = user;
@@ -195,5 +206,6 @@ export {
   putAndCheckMatch,
   getDogMatchesArray,
   createMessage,
-  getMessages
+  getMessages,
+  login
 };

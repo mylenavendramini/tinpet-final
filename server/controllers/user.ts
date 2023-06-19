@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import { IUser } from '../models/Interfaces';
-import { getUser, createUser } from '../models/index';
+import { getUser, createUser, login } from '../models/index';
 
 async function getUserController(ctx: Context) {
   try {
@@ -25,4 +25,15 @@ async function createUserController(ctx: Context) {
   }
 }
 
-export { getUserController, createUserController };
+async function loginController(ctx:Context) {
+  try{
+    const user = ctx.request.body as IUser
+    const res = await login(user)
+    ctx.body= res
+  } catch (error) {
+    ctx.status = 500;
+    ctx.body= JSON.stringify('Unable to find user')
+  }
+}
+
+export { getUserController, createUserController, loginController };
