@@ -9,21 +9,20 @@ import { Context } from './Context/Context';
 import apiService from './services/apiservices';
 
 const App = () => {
-  const contexts = useContext(Context)
+  const contexts = useContext(Context);
   const [cookies, setCookie, removeCookie] = useCookies(['user']);
   useEffect(() => {
-    const user = localStorage.getItem('user')as unknown as User
-    console.log(JSON.parse(user).username)
-    if(user) {
-      const{email, password} = JSON.parse(user)
+    const user = localStorage.getItem('user') as unknown as User;
+    // console.log(JSON.parse(user).username)
+    if (user) {
+      const { email, password } = JSON.parse(user);
       contexts?.updateAuthenticated(true);
       apiService.login(email, password).then((res) => {
-        contexts?.updateUser(res)
-      })
+        contexts?.updateUser(res);
+      });
     } else {
-      console.log('no users')
+      console.log('no users');
     }
-    
   }, []);
   // useEffect(() => {
   //   const user = localStorage.getItem('user')

@@ -4,7 +4,7 @@ import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 const Nav = () => {
   const [open, setOpen] = useState(false);
 
@@ -17,30 +17,27 @@ const Nav = () => {
   const myDogs = contexts?.myDogs;
 
   const getAllTheDogs = async () => {
-    apiService
-      .getDogsofUSer(userId)
-      .then((data) => {
-        contexts?.updateMyDogs(data);
-      });
+    apiService.getDogsofUSer(userId).then((data) => {
+      contexts?.updateMyDogs(data);
+    });
   };
 
-  console.log(contexts?.user, 'NAV')
+  console.log(contexts?.user, 'NAV');
 
   useEffect(() => {
-    if(contexts?.authenticated) {
-      console.log(contexts?.user)
+    if (contexts?.authenticated) {
+      console.log(contexts?.user);
       getAllTheDogs();
     } else {
-      console.log('no users')
+      console.log('no users');
     }
-    
   }, []);
 
   const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
     contexts?.updateAuthenticated(false);
-    localStorage.clear()
+    localStorage.clear();
   };
 
   const login = () => {
@@ -53,7 +50,7 @@ const Nav = () => {
     navigate('/dashboard');
   };
 
-  console.log(contexts?.authenticated ,'auth')
+  console.log(contexts?.authenticated, 'auth');
 
   return (
     <nav>

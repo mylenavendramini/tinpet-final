@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ChatContainer from '../components/ChatContainer';
 import { User } from '../types/Types';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { useParams } from 'react-router';
 import TinderCard from 'react-tinder-card';
 

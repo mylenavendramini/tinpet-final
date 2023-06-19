@@ -1,7 +1,7 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { FormEvent, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { Context } from '../Context/Context';
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ const Login = () => {
           if (res.username) {
             contexts?.updateAuthenticated(true);
             contexts?.updateUser(res.username);
-            localStorage.setItem('user', JSON.stringify(res))
+            localStorage.setItem('user', JSON.stringify(res));
             navigate('/dashboard');
           } else {
             setError('Unable to login');

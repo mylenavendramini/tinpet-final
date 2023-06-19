@@ -4,7 +4,7 @@ import ChatHeader from './ChatHeader';
 import { useContext, useState, useEffect } from 'react';
 import { User } from '../types/Types';
 import { Context } from '../Context/Context';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { Dog } from '../types/Types';
 
 interface ChatContainerProps {

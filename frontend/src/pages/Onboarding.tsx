@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 import { useState, FormEvent, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 
@@ -42,15 +42,16 @@ const Onboarding = () => {
       matches_dogs: [],
     };
     // console.log({ newDog });
-    const id = contexts?.user?.id as number
+    const id = contexts?.user?.id as number;
     console.log(id);
     console.log(contexts?.user);
     apiService
-      .createDog(id , newDog)
+      .createDog(id, newDog)
       // .createDog(contexts?.user, newDog)
       .then((data) => {
-        console.log(data)
-        navigate('/dashboard')});
+        console.log(data);
+        navigate('/dashboard');
+      });
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
