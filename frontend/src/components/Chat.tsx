@@ -1,5 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
-import apiService from '../services/APIServices';
+import { useContext } from 'react';
 import { Context } from '../Context/Context';
 
 

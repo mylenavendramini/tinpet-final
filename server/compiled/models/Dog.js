@@ -14,7 +14,7 @@ class Dog extends sequelize_1.Model {
             name: {
                 type: sequelize_1.DataTypes.STRING,
                 allowNull: false,
-                unique: true,
+                unique: false,
             },
             age: {
                 type: sequelize_1.DataTypes.INTEGER,

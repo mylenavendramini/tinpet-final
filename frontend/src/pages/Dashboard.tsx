@@ -31,30 +31,30 @@ const Dashboard: React.FC = () => {
     }
   }, [user]);
 
-  const updateMatches = async (matchedUserId) => {
-    try {
-      await axios.put('http://localhost:3000/addmatch', {
-        userId,
-        matchedUserId,
-      });
-      getUser();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const updateMatches = async (matchedUserId) => {
+  //   try {
+  //     await axios.put('http://localhost:3000/addmatch', {
+  //       userId,
+  //       matchedUserId,
+  //     });
+  //     getUser();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const swiped = (direction, swipedId) => {
-    if (direction === 'right') {
-      updateMatches(swipedId);
-    }
-    setLastDirection(direction);
-  };
+  // const swiped = (direction, swipedId) => {
+  //   if (direction === 'right') {
+  //     updateMatches(swipedId);
+  //   }
+  //   setLastDirection(direction);
+  // };
 
-  const outOfFrame = (name) => {
-    console.log(name + ' left the screen!');
-  };
+  // const outOfFrame = (name) => {
+  //   console.log(name + ' left the screen!');
+  // };
 
-  const filteredUsers = users.filter((user) => user.id !== userId);
+  // const filteredUsers = users.filter((user) => user.id !== userId);
 
   return (
     <>
@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
         <div className='dashboard'>
           <ChatContainer user={currentUser as User} />
           <div className='swiper-container'>
-            {
+            {/*
               <div className='card-container'>
                 {filteredUsers.map((user) => (
                   <TinderCard
@@ -86,7 +86,7 @@ const Dashboard: React.FC = () => {
                   {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
                 </div>
               </div>
-            }
+                */}
           </div>
         </div>
       )}

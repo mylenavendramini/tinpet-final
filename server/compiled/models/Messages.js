@@ -17,11 +17,11 @@ class Message extends sequelize_1.Model {
                 unique: true,
             },
             sender: {
-                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER),
+                type: sequelize_1.DataTypes.INTEGER,
                 allowNull: false
             },
             receiver: {
-                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER),
+                type: sequelize_1.DataTypes.STRING,
                 allowNull: false
             },
             createdAt: {

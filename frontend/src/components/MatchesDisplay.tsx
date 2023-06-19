@@ -1,19 +1,21 @@
-import axios from 'axios';
+
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
 import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
+
 interface MatchesDisplayProps {
-  matches: Dog[];
+  // matches: Dog[];
   // setClickedDog: Function;
-  setClickedDog: (dog: Dog) => void;
+  // setClickedDog: (dog: Dog) => void;
 }
 const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
-  matches,
-  setClickedDog,
 }) => {
+  const contexts = useContext(Context);
+  const setClickedDog = contexts?.updateSelectedDog as Function
+  const matches = contexts?.matchedDogs as Dog[]
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog>();
@@ -25,10 +27,8 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
   const dogUrl = myDogs?.map((dog) => dog.url);
   const currentDogId = Number(currentDog?.id);
 
-  console.log({ matches });
-
   const getDogMatchesIds = async () => {
-    const matchesDogs = apiService
+    apiService
       .getMatches(currentDogId)
       .then((data) => {
         setMatchedIds(data);
@@ -38,10 +38,8 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
 
   const getDogMatches = () => {
     apiService.getDogs().then((data) => {
-      console.log(data);
-      // TODO:
-      // get only the dogs that the id is === the ids matchedProfiles
       const matchedDogs: Dog[] = [];
+      console.log({ matchedIds });
       matchedIds.forEach((matchId) => {
         data.filter((dog) => {
           if (dog.id === matchId) matchedDogs.push(dog);

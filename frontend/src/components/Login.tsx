@@ -19,9 +19,10 @@ const Login = () => {
     } else {
       try {
         apiService.login(email, password).then((res) => {
+          console.log(res);
           if (res.username) {
-            contexts?.updateAuthenticated()
-            contexts?.updateUser(res.username)
+            contexts?.updateAuthenticated();
+            contexts?.updateUser(res.username);
             navigate('/dashboard');
           } else {
             setError('Unable to login');

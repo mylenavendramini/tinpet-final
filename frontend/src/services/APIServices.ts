@@ -1,11 +1,11 @@
-const PORT = 'http://localhost:3000/';
+const PORT = 'http://localhost:3001';
 import { Dog, User, Message } from '../types/Types';
 // import axios from 'axios';
 const apiService = {
-  register: async (email: string, password: string) => {
+  register: async (username: string, email: string, password: string) => {
     return fetch(`${PORT}/user`, {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, email, password }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
@@ -16,6 +16,7 @@ const apiService = {
   },
 
   login: async (email: string, password: string) => {
+    console.log(email);
     return fetch(`${PORT}/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
@@ -29,6 +30,7 @@ const apiService = {
   },
 
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
+    console.log(user_id);
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'POST',
       body: JSON.stringify(dog),
@@ -77,6 +79,8 @@ const apiService = {
   },
 
   getMatches: async (id: number) => {
+    console.log('GET MATCHEEES');
+    console.log({ id });
     return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',
       headers: {

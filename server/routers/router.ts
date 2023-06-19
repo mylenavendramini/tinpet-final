@@ -1,12 +1,11 @@
 import Router from 'koa-router';
-import { getUserController, createUserController } from '../controllers/user';
+import { getUserController, createUserController, loginController } from '../controllers/user';
 import {
   getAllDogsController,
   getDogsOfUser,
   createDogController,
   putLikeDogController,
-  getAllDogMatches,
-
+  getAllDogMatches
 } from '../controllers/dog';
 import { Context } from 'koa';
 import { createMessageController, getMessagesController } from '../controllers/messages';
@@ -35,6 +34,7 @@ const uploadMiddleware: Router.IMiddleware = async (ctx: Context, next: () => Pr
 
 router.post('/user', createUserController);
 router.post('/dogs/:id', createDogController);
+router.post('/login', loginController)
 router.post('/messages/:id', createMessageController);
 router.get('/messages/:id', getMessagesController);
 router.get('/user/:id', getUserController);

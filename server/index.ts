@@ -2,17 +2,22 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import router from './routers/router';
-import db from './models/db';
+// import {db} from './models/db';
+
+const corsConfig = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+};
 
 const app = new Koa();
 const PORT = 3001;
 
-(async () => {
-  await db.sync();
-})();
+// (async () => {
+//   await db.sync();
+// })();
 
 app
-  .use(cors())
+  .use(cors(corsConfig))
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods());

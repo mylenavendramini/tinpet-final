@@ -35,6 +35,7 @@ const uploadMiddleware = (ctx, next) => __awaiter(void 0, void 0, void 0, functi
 });
 router.post('/user', user_1.createUserController);
 router.post('/dogs/:id', dog_1.createDogController);
+router.post('/login', user_1.loginController);
 router.post('/messages/:id', messages_1.createMessageController);
 router.get('/messages/:id', messages_1.getMessagesController);
 router.get('/user/:id', user_1.getUserController);

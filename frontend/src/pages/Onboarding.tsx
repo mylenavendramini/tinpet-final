@@ -1,47 +1,68 @@
 /* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
 import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
+import { Context } from '../Context/Context';
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const parsedId = Number(id);
+  const contexts = useContext(Context);
 
-  // const [cookies, setCookies, removeCookies] = useCookies(['user']);
-  const [formData, setFormData] = useState<Dog>({
-    name: '',
-    age: 0,
-    gender: '',
-    url: '',
-    about: '',
-    liked_dog: [],
-    matches_dogs: [],
-  });
+  const [cookies, setCookies, removeCookies] = useCookies(['user']);
+  // const [formData, setFormData] = useState<Dog>({
+  //   name: '',
+  //   age: 0,
+  //   gender: '',
+  //   url: '',
+  //   about: '',
+  //   liked_dog: [],
+  //   matches_dogs: [],
+  // });
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(0);
+  const [gender, setGender] = useState('');
+  const [url, setUrl] = useState('');
+  const [about, setAbout] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     console.log('Submited');
+    const newDog = {
+      name,
+      age,
+      gender,
+      url,
+      about,
+      liked_dog: [],
+      matches_dogs: [],
+    };
+    console.log({ newDog });
     apiService
-      .createDog(parsedId, formData)
+      // .createDog(parsedId, newDog)
+      .createDog(1, newDog)
       .then((data) => navigate('/dashboard'));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e?.target.value;
-    const name = e.target.name;
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e?.target.value;
+  //   const name = e.target.name;
+  //   setName();
 
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
 
   function getMyDogs() {
-    apiService.getDogsofUSer(parsedId).then((data) => setMyDogs(data));
+    apiService
+      .getDogsofUSer(parsedId)
+      .then((data) => contexts?.updateMyDogs(data));
   }
 
   useEffect(() => {
@@ -63,8 +84,8 @@ const Onboarding = () => {
               id='name'
               placeholder='Name'
               required={true}
-              value={formData.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <label>Age</label>
             <input
@@ -73,8 +94,11 @@ const Onboarding = () => {
               id='age'
               placeholder='Age'
               required={true}
-              value={formData.age}
-              onChange={handleChange}
+              value={age}
+              onChange={(e) => {
+                const dogAge = Number(e.target.value);
+                setAge(dogAge);
+              }}
             />
             <label>Gender</label>
             <div className='multiple-input-container'>
@@ -84,8 +108,8 @@ const Onboarding = () => {
                 name='gender'
                 placeholder='Gender'
                 value='male'
-                checked={formData.gender === 'male'}
-                onChange={handleChange}
+                checked={gender === 'male'}
+                onChange={(e) => setGender(e.target.value)}
               />
 
               <label htmlFor='male-gender'>Male</label>
@@ -95,8 +119,8 @@ const Onboarding = () => {
                 name='gender'
                 placeholder='Gender'
                 value='female'
-                checked={formData.gender === 'female'}
-                onChange={handleChange}
+                checked={gender === 'female'}
+                onChange={(e) => setGender(e.target.value)}
               />
               <label htmlFor='female-gender'>Female</label>
             </div>
@@ -108,23 +132,23 @@ const Onboarding = () => {
               name='about'
               required={true}
               placeholder='Friendly and playful'
-              value={formData.about}
-              onChange={handleChange}
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
             />
             <input type='submit' value='Submit' />
           </section>
 
           <section>
-            <label htmlFor='about'>Profile Picture</label>
+            <label htmlFor='url'>Profile Picture</label>
             <input
               id='url'
               type='url'
               name='url'
               required={true}
-              onChange={handleChange}
+              onChange={(e) => setUrl(e.target.value)}
             />
             <div className='photo-container'>
-              {formData.url && <img src={formData.url} alt='profile picture' />}
+              {url && <img src={url} alt='profile picture' />}
             </div>
           </section>
         </form>
