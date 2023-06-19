@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Logout_1 = __importDefault(require("@mui/icons-material/Logout"));
 const react_router_dom_1 = require("react-router-dom");
 const react_1 = require("react");
-const Context_1 = require("../Context/Context");
+const Context_1 = require("./Context/Context");
+//TODO:
 const ChatHeader = () => {
     // const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const context = (0, react_1.useContext)(Context_1.Context);
@@ -23,6 +24,8 @@ const ChatHeader = () => {
     return (<div className='chat-container-header'>
       <div className='profile'>
         <div className='img-container'>
+          {/* something tells me this will not work - Harold
+        img src takes in a string and would be an array of string */}
           <img src={`${dogUrl}`} alt='user photo'/>
         </div>
         <h3>{dogName}</h3>

@@ -29,11 +29,16 @@ const UploadPic = () => {
             console.error(error);
         }
     });
+    // @ts-ignore
     const { getRootProps, getInputProps } = (0, react_dropzone_1.useDropzone)({ onDrop });
+    // as {
+    //   getRootProps: (props?: DropzoneRootProps) => JSX.Element;
+    //   getInputProps: (props?: DropzoneInputProps) => JSX.Element;
+    // };
     return (<div>
       <div>
         <div {...getRootProps()}>
-          <input {...getInputProps()}/>
+        <input {...getInputProps()} type="string"/>
           <div className="upload-btn-wrapper">
             <button type="button" className="btn">
               Select Files

@@ -28,6 +28,9 @@ class User extends sequelize_1.Model {
             updatedAt: {
                 type: sequelize_1.DataTypes.DATE,
             },
+            // messages: {
+            //   type: DataTypes.ARRAY(DataTypes.INTEGER) //for messages might not be needed depends on the message model
+            // }
         }, {
             sequelize,
             modelName: 'user',

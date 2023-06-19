@@ -41,10 +41,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
         </button>
       </div>
 
-      {!clickedDog && (
+      {/* {!clickedDog && (
         {/*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/ }
          {/*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/}
-      )}
+      
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
       {clickedDog && <ChatDisplay />}

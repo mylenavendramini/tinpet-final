@@ -12,39 +12,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
 const react_1 = require("react");
 const react_2 = require("react");
 const Context_1 = require("../Context/Context");
-const MatchesDisplay = ({ matches, setClickedUser, }) => {
+const APIServices_1 = __importDefault(require("../services/APIServices"));
+const MatchesDisplay = ({ matches, setClickedDog, }) => {
+    const [matchedIds, setMatchedIds] = (0, react_1.useState)([]);
+    const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)([]);
+    const [matchedDog, setMatchedDog] = (0, react_1.useState)();
     const context = (0, react_2.useContext)(Context_1.Context);
-    const dogs = context === null || context === void 0 ? void 0 : context.dogs;
     const updateDog = context === null || context === void 0 ? void 0 : context.updateDog;
-    const dogName = dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => dog.name);
-    const dogUrl = dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => dog.url);
-    console.log(matches);
-    const getMatches = () => __awaiter(void 0, void 0, void 0, function* () {
-        const matchedUserIds = matches.map(({ user_id }) => user_id);
-        try {
-            const response = yield axios_1.default.get('http://localhost:3000/matchedusers', {
-                params: { userIds: JSON.stringify(matchedUserIds) },
-            });
-            //TODO:
-            setMatchedProfiles(response.data);
-        }
-        catch (error) {
-            console.log(error);
-        }
+    const currentDog = context === null || context === void 0 ? void 0 : context.currentDog;
+    const myDogs = context === null || context === void 0 ? void 0 : context.myDogs;
+    const dogName = myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => dog.name);
+    const dogUrl = myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => dog.url);
+    const currentDogId = Number(currentDog === null || currentDog === void 0 ? void 0 : currentDog.id);
+    console.log({ matches });
+    const getDogMatchesIds = () => __awaiter(void 0, void 0, void 0, function* () {
+        const matchesDogs = APIServices_1.default
+            .getMatches(currentDogId)
+            .then((data) => {
+            setMatchedIds(data);
+        })
+            .catch((error) => console.log(error));
     });
+    const getDogMatches = () => {
+        APIServices_1.default.getDogs().then((data) => {
+            console.log(data);
+            // TODO:
+            // get only the dogs that the id is === the ids matchedProfiles
+            const matchedDogs = [];
+            matchedIds.forEach((matchId) => {
+                data.filter((dog) => {
+                    if (dog.id === matchId)
+                        matchedDogs.push(dog);
+                });
+            });
+            setMatchedProfiles(matchedDogs);
+        });
+    };
     (0, react_1.useEffect)(() => {
-        getMatches();
+        getDogMatchesIds();
+        getDogMatches();
     }, [matches]);
     return (<div className='matches-display'>
-      {matchedProfiles === null || matchedProfiles === void 0 ? void 0 : matchedProfiles.map((match) => (<div key={match.user_id} className='match-card' onClick={() => setClickedUser(match)}>
+      {matchedProfiles === null || matchedProfiles === void 0 ? void 0 : matchedProfiles.map((matchProfile, idx) => (<div key={idx} className='match-card' onClick={() => setClickedDog(matchProfile)}>
           <div className='img-container'>
-            <img src={match === null || match === void 0 ? void 0 : match.url} alt='matched photo'/>
+            <img src={matchProfile === null || matchProfile === void 0 ? void 0 : matchProfile.url} alt='matched photo'/>
           </div>
-          <h3>{match === null || match === void 0 ? void 0 : match.name}</h3>
+          <h3>{matchProfile === null || matchProfile === void 0 ? void 0 : matchProfile.name}</h3>
         </div>))}
     </div>);
 };

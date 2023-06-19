@@ -9,9 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
+exports.postImage = exports.getMessages = exports.createMessage = exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Dog_1 = require("./Dog");
 const User_1 = require("./User");
+const Messages_1 = require("./Messages");
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -170,3 +171,47 @@ function getDogMatchesArray(dogId) {
     });
 }
 exports.getDogMatchesArray = getDogMatchesArray;
+function createMessage(body) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { content, sender, receiver } = body;
+        try {
+            const newMessage = yield Messages_1.Message.create({
+                content,
+                sender,
+                receiver
+            });
+            return newMessage;
+        }
+        catch (e) {
+            console.log('DAWG this function is simple are you that stupid not to make it work???');
+        }
+    });
+}
+exports.createMessage = createMessage;
+function getMessages(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const messages = Messages_1.Message.findAll({ where: { id } });
+            return messages;
+        }
+        catch (e) {
+            console.log('Yo open your eyes Im sure you can find those messages');
+        }
+    });
+}
+exports.getMessages = getMessages;
+// (async () => {
+//   await db.sync();
+// })();
+function postImage(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const dog = yield Dog_1.Dog.findByPk(id);
+            return dog;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.postImage = postImage;

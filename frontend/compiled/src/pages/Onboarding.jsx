@@ -15,14 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-unused-vars */
 const Nav_1 = __importDefault(require("../components/Nav"));
 const react_1 = require("react");
-const react_cookie_1 = require("react-cookie");
 const react_router_dom_1 = require("react-router-dom");
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Onboarding = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
     const { id } = (0, react_router_dom_1.useParams)();
     const parsedId = Number(id);
-    const [cookies, setCookies, removeCookies] = (0, react_cookie_1.useCookies)(['user']);
+    // const [cookies, setCookies, removeCookies] = useCookies(['user']);
     const [formData, setFormData] = (0, react_1.useState)({
         name: '',
         age: 0,
@@ -44,10 +43,16 @@ const Onboarding = () => {
         const name = e.target.name;
         setFormData((prevState) => (Object.assign(Object.assign({}, prevState), { [name]: value })));
     };
+    function getMyDogs() {
+        APIServices_1.default.getDogsofUSer(parsedId).then((data) => setMyDogs(data));
+    }
+    (0, react_1.useEffect)(() => {
+        getMyDogs();
+    }, []);
     return (<>
       <Nav_1.default />
       <div className='onboarding'>
-        <h2>Creare a dog</h2>
+        <h2>Create a dog</h2>
 
         <form onSubmit={handleSubmit}>
           <section>

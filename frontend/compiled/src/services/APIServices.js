@@ -24,6 +24,18 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
+    login: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/login`, {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((parsedRes) => parsedRes);
+    }),
     createDog: (user_id, dog) => __awaiter(void 0, void 0, void 0, function* () {
         return fetch(`${PORT}/dogs/${user_id}`, {
             method: 'POST',
@@ -58,8 +70,19 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getMatches: () => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/matches`, {
+    getDogsofUSer: (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/dogs/${user_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((parsedRes) => parsedRes);
+    }),
+    getMatches: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/matches/${id}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -80,6 +103,45 @@ const apiService = {
         })
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
+    }),
+    sendMessage: (id, body) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${id}`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((parsedRes) => parsedRes);
+    }),
+    getMessages: (id) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            credentials: 'include',
+        })
+            .then((res) => res.json())
+            .then((parsedRes) => parsedRes);
+    }),
+    postImage: (id, formData) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const response = yield fetch(`/image/${id}`, {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Error uploading image');
+            }
+            console.log('Image uploaded successfully');
+        }
+        catch (error) {
+            console.error('Error uploading image:', error);
+            throw error;
+        }
     }),
 };
 exports.default = apiService;
