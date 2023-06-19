@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import ChatDisplay from './ChatDisplay';
 import MatchesDisplay from './MatchesDisplay';
 import ChatHeader from './ChatHeader';
@@ -15,15 +13,12 @@ interface ChatContainerProps {
 
 const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
   const [clickedDog, setClickedDog] = useState(null);
-  const context = useContext(Context);
-  const myDogs = context?.myDogs;
-  const dogsMatches = myDogs?.map((dog) => dog.matches_dogs); //TODO:something tells me this will not work because MatchesDisplay is expecting an array of Dogs but will will be an
-                                                              //array of numbers... - Harold
-                                                              // would make more sense to use the matches in the context...
-  //i think this would make more sense then map over the context.matchedDogs
+  const contexts = useContext(Context);
+  const myDogs = contexts?.myDogs;
+  // const dogsMatches = myDogs?.map((dog) => dog.matches_dogs);
   useEffect(() => {
-    apiService.getMatches(context?.currentDog?.id as number).then((res) => {
-      context?.updateMatches(res)
+    apiService.getMatches(contexts?.currentDog?.id as number).then((res) => {
+      contexts?.updateMatches(res)
     })
   }, [])
 
@@ -42,8 +37,8 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
       </div>
 
       {!clickedDog && (
-        {/*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/ }
-         {/*<MatchesDisplay matches={context?.matchedDogs as Dog[]} setClickedDog={context?.updateSelectedDog as Function} />*/}
+         <MatchesDisplay />
+        //  <MatchesDisplay matches={contexts?.matchedDogs as Dog[]} setClickedDog={contexts?.updateSelectedDog as Function} />
       )}
 
       {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
@@ -54,3 +49,5 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
 };
 
 export default ChatContainer;
+
+{/*<MatchesDisplay matches={dogsMatches} setClickedDog={setClickedDog} />*/ }

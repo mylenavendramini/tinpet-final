@@ -21,7 +21,7 @@ export type Message = {
   id?: number,
   content: string,
   sender: number,
-  receiver: number,
+  receiver: string,
   createdAt?: Date
   updatedAt?: Date
 }

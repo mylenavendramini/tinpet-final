@@ -1,19 +1,21 @@
-import axios from 'axios';
+
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
 import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
+
 interface MatchesDisplayProps {
-  matches: Dog[];
+  // matches: Dog[];
   // setClickedDog: Function;
-  setClickedDog: (dog: Dog) => void;
+  // setClickedDog: (dog: Dog) => void;
 }
 const MatchesDisplay: React.FC<MatchesDisplayProps> = ({
-  matches,
-  setClickedDog,
 }) => {
+  const contexts = useContext(Context);
+  const setClickedDog = contexts?.updateSelectedDog as Function
+  const matches = contexts?.matchedDogs as Dog[]
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog>();

@@ -1,7 +1,6 @@
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import { useContext } from 'react';
-import apiService from '../services/APIServices';
 import { Context } from '../Context/Context';
 
 //TODO:

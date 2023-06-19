@@ -186,7 +186,7 @@ async function createMessage(body:{}) {
 
 async function getMessages(id:number) {
   try{
-    const messages = Message.findAll({ where: { id }} )
+    const messages = Message.findAll({ where: { sender:id }} )
     return messages
   } catch(e) {
     console.log('Yo open your eyes Im sure you can find those messages')
