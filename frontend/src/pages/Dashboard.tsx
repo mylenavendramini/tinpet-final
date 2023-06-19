@@ -7,10 +7,12 @@ import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
 
 const Dashboard: React.FC = () => {
+  const [lastDirection, setLastDirection] = useState('');
   const { id } = useParams<{ id: string }>();
   const parsedId = Number(id);
   const contexts = useContext(Context);
   const currentUser = contexts?.user;
+  const currentDogId = contexts?.currentDog?.id as number;
 
   // function getUser() {
   //   apiService.getUser(parsedId).then((data) => {
@@ -29,21 +31,13 @@ const Dashboard: React.FC = () => {
   //   }
   // }, [user]);
 
-  const updateMatches = async (matchedUserId) => {
-    try {
-      await axios.put('http://localhost:3000/addmatch', {
-        userId,
-        matchedUserId,
-      });
-      getUser();
-    } catch (error) {
-      console.log(error);
-    }
+  const updateMatches = async (otherDog: Dog) => {
+    apiService.addMatch(currentDogId, otherDog);
   };
 
-  const swiped = (direction, swipedId) => {
+  const swiped = (direction: string, otherDog: Dog) => {
     if (direction === 'right') {
-      updateMatches(swipedId);
+      updateMatches(otherDog);
     }
     setLastDirection(direction);
   };
@@ -71,7 +65,7 @@ const Dashboard: React.FC = () => {
                   <TinderCard
                     className='swipe'
                     key={idx}
-                    onSwipe={(dir) => swiped(dir, dog.id)}
+                    onSwipe={(direction) => swiped(direction, dog)}
                     onCardLeftScreen={() => outOfFrame(dog.name)}
                   >
                     <div
@@ -86,7 +80,7 @@ const Dashboard: React.FC = () => {
                   </TinderCard>
                 ))}
                 <div className='swipe-info'>
-                  {/*lastDirection ? <p>You swiped {lastDirection}</p> : <p />*/}
+                  {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>
               </div>
             }
