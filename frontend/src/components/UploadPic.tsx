@@ -1,41 +1,110 @@
 import { useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-//TODO:
+import { useDropzone, FileWithPath , DropzoneRootProps, DropzoneInputProps, DropzoneOptions } from 'react-dropzone';
+import apiService from '../services/APIServices';
 
 const UploadPic = () => {
-  const [files, setFiles] = useState([]);
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-    },
-  });
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
 
-  const thumbs = files.map((file) => (
-    <div key={file.name}>
-      <img
-        src={file.preview}
-        alt={file.name}
-        style={{ width: '100px', height: '100px' }}
-      />
-    </div>
-  ));
 
+ 
+
+
+  const onDrop = async (acceptedFiles: FileWithPath[]) =>{
+    const formData = new FormData();
+    formData.append('image', acceptedFiles[0]);
+
+    try {
+      await apiService.postImage(1, formData);
+      const imageUrl = URL.createObjectURL(acceptedFiles[0]);
+      setUploadedImages([...uploadedImages, imageUrl]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // @ts-ignore
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })  
+  
+  // as {
+  //   getRootProps: (props?: DropzoneRootProps) => JSX.Element;
+  //   getInputProps: (props?: DropzoneInputProps) => JSX.Element;
+  // };
+
+  
   return (
-    <section className='container'>
-      <div {...getRootProps({ className: 'dropzone' })}>
-        <input {...getInputProps()} />
-        <p>Drag & drop some files here, or click to select files</p>
+    <div>
+      <div>
+        <div {...getRootProps()}>
+        <input {...getInputProps()} type="string" />
+          <div className="upload-btn-wrapper">
+            <button type="button" className="btn">
+              Select Files
+            </button>
+          </div>
+        </div>
+        <div className="image">
+          {uploadedImages.map((image, index) => (
+            <img key={index} src={image} alt="Uploaded" className="item" />
+          ))}
+        </div>
       </div>
-      <aside>{thumbs}</aside>
-    </section>
+    </div>
   );
 };
 
 export default UploadPic;
+
+
+/*
+import { useCallback, useState } from 'react';
+import { useDropzone, DropzoneRootProps, DropzoneInputProps, FileWithPath } from 'react-dropzone';
+import { postImage } from '../services/apiService';
+
+const UploadPic = () => {
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+
+  const onDrop = useCallback(
+    async (acceptedFiles: FileWithPath[]) => {
+      const formData = new FormData();
+      formData.append('image', acceptedFiles[0]);
+
+      try {
+        await postImage(1, formData);
+        const imageUrl = URL.createObjectURL(acceptedFiles[0]);
+        setUploadedImages((prevImages) => [...prevImages, imageUrl]);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
+
+  const { getRootProps, getInputProps }: {
+    getRootProps: (props?: DropzoneRootProps) => DropzoneRootProps;
+    getInputProps: (props?: DropzoneInputProps) => DropzoneInputProps;
+  } = useDropzone({ onDrop });
+
+  return (
+    <div>
+      <div>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          <div className="upload-btn-wrapper">
+            <button type="button" className="btn">
+              Select Files
+            </button>
+          </div>
+        </div>
+        <div className="image">
+          {uploadedImages.map((image, index) => (
+            <img key={index} src={image} alt="Uploaded" className="item" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UploadPic;
+
+*/
