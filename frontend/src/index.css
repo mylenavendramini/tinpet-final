@@ -8,6 +8,14 @@
   text-align: center;
 }
 
+body {
+  background: linear-gradient(
+    45deg,
+    rgba(208, 245, 190, 1) 0%,
+    rgba(251, 255, 220, 1) 100%
+  );
+}
+
 .primary-title {
   font-size: 6rem;
   color: #025464;

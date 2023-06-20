@@ -47,6 +47,7 @@ function createDogController(ctx) {
         const user_id = ctx.params.id;
         try {
             const newDog = yield (0, index_1.createDog)(dog, user_id);
+            ctx.body = newDog;
             console.log(newDog, 'controller');
         }
         catch (e) {

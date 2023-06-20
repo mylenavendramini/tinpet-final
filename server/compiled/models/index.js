@@ -40,7 +40,7 @@ function login(body) {
             }
         }
         catch (error) {
-            console.log('Well thats funny cause something went wrong.');
+            console.log('Well thats funny cause something went wrong while logging in.');
         }
     });
 }
@@ -143,7 +143,8 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
         console.log('before the try');
         try {
             console.log('inside the try');
-            console.log(myDogIdObj);
+            console.log({ myDogIdObj });
+            console.log({ theOtherDogId });
             const myDog = yield Dog.findOne({ where: myDogIdObj });
             const theOtherDog = yield Dog.findOne({
                 where: { id: Number(theOtherDogId) },
@@ -163,14 +164,14 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
                 }, { where: { id: theOtherDogId } });
                 filterDogArray(myDogArray, myDog === null || myDog === void 0 ? void 0 : myDog.id, theOtherDogId);
                 filterDogArray(theOtherDogArray, theOtherDogId, myDog === null || myDog === void 0 ? void 0 : myDog.id);
-                return newMatch;
+                return myDog;
             }
             // Add the dog that my dog like:
             if (!myDogArray.includes(theOtherDogId)) {
                 const likeDog = yield Dog.update({
                     liked_dog: [...myDogArray, Number(theOtherDogId)],
                 }, { where: myDogIdObj });
-                return likeDog;
+                return myDog;
             }
         }
         catch (error) {

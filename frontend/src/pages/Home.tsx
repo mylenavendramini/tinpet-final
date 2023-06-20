@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import AuthModal from '../components/AuthModal';
 import Nav from '../components/Nav';
+import { useNavigate } from 'react-router';
+import { Context } from '../Context/Context';
 
 const Home = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
+  const contexts = useContext(Context);
+  const authenticated = contexts?.authenticated;
 
-  const authToken = false;
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log('Click!!');
+    console.log('Create account clicked');
     setShowModal(true);
     setIsSignUp(true);
   };
@@ -25,9 +29,23 @@ const Home = () => {
             you can contact other people who are also looking for friends for
             their pets, where you can make friends .... among other things...
           </p>
-          <button className='btn-primary' onClick={handleClick}>
-            {authToken ? 'Sign Out' : 'Create Account'}
-          </button>
+
+          {!authenticated && (
+            <>
+              <button
+                className='btn-primary'
+                onClick={() => navigate('/register')}
+              >
+                Create Account
+              </button>
+              <button
+                className='btn-primary'
+                onClick={() => navigate('/login')}
+              >
+                Login
+              </button>
+            </>
+          )}
 
           {showModal && <AuthModal />}
         </div>

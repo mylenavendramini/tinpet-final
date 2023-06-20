@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
+import { User } from '../types/Types';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 const Nav = () => {
   const [open, setOpen] = useState(false);
 
@@ -13,6 +14,7 @@ const Nav = () => {
   const contexts = useContext(Context);
   console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
+  console.log(userId);
   const myDogs = contexts?.myDogs;
 
   const getAllTheDogs = async () => {
@@ -21,14 +23,23 @@ const Nav = () => {
     });
   };
 
+  console.log(contexts?.user, 'NAV');
+
   useEffect(() => {
-    getAllTheDogs();
+    if (contexts?.authenticated) {
+      console.log(contexts?.user);
+      getAllTheDogs();
+    } else {
+      console.log('no users');
+    }
   }, []);
 
   const logout = () => {
     contexts?.updateModal();
     contexts?.updateSignUp();
-    contexts?.updateAuthenticated();
+    contexts?.updateAuthenticated(false);
+    localStorage.clear();
+    navigate('/');
   };
 
   const login = () => {
@@ -41,24 +52,20 @@ const Nav = () => {
     navigate('/dashboard');
   };
 
-  // const authToken = true;
+  console.log(contexts?.authenticated, 'auth');
+
   return (
     <nav>
       <div className='logo-container'>
         <img className='logo' src={logo} onClick={handleOpen} />
         {open && (
           <div className='dropdown-btns'>
-            {contexts?.authenticated ? (
+            {!contexts?.authenticated ? (
               <button id='login' className='btn-nav' onClick={login}>
                 Log In
               </button>
             ) : (
-              <button
-                id='logout'
-                className='btn-nav'
-                onClick={logout}
-                disabled={contexts?.showModal}
-              >
+              <button id='logout' className='btn-nav' onClick={logout}>
                 Log Out
               </button>
             )}

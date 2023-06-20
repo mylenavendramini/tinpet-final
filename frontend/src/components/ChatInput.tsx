@@ -1,5 +1,5 @@
-import { useState,useContext } from 'react';
-import apiService from '../services/APIServices';
+import { useState, useContext } from 'react';
+import apiService from '../services/apiservices';
 import { Context } from '../Context/Context';
 
 const ChatInput = () => {
@@ -13,7 +13,7 @@ const ChatInput = () => {
   // const clickedUserId = clickedUser?.user_id;
 
   const addMessage = async () => {
-    const id = contexts?.currentDog?.id as number
+    const id = contexts?.currentDog?.id as number;
     // const sender = contexts?.currentDog?.name as string
     const newMessage = {
       content: message,
@@ -21,8 +21,8 @@ const ChatInput = () => {
       receiver: contexts?.selectedDog?.name as string,
     };
     apiService.sendMessage(id, newMessage).then((res) => {
-      contexts?.updateMessages([...contexts.messages, res])
-    })
+      contexts?.updateMessages([...contexts.messages, res]);
+    });
   };
 
   return (

@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 import { useState, FormEvent, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiService from '../services/APIServices';
+import apiService from '../services/apiservices';
 import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 
@@ -12,6 +12,7 @@ const Onboarding = () => {
   const { id } = useParams();
   const parsedId = Number(id);
   const contexts = useContext(Context);
+  const myDogs = contexts?.myDogs;
 
   const [cookies, setCookies, removeCookies] = useCookies(['user']);
   // const [formData, setFormData] = useState<Dog>({
@@ -31,7 +32,7 @@ const Onboarding = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submited');
+    console.log('Submitted');
     const newDog = {
       name,
       age,
@@ -41,11 +42,15 @@ const Onboarding = () => {
       liked_dog: [],
       matches_dogs: [],
     };
-    console.log({ newDog });
-    apiService
-      // .createDog(parsedId, newDog)
-      .createDog(1, newDog)
-      .then((data) => navigate('/dashboard'));
+    // console.log({ newDog });
+    const id = contexts?.user?.id as number;
+    console.log(id);
+    console.log(contexts?.user);
+    apiService.createDog(id, newDog).then((data) => {
+      console.log(data);
+      contexts?.myDogs.push(data);
+      navigate('/dashboard');
+    });
   };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,16 +63,6 @@ const Onboarding = () => {
   //     [name]: value,
   //   }));
   // };
-
-  function getMyDogs() {
-    apiService
-      .getDogsofUSer(parsedId)
-      .then((data) => contexts?.updateMyDogs(data));
-  }
-
-  useEffect(() => {
-    getMyDogs();
-  }, []);
 
   return (
     <>

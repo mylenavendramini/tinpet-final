@@ -94,10 +94,12 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  addMatch: async (id: number, dog: Dog) => {
-    return fetch(`${PORT}/dogs/${id}`, {
+  addMatch: async (myDog: Dog, otherDogId: number) => {
+    console.log(myDog);
+    console.log(otherDogId);
+    return fetch(`${PORT}/dogs/${otherDogId}`, {
       method: 'PUT',
-      body: JSON.stringify(dog),
+      body: JSON.stringify(myDog),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },

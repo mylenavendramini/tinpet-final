@@ -25,7 +25,9 @@ async function login(body: IUser) {
       return user;
     }
   } catch (error) {
-    console.log('Well thats funny cause something went wrong.');
+    console.log(
+      'Well thats funny cause something went wrong while logging in.'
+    );
   }
 }
 
@@ -119,7 +121,8 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
   console.log('before the try');
   try {
     console.log('inside the try');
-    console.log(myDogIdObj);
+    console.log({ myDogIdObj });
+    console.log({ theOtherDogId });
     const myDog = await Dog.findOne({ where: myDogIdObj });
     const theOtherDog = await Dog.findOne({
       where: { id: Number(theOtherDogId) },
@@ -148,7 +151,7 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
       filterDogArray(myDogArray, myDog?.id as number, theOtherDogId);
       filterDogArray(theOtherDogArray, theOtherDogId, myDog?.id as number);
 
-      return newMatch;
+      return myDog;
     }
 
     // Add the dog that my dog like:
@@ -159,7 +162,7 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
         },
         { where: myDogIdObj }
       );
-      return likeDog;
+      return myDog;
     }
   } catch (error) {
     console.log(error);
