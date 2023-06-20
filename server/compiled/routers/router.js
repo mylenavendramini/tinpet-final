@@ -17,5 +17,5 @@ router.get('/user/:id', user_1.getUserController);
 router.get('/dogs', dog_1.getAllDogsController);
 router.get('/dogs/:id', dog_1.getDogsOfUser);
 router.get('/matches/:id', dog_1.getAllDogMatches);
-router.put('/dogs/:id', dog_1.putLikeDogController);
+router.put('/dogs/:id', dog_1.likeAndMatchController);
 exports.default = router;

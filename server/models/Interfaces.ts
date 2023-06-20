@@ -21,10 +21,14 @@ export interface IDog {
 }
 
 export interface IMessage {
-  id?:number;
-  sender:number;
-  receiver:number;
-  content:string;
-  createdAt?:Date;
-  updatedAt?:Date;
+  id?: number;
+  sender: number;
+  receiver: number;
+  content: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface IdObject {
+  id: number;
 }

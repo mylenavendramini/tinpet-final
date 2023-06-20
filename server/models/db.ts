@@ -21,7 +21,6 @@ const { Dog, User } = initModels(db);
 (async function authenticate() {
   try {
     await db.sync();
-
     await db.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {

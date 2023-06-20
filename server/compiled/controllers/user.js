@@ -20,8 +20,9 @@ function getUserController(ctx) {
             ctx.status = 200;
         }
         catch (error) {
+            console.log(error);
             ctx.status = 500;
-            ctx.body = { error: 'Internal server error' };
+            ctx.body = { error: 'Failed to retrieve user' };
         }
     });
 }
@@ -37,6 +38,7 @@ function createUserController(ctx) {
         catch (error) {
             console.log(error);
             ctx.status = 500;
+            ctx.body = { error: 'Failed to create user' };
         }
     });
 }
@@ -51,7 +53,7 @@ function loginController(ctx) {
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = JSON.stringify('Unable to find user');
+            ctx.body = { error: 'Failed to login' };
         }
     });
 }

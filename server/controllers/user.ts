@@ -9,8 +9,9 @@ async function getUserController(ctx: Context) {
     ctx.body = user;
     ctx.status = 200;
   } catch (error) {
+    console.log(error);
     ctx.status = 500;
-    ctx.body = { error: 'Internal server error' };
+    ctx.body = { error: 'Failed to retrieve user' };
   }
 }
 
@@ -23,6 +24,7 @@ async function createUserController(ctx: Context) {
   } catch (error) {
     console.log(error);
     ctx.status = 500;
+    ctx.body = { error: 'Failed to create user' };
   }
 }
 
@@ -34,7 +36,7 @@ async function loginController(ctx: Context) {
     ctx.status = 201;
   } catch (error) {
     ctx.status = 500;
-    ctx.body = JSON.stringify('Unable to find user');
+    ctx.body = { error: 'Failed to login' };
   }
 }
 
