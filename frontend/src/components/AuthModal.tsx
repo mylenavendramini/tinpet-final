@@ -11,10 +11,6 @@ const AuthModal = () => {
   const [error, setError] = useState('');
   const contexts = useContext(Context);
   const navigate = useNavigate();
-  const userId = Number(contexts?.user?.id) as number;
-  const handleClick = () => {
-    contexts?.updateModal();
-  };
 
   function handleRegister(e: FormEvent) {
     e.preventDefault();
@@ -37,30 +33,7 @@ const AuthModal = () => {
       }
     }
   }
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (isSignUp && password !== confirmPassword) {
-  //       setError('Passwords needs to match!');
-  //       return;
-  //     }
-  //     const response = await axios.post(
-  //       `http://localhost:3000/${isSignUp ? 'signup' : 'login'}`,
-  //       {
-  //         email,
-  //         password,
-  //       }
-  //     );
-  //     setCookies('AuthToken', response.data.token);
-  //     setCookies('UserId', response.data.userId);
-  //     const success = response.status === 201;
-  // if (success && isSignUp) navigate('/onboarding');
-  // if (success && !isSignUp) navigate('/dashboard');
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+
   return (
     <div className='overlay'>
       <div className='auth-modal'>

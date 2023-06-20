@@ -35,7 +35,7 @@ const Nav = () => {
 
   const logout = () => {
     contexts?.updateModal();
-    contexts?.updateSignUp();
+    contexts?.updateSignUp(false);
     contexts?.updateAuthenticated(false);
     localStorage.clear();
     navigate('/');
@@ -64,28 +64,30 @@ const Nav = () => {
                 Log In
               </button>
             ) : (
-              <button id='logout' className='btn-nav' onClick={logout}>
-                Log Out
-              </button>
+              <>
+                <button id='logout' className='btn-nav' onClick={logout}>
+                  Log Out
+                </button>
+                {myDogs?.map((dog, idx) => (
+                  <button
+                    className='btn-nav'
+                    onClick={() => handleClickDog(dog)}
+                    key={idx}
+                  >
+                    {dog.name}
+                  </button>
+                ))}
+                <button className='btn-nav' onClick={() => navigate('/dashboard')}>
+                  Start chat
+                </button>
+                <button
+                  className='btn-nav'
+                  onClick={() => navigate(`/onboarding/${userId}`)}
+                >
+                  Add new dog
+                </button>
+              </>
             )}
-            {myDogs?.map((dog, idx) => (
-              <button
-                className='btn-nav'
-                onClick={() => handleClickDog(dog)}
-                key={idx}
-              >
-                {dog.name}
-              </button>
-            ))}
-            <button className='btn-nav' onClick={() => navigate('/dashboard')}>
-              Start chat
-            </button>
-            <button
-              className='btn-nav'
-              onClick={() => navigate(`/onboarding/${userId}`)}
-            >
-              Add new dog
-            </button>
           </div>
         )}
       </div>

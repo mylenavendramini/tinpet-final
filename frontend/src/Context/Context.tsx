@@ -14,7 +14,7 @@ interface ContextType {
   updateUser: (newUser: User | null) => void;
   updateDogs: (newDog: Dog[] | null) => void;
   updateModal: () => void;
-  updateSignUp: () => void;
+  updateSignUp: (signup:boolean) => void;
   updateMyDogs: (myDog: Dog[]) => void;
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
@@ -46,8 +46,8 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateModal = () => {
     setShowModal(!showModal);
   };
-  const updateSignUp = () => {
-    setIsSignUp(!isSignUp);
+  const updateSignUp = (signup:boolean) => {
+    setIsSignUp(signup);
   };
   const updateMyDogs = (myDogs: Dog[]) => {
     setMyDogs(myDogs);

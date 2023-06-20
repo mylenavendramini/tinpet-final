@@ -40,6 +40,7 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
     });
   };
 
+
   useEffect(() => {
     getDogMatchesIds();
     getDogMatches();

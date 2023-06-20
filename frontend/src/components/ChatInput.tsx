@@ -9,7 +9,6 @@ const ChatInput = () => {
 
   const addMessage = async () => {
     const id = contexts?.currentDog?.id as number;
-    // const sender = contexts?.currentDog?.name as string
     const newMessage = {
       content: message,
       sender: id,

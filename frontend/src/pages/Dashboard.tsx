@@ -9,33 +9,16 @@ import { Context } from '../Context/Context';
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
   const { id } = useParams<{ id: string }>();
-  const parsedId = Number(id);
   const contexts = useContext(Context);
   const currentUser = contexts?.user;
   const currentDog = contexts?.currentDog as Dog;
   const currentDogId = contexts?.currentDog?.id as number;
 
-  // function getUser() {
-  //   apiService.getUser(parsedId).then((data) => {
-  //     contexts?.updateUser(data);
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-
-  //NOT USE:
-  // useEffect(() => {
-  //   if (user) {
-  //     getAllUsers();
-  //   }
-  // }, [user]);
 
   const updateMatches = async (otherDogId: number) => {
     apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
       if (theOtherDog.matches_dogs.includes(currentDog.id)) {
-        alert('Its a maaaatch');
+        // alert('Its a maaaatch');
       }
     });
   };
@@ -53,12 +36,9 @@ const Dashboard: React.FC = () => {
     console.log(name + ' left the screen!');
   };
 
-  console.log({ currentUser });
   const otherDogs = contexts?.dogs?.filter((dog) => {
     return dog?.userId !== currentUser?.id;
   });
-
-  console.log({ currentDog });
 
   return (
     <>

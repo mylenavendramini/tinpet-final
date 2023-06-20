@@ -1,21 +1,22 @@
-import { useContext, useState } from 'react';
-import AuthModal from '../components/AuthModal';
+import { useContext } from 'react';
 import Nav from '../components/Nav';
 import { useNavigate } from 'react-router';
 import { Context } from '../Context/Context';
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(true);
   const contexts = useContext(Context);
   const authenticated = contexts?.authenticated;
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    console.log('Create account clicked');
-    setShowModal(true);
-    setIsSignUp(true);
+  const handleAuth = (path:string) => {
+    if (path === 'register') {
+      contexts?.updateSignUp(true)
+    } else if (path === 'login') {
+      contexts?.updateSignUp(false)
+    }
+    navigate(`/${path}`)
+
   };
 
   return (
@@ -34,20 +35,18 @@ const Home = () => {
             <>
               <button
                 className='btn-primary'
-                onClick={() => navigate('/register')}
+                onClick={() => handleAuth('register')}
               >
                 Create Account
               </button>
               <button
                 className='btn-primary'
-                onClick={() => navigate('/login')}
+                onClick={() => handleAuth('login')}
               >
                 Login
               </button>
             </>
           )}
-
-          {showModal && <AuthModal />}
         </div>
       </div>
     </>

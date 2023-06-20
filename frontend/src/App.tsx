@@ -2,7 +2,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import { Dog } from './types/Types';
 import Login from './components/Login';
 import { useEffect, useContext, useState } from 'react';
 import { Context } from './Context/Context';
@@ -13,18 +13,38 @@ const App = () => {
   const contexts = useContext(Context);
   const [gotDogs, setGotDogs] = useState(false)
   const userId = contexts?.user?.id as number;
-  const myDogs = contexts?.myDogs;
+  const dogs = contexts?.dogs;
+  const matchedIds = contexts?.currentDog?.matches_dogs
+
 
   const getAllTheDogs = async () => {
     apiService.getDogsofUSer(userId).then((data) => {
       contexts?.updateMyDogs(data);
+      if(data.length > 0) {
+        contexts?.updateCurrentDog(data[0])
+      }
+      setGotDogs(true)
     });
   };
 
+  const login = async (email:string, password:string) => {
+    apiService.login(email, password).then((res) => {
+      contexts?.updateUser(res);
+    });
+  }
+
+  const getMatches = async () => {
+    const matchedDogs: Dog[] = [];
+    matchedIds?.forEach((id) => {
+      dogs?.map((dog) => {
+        if(dog.id === id) matchedDogs.push(dog)
+      })
+    })
+    contexts?.updateMatches(matchedDogs)
+  }
 
   useEffect(() => {
     if (contexts?.authenticated) {
-      console.log(contexts?.user);
       getAllTheDogs();
     } else {
       console.log('no users');
@@ -34,11 +54,11 @@ const App = () => {
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
+      getAllTheDogs();
       const { email, password } = JSON.parse(user);
+      login(email, password)
       contexts?.updateAuthenticated(true);
-      apiService.login(email, password).then((res) => {
-        contexts?.updateUser(res);
-      });
+      getMatches()
     } else {
       console.log('no users');
     }
@@ -51,8 +71,7 @@ const App = () => {
     });
   }, []);
 
-
-  if(gotDogs){
+  if (gotDogs) {
     return (
       <>
         <BrowserRouter>
@@ -67,6 +86,5 @@ const App = () => {
       </>
     );
   }
-
 };
 export default App;
