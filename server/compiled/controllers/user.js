@@ -47,7 +47,7 @@ function loginController(ctx) {
             const user = ctx.request.body;
             const res = yield (0, index_1.login)(user);
             ctx.body = res;
-            ctx.status = 200;
+            ctx.status = 201;
         }
         catch (error) {
             ctx.status = 500;

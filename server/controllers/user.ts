@@ -31,7 +31,7 @@ async function loginController(ctx: Context) {
     const user = ctx.request.body as IUser;
     const res = await login(user);
     ctx.body = res;
-    ctx.status = 200;
+    ctx.status = 201;
   } catch (error) {
     ctx.status = 500;
     ctx.body = JSON.stringify('Unable to find user');

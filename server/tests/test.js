@@ -1,8 +1,8 @@
 
 const { describe, expect, test } = require('@jest/globals')
 const { MockUser, MockDog } = require('./mocks');
-const { createUserController, getUserController } = require('../compiled/controllers/user')
-const { createDogController, getDogsOfUser } = require('../compiled/controllers/dog')
+const { createUserController, getUserController, loginController } = require('../compiled/controllers/user')
+const { createDogController, getDogsOfUser, getAllDogMatches, getAllDogsController, putLikeDogController } = require('../compiled/controllers/dog')
 const Sequelize = require('sequelize')
 const { initModels } = require('../compiled/models/associations');
 const Koa = require('koa');
@@ -38,9 +38,14 @@ const { Dog, User } = initModels(db_test);
 
 
 router.post('/user', createUserController);
-router.post('/dogs/:id', createDogController);
-router.get('/dogs/:id', getDogsOfUser);
+router.post('/login', loginController);
 router.get('/user/:id', getUserController);
+router.post('/dogs/:id', createDogController);
+router.get('/dogs', getAllDogsController);
+router.get('/dogs/:id', getDogsOfUser);
+router.put('/dogs/:id', putLikeDogController);
+router.get('/matches/:id', getAllDogMatches);
+
 
 
 router.get('/dogs/1', (ctx) => {
@@ -108,6 +113,15 @@ describe('User', () => {
       expect(response.statusCode).toEqual(200);
       expect(response.body.username).toEqual(MockUser.username);
     });
+    test('Login', async () => {
+      const mock = MockUser;
+      const response = await supertest(app.callback())
+        .post('/login',)
+        .send(mock);
+      expect(response.statusCode).toEqual(201);
+      expect(response.body.username).toEqual('Mike');
+      expect(typeof response.body.id).toEqual('number');
+    });
   })
 })
 
@@ -128,11 +142,25 @@ describe('Dog', () => {
     expect(typeof response.body.id).toEqual('number');
   });
 
+  test('Get all dogs', async () => {
+    const response = await supertest(app.callback())
+      .get('/dogs');
+    expect(response.statusCode).toEqual(200);
+    expect(response.body[0].name).toEqual(MockDog.name);
+  });
+
   test('Get dog by user id', async () => {
     const response = await supertest(app.callback())
       .get('/dogs/1');
     expect(response.statusCode).toEqual(200);
     expect(response.body[0].name).toEqual(MockDog.name);
+  });
+
+  test('Get all matches', async () => {
+    const response = await supertest(app.callback())
+      .get('/dogs/1');
+    expect(response.statusCode).toEqual(200);
+    expect(response.body[0].matches_dogs).toEqual([]);
   });
 })
 
