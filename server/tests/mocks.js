@@ -1,4 +1,5 @@
 'use strict';
+const { createDog } = require('../compiled/models/index')
 
 const MockUser = {
   username: 'Mike',
@@ -31,6 +32,8 @@ const MockUserOutput = {
   }),
 }
 
+const MockFnCreateDog = jest.fn(createDog(MockDog, 1));
+
 // const MockDogOutput = {
 //   id: 1,
 //   name: 'Lily',
@@ -49,4 +52,4 @@ const MockUserOutput = {
 
 
 
-module.exports = { MockUser, MockDog, }
+module.exports = { MockUser, MockDog, MockFnCreateDog }

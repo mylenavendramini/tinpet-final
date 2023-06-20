@@ -1,8 +1,9 @@
 
 const { describe, expect, test } = require('@jest/globals')
-const { MockUser, MockDog } = require('./mocks');
+const { MockUser, MockDog, MockFnCreateDog } = require('./mocks');
 const { createUserController, getUserController, loginController } = require('../compiled/controllers/user')
 const { createDogController, getDogsOfUser, getAllDogMatches, getAllDogsController, putLikeDogController } = require('../compiled/controllers/dog')
+const { createDog } = require('../compiled/models/index')
 const Sequelize = require('sequelize')
 const { initModels } = require('../compiled/models/associations');
 const Koa = require('koa');
@@ -16,14 +17,6 @@ const app = new Koa();
 const router = new Router();
 const PORT = 3001;
 
-router.get('/', (ctx) => {
-  ctx.body = 'Hello World';
-});
-
-router.post('/hello', async (ctx) => {
-  const user = ctx.request.body;
-  ctx.body = user;
-});
 let db_test = new Sequelize(
   'dog_test',
   'postgres',
@@ -45,13 +38,6 @@ router.get('/dogs', getAllDogsController);
 router.get('/dogs/:id', getDogsOfUser);
 router.put('/dogs/:id', putLikeDogController);
 router.get('/matches/:id', getAllDogMatches);
-
-
-
-router.get('/dogs/1', (ctx) => {
-  ctx.body = 'Hello World';
-});
-
 
 app
   .use(bodyParser())
@@ -131,8 +117,9 @@ describe('Dog', () => {
     const response = await supertest(app.callback())
       .post('/user',)
       .send(mock);
+
   })
-  test('Create dog', async () => {
+  test('Create dog returns a dog', async () => {
     const mock = MockDog;
     const response = await supertest(app.callback())
       .post('/dogs/1',)
@@ -142,6 +129,23 @@ describe('Dog', () => {
     expect(typeof response.body.id).toEqual('number');
   });
 
+  test.only('Dog.create is called with correct arguments and returns expected result', async () => {
+
+    Dog.create = jest.fn().mockResolvedValue(MockDog);
+    const result = await createDog(MockDog, 1);
+
+    expect(Dog.create).toHaveBeenCalledWith({
+      name: 'Lily',
+      age: 3,
+      gender: 'female',
+      about: 'grumpy dog',
+      url: '/',
+      liked_dog: [],
+      matches_dogs: [],
+    });
+    expect()
+  });
+
   test('Get all dogs', async () => {
     const response = await supertest(app.callback())
       .get('/dogs');
@@ -149,126 +153,28 @@ describe('Dog', () => {
     expect(response.body[0].name).toEqual(MockDog.name);
   });
 
-  test('Get dog by user id', async () => {
+  test('Get dog by user id returns a dog', async () => {
     const response = await supertest(app.callback())
       .get('/dogs/1');
     expect(response.statusCode).toEqual(200);
     expect(response.body[0].name).toEqual(MockDog.name);
   });
 
-  test('Get all matches', async () => {
+  test('Get all matches returns the dog matches', async () => {
     const response = await supertest(app.callback())
       .get('/dogs/1');
     expect(response.statusCode).toEqual(200);
     expect(response.body[0].matches_dogs).toEqual([]);
   });
-})
 
-describe('Hello World', () => {
-  test('Get Hello world works', async () => {
-    const response = await supertest(app.callback()).get('/');
-    expect(response.status).toBe(200);
-    expect(response.text).toBe('Hello World');
-  });
-
-  test('Create Hello world works', async () => {
-    const title = 'Hello World';
-    const response = await supertest(app.callback())
-      .post('/hello',)
-      .send({ title });
-    expect(JSON.parse(response.text).title).toBe(title);
-
-  });
+  // test('Like another dog', async () => {
+  //   const mock = MockDog;
+  //   const response = await supertest(app.callback())
+  //     .post('/dogs/1',)
+  //     .send(mock);
+  //   expect(response.statusCode).toEqual(201);
+  //   expect(response.body.name).toEqual('Lily');
+  // });
 })
 
 
-
-// test('Create user works', async () => {
-//   const title = {
-//     id: 1,
-//     username: 'Mike',
-//     email: 'mike@example.com',
-//     password: 'mockpassword'
-//   };
-//   const response = await supertest(app.callback())
-//     .post('/user',)
-//     .send(title);
-//   expect(response.body.username).toEqual('Mike');
-// });
-
-
-
-// describe('POST /user', function () {
-//   it('user.name should return "mike"', async () => {
-//     const response = await supertest(app.callback())
-//       .post('/user')
-//       .send({
-//         username: 'Mike',
-//         email: 'mike@example.com',
-//         password: 'mockpassword'
-//       });
-//     expect(response.status).toBe(201);
-//     expect(response.body).toBe({
-//       id: 1,
-//       username: 'Mike',
-//       email: 'mike@example.com',
-//       password: 'mockpassword'
-//     });
-//   });
-// });
-
-
-// describe('get user', () => {
-//   it('should return the user', async () => {
-//     // const response = await request(server)
-//     const response = await supertest(server)
-//       // const response = await request('http://localhost:3001')
-//       .get('/user/1')
-//     // .set('Accept', 'application/json')
-//     expect(response.status).toEqual(200);
-//     expect(response.body).toEqual(MockUser);
-//   });
-
-// })
-
-// describe('create user', () => {
-//   it('should create a new user', async () => {
-//     // create = jest.fn();
-//     User.create = jest.fn().mockResolvedValueOnce(MockUser);
-
-//     // input user object:
-//     const user = {
-//       username: 'Mike',
-//       email: 'mike@example.com',
-//       password: 'mockpassword',
-//     };
-
-//     // create user with createUser function (models/index)
-//     const newUser = await createUser(MockUser);
-//     console.log(newUser)
-
-//     // check the parameters
-//     expect(User.create).toHaveBeenCalledWith(MockUser);
-//     // expect(User.create).toHaveBeenCalledWith({
-//     //   id: 1,
-//     //   username: 'Mike',
-//     //   email: 'mike@example.com',
-//     //   password: 'mockpassword',
-//     //   createdAt: new Date(),
-//     //   updatedAt: new Date(),
-//     // });
-
-//     // check the returned user
-//     expect(newUser).toEqual({
-//       id: 1,
-//       username: 'Mike',
-//       email: 'mike@example.com',
-//       password: 'mockpassword',
-//       createdAt: expect.any(Date),
-//       updatedAt: expect.any(Date),
-//     });
-//   })
-
-
-
-// })
