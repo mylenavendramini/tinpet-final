@@ -69,9 +69,6 @@ const Dashboard: React.FC = () => {
                         </h3>
                       </div>
                     </TinderCard>
-                    {/*<button onClick={() => swiped('right', dog)}>
-                      IOAUSHDOUISAHDUIAD
-                </button>*/}
                   </>
                 ))}
 

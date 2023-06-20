@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { User } from '../types/Types';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
@@ -91,21 +90,6 @@ const Nav = () => {
           </div>
         )}
       </div>
-
-      {/*contexts?.authenticated ? (
-        <button id='login' className='btn-nav' onClick={login}>
-          Log In
-        </button>
-      ) : (
-        <button
-          id='logout'
-          className='btn-nav'
-          onClick={logout}
-          disabled={contexts?.showModal}
-        >
-          Log Out
-        </button>
-      )*/}
     </nav>
   );
 };
