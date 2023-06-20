@@ -26,30 +26,33 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
       .catch((error) => console.log(error));
   };
 
-  const getDogMatches = () => {
-    apiService.getDogs().then((data) => {
-      const matchedDogs: Dog[] = [];
-      console.log({ matchedIds });
-      matchedIds.forEach((matchId) => {
-        data.filter((dog) => {
-          if (dog.id === matchId) matchedDogs.push(dog);
-        });
-      });
-      setMatchedProfiles(matchedDogs);
-      setGotMatches(true)
-    });
-  };
+  console.log(contexts?.matchedDogs, currentDog)
+
+  // const getDogMatches = () => {
+  //   apiService.getDogs().then((data) => {
+  //     const matchedDogs: Dog[] = [];
+  //     console.log({ matchedIds });
+  //     matchedIds.forEach((matchId) => {
+  //       data.filter((dog) => {
+  //         if (dog.id === matchId) matchedDogs.push(dog);
+  //       });
+  //     });
+  //     setMatchedProfiles(matchedDogs);
+  //     setGotMatches(true)
+  //   });
+  // };
 
 
   useEffect(() => {
     getDogMatchesIds();
-    getDogMatches();
+    // getDogMatches();
   }, []);
 
-  if(gotMatches) {
-    return (
-      <div className='matches-display'>
-        {matchedProfiles?.map((matchProfile, idx) => (
+
+  return (
+    <div className='matches-display'>
+      {contexts?.matchedDogs?.map((matchProfile, idx) => {
+        return (
           <div
             key={idx}
             className='match-card'
@@ -60,9 +63,9 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
             </div>
             <h3>{matchProfile?.name}</h3>
           </div>
-        ))}
-      </div>
-    );
-  }
+        )
+      })}
+    </div>
+  );
 };
 export default MatchesDisplay;

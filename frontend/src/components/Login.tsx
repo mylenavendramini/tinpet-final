@@ -32,7 +32,7 @@ const Login = () => {
           }
         });
       } catch (e) {
-        console.log('OMEGA LUL your login function failed');
+        setError('OMEGA LUL your login function failed');
       }
     }
   }

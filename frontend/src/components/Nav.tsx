@@ -11,9 +11,7 @@ const Nav = () => {
     setOpen(!open);
   };
   const contexts = useContext(Context);
-  console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
-  console.log(userId);
   const myDogs = contexts?.myDogs;
   const matchedIds = contexts?.currentDog?.matches_dogs
   const dogs = contexts?.dogs;
@@ -24,7 +22,20 @@ const Nav = () => {
     });
   };
 
-  const getMatches = async () => {
+  // console.log(contexts?.currentDog?.matches_dogs)
+  // const getMatches = () => {
+  //   apiService.getMatches(contexts?.currentDog?.id as number).then((res) => {
+  //     const matchedDogs: Dog[] = [];
+  //     console.log(res)
+  //     res.forEach((id:number) => {
+  //     dogs?.map((dog) => {
+  //       if(dog.id === id) matchedDogs.push(dog)
+  //     })
+  //   })
+  //   contexts?.updateMatches(matchedDogs)
+  //   }).then((res) => navigate('/dashboard'))
+
+  const getMatches = () => {
     const matchedDogs: Dog[] = [];
     matchedIds?.forEach((id) => {
       dogs?.map((dog) => {
@@ -33,7 +44,6 @@ const Nav = () => {
     })
     contexts?.updateMatches(matchedDogs)
   }
-
 
   useEffect(() => {
     if (contexts?.authenticated) {
@@ -59,10 +69,9 @@ const Nav = () => {
 
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
+    getMatches()
     navigate('/dashboard');
   };
-
-  console.log(contexts?.authenticated, 'auth');
 
   return (
     <nav>

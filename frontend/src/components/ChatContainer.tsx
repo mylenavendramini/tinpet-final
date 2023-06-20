@@ -12,42 +12,35 @@ interface ChatContainerProps {
 }
 
 const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
-  const [clickedMatches, setClickedMatches] = useState(false);
   const [clickedChat, setClickedChat] = useState(false);
   const[fetchedMatches, setFetchedMatches] = useState(false)
   const[fetchedMessages, setFetchedMessages] = useState(false)
   const context = useContext(Context);
   const myDogs = context?.myDogs;
 
-  useEffect(() => {
-    apiService.getMatches(context?.currentDog?.id as number).then((res) => {
-      context?.updateMatches(res);
-      console.log(res, 'RESULT')
-    });
-  }, []);
+  // useEffect(() => {
+  //   apiService.getMatches(context?.currentDog?.id as number).then((res) => {
+  //     context?.updateMatches(res);
+  //     console.log(res, 'RESULT')
+  //   });
+  // }, []);
 
   return (
     <div className='chat-container'>
-      {/*TODO:*/}
       <ChatHeader />
-      {/* <ChatHeader user={user} /> */}
       <div>
-        <button className='option' onClick={() => setClickedMatches(true)}>
-        {/* <button className='option' onClick={() => setClickedDog(null)}> */}
+        <button className='option' onClick={() => setClickedChat(false)}>
           Matches
         </button>
-        <button className='option' onClick={() => setClickedChat(!clickedChat)}>
+        <button className='option' onClick={() => setClickedChat(true)}>
           Chat
         </button>
       </div>
 
-      {clickedMatches && (
+      {!clickedChat && (
         <MatchesDisplay />
       )}
-
-      {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
       {clickedChat && <ChatDisplay />}
-      {/* ChatDisplay wont need any props cause its now using Context to access the props it needs */}
     </div>
   );
 };
