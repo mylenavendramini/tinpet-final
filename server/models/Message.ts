@@ -30,7 +30,7 @@ export class Message extends Model<
       content: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       sender: {
         type: DataTypes.INTEGER,

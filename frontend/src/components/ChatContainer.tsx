@@ -14,12 +14,15 @@ interface ChatContainerProps {
 const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
   const [clickedMatches, setClickedMatches] = useState(false);
   const [clickedChat, setClickedChat] = useState(false);
+  const[fetchedMatches, setFetchedMatches] = useState(false)
+  const[fetchedMessages, setFetchedMessages] = useState(false)
   const context = useContext(Context);
   const myDogs = context?.myDogs;
 
   useEffect(() => {
     apiService.getMatches(context?.currentDog?.id as number).then((res) => {
       context?.updateMatches(res);
+      console.log(res, 'RESULT')
     });
   }, []);
 

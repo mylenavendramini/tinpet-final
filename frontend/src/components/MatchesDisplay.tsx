@@ -10,18 +10,11 @@ interface MatchesDisplayProps {
   // setClickedDog: (dog: Dog) => void;
 }
 const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
-  const contexts = useContext(Context);
-  const setClickedDog = contexts?.updateSelectedDog as Function;
-  const matches = contexts?.matchedDogs as Dog[];
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
-  const [matchedDog, setMatchedDog] = useState<Dog>();
-  const context = useContext(Context);
-  const updateDog = context?.updateDogs;
-  const currentDog = context?.currentDog;
-  const myDogs = context?.myDogs;
-  const dogName = myDogs?.map((dog) => dog.name);
-  const dogUrl = myDogs?.map((dog) => dog.url);
+  const [gotMatches, setGotMatches] = useState(false)
+  const contexts = useContext(Context);
+  const currentDog = contexts?.currentDog;
   const currentDogId = Number(currentDog?.id);
 
   const getDogMatchesIds = async () => {
@@ -43,29 +36,32 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
         });
       });
       setMatchedProfiles(matchedDogs);
+      setGotMatches(true)
     });
   };
 
   useEffect(() => {
     getDogMatchesIds();
     getDogMatches();
-  }, [matches]);
+  }, []);
 
-  return (
-    <div className='matches-display'>
-      {matchedProfiles?.map((matchProfile, idx) => (
-        <div
-          key={idx}
-          className='match-card'
-          onClick={() => context?.updateSelectedDog(matchProfile)}
-        >
-          <div className='img-container'>
-            <img src={matchProfile?.url} alt='matched photo' />
+  if(gotMatches) {
+    return (
+      <div className='matches-display'>
+        {matchedProfiles?.map((matchProfile, idx) => (
+          <div
+            key={idx}
+            className='match-card'
+            onClick={() => contexts?.updateSelectedDog(matchProfile)}
+          >
+            <div className='img-container'>
+              <img src={matchProfile?.url} alt='matched photo' />
+            </div>
+            <h3>{matchProfile?.name}</h3>
           </div>
-          <h3>{matchProfile?.name}</h3>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
+  }
 };
 export default MatchesDisplay;

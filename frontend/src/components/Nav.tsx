@@ -23,7 +23,6 @@ const Nav = () => {
     });
   };
 
-  console.log(contexts?.user, 'NAV');
 
   useEffect(() => {
     if (contexts?.authenticated) {

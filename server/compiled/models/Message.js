@@ -14,7 +14,7 @@ class Message extends sequelize_1.Model {
             content: {
                 type: sequelize_1.DataTypes.STRING,
                 allowNull: false,
-                unique: true,
+                unique: false,
             },
             sender: {
                 type: sequelize_1.DataTypes.INTEGER,

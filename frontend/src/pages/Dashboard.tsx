@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
     return dog?.userId !== currentUser?.id;
   });
 
-  console.log({ otherDogs });
+  console.log({ currentDog });
 
   return (
     <>
