@@ -12,18 +12,18 @@ const MyDogs = () => {
   const userId = contexts?.user?.id as number;
   const navigate = useNavigate();
 
-  console.log({ myDogs });
+  // console.log({ myDogs });
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
-    navigate('/dashboard');
+    navigate(`/dashboard/${dog.id}`);
   };
 
   const getAllTheDogs = async () => {
     apiService.getDogsofUSer(userId).then((data) => {
       contexts?.updateMyDogs(data);
-      if (data.length > 0) {
-        contexts?.updateCurrentDog(data[0]);
-      }
+      // if (data.length > 0) {
+      //   contexts?.updateCurrentDog(data[0]);
+      // }
       setGotDogs(true);
     });
   };

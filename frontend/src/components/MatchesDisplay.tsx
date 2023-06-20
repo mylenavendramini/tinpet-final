@@ -13,20 +13,40 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [gotMatches, setGotMatches] = useState(false)
+  const [allMatches, setAllMatches] = useState<Dog[]>([])
   const contexts = useContext(Context);
+  const dogs = contexts?.dogs
   const currentDog = contexts?.currentDog;
   const currentDogId = Number(currentDog?.id);
 
+  //maybe do the filter here cause this one seems
+  //to be up to date and changes on time
+
   const getDogMatchesIds = async () => {
+    const matchedProfile = [] as Dog[]
     apiService
       .getMatches(currentDogId)
       .then((data) => {
         setMatchedIds(data);
+        matchedIds.forEach((dogId) => {
+          dogs?.map((dog) => {
+            if (dog.id === dogId) {
+              matchedProfile.push(dog)
+            }
+          })
+        })
+        setMatchedProfiles([...matchedProfile])
       })
       .catch((error) => console.log(error));
   };
 
-  console.log(contexts?.matchedDogs, currentDog)
+  // getDogMatchesIds()
+
+  console.log(matchedProfiles, currentDogId)
+
+  // setAllMatches(contexts?.matchedDogs as Dog[])
+
+  // console.log(contexts?.matchedDogs, currentDog)
 
   // const getDogMatches = () => {
   //   apiService.getDogs().then((data) => {
@@ -51,7 +71,7 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
 
   return (
     <div className='matches-display'>
-      {contexts?.matchedDogs?.map((matchProfile, idx) => {
+      {matchedProfiles.map((matchProfile, idx) => {
         return (
           <div
             key={idx}

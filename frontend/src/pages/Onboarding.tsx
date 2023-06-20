@@ -13,17 +13,6 @@ const Onboarding = () => {
   const parsedId = Number(id);
   const contexts = useContext(Context);
   const myDogs = contexts?.myDogs;
-
-  const [cookies, setCookies, removeCookies] = useCookies(['user']);
-  // const [formData, setFormData] = useState<Dog>({
-  //   name: '',
-  //   age: 0,
-  //   gender: '',
-  //   url: '',
-  //   about: '',
-  //   liked_dog: [],
-  //   matches_dogs: [],
-  // });
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState('');
@@ -32,7 +21,7 @@ const Onboarding = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submitted');
+    // console.log('Submitted');
     const newDog = {
       name,
       age,
@@ -42,14 +31,12 @@ const Onboarding = () => {
       liked_dog: [],
       matches_dogs: [],
     };
-    const id = contexts?.user?.id as number;
-    console.log(id);
-    console.log(contexts?.user);
+    const id = contexts?.currentDog?.id as number;
+    // console.log(contexts?.user);
     apiService.createDog(id, newDog).then((data) => {
-      console.log(data);
       contexts?.myDogs.push(data);
       contexts?.updateCurrentDog(data)
-      navigate('/dashboard');
+      navigate(`/dashboard/${id}`);
     });
   };
 

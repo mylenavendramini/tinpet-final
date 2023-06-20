@@ -4,10 +4,12 @@ import { Dog, User } from '../types/Types';
 import apiService from '../services/APIServices';
 import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
+import { useParams } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
   const contexts = useContext(Context);
+  const dogId = useParams()
   const currentUser = contexts?.user;
   const currentDog = contexts?.currentDog as Dog;
   const currentDogId = contexts?.currentDog?.id as number;
@@ -22,7 +24,7 @@ const Dashboard: React.FC = () => {
   };
 
   const swiped = (direction: string, otherDogId: number) => {
-    console.log(direction);
+    // console.log(direction);
     if (direction == 'right') {
       updateMatches(otherDogId);
     }
@@ -42,7 +44,7 @@ const Dashboard: React.FC = () => {
     <>
       {currentUser && (
         <div className='dashboard'>
-          <ChatContainer user={currentUser as User} />
+          <ChatContainer />
           <div className='swiper-container'>
             {
               <div className='card-container'>

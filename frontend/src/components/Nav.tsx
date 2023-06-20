@@ -11,9 +11,9 @@ const Nav = () => {
     setOpen(!open);
   };
   const contexts = useContext(Context);
-  console.log(contexts?.user);
+  // console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
-  console.log(userId);
+  // console.log(userId);
   const myDogs = contexts?.myDogs;
   const matchedIds = contexts?.currentDog?.matches_dogs
   const dogs = contexts?.dogs;
@@ -24,8 +24,9 @@ const Nav = () => {
     });
   };
 
-  const getMatches = async () => {
-    console.log('called', matchedIds, contexts?.currentDog)
+  const getMatches = (dogId:number) => {
+    // console.log({dogId})
+    // console.log(contexts?.currentDog)
     const matchedDogs: Dog[] = [];
     matchedIds?.forEach((id) => {
       dogs?.map((dog) => {
@@ -38,7 +39,7 @@ const Nav = () => {
 
   useEffect(() => {
     if (contexts?.authenticated) {
-      console.log(contexts?.user);
+      // console.log(contexts?.user);
       getAllUserDogs();
     } else {
       console.log('no users');
@@ -59,9 +60,14 @@ const Nav = () => {
   const navigate = useNavigate();
 
   const handleClickDog = (dog: Dog) => {
+    //for some reason it doesnt update immediately
+    //and when it goes to the dashboard it would still hold the previous value
+    //even though we have updated it
     contexts?.updateCurrentDog(dog);
-    getMatches()
-    navigate('/dashboard');
+    console.log(contexts?.currentDog)
+    console.log(dog)
+    getMatches(dog.id as number)
+    navigate(`/dashboard/${dog.id}`);
   };
 
   return (
@@ -79,15 +85,18 @@ const Nav = () => {
                 <button id='logout' className='btn-nav' onClick={logout}>
                   Log Out
                 </button>
-                {myDogs?.map((dog, idx) => (
-                  <button
+                {myDogs?.map((dog, idx) => {
+                  return (
+                    <button
                     className='btn-nav'
                     onClick={() => handleClickDog(dog)}
+                    id={`${dog.id}`}
                     key={idx}
                   >
                     {dog.name}
                   </button>
-                ))}
+                  )
+                })}
                 <button className='btn-nav' onClick={() => navigate('/dashboard')}>
                   Start chat
                 </button>

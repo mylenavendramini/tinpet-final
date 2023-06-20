@@ -7,11 +7,8 @@ import { Context } from '../Context/Context';
 import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
-interface ChatContainerProps {
-  user: User;
-}
 
-const ChatContainer: React.FC<ChatContainerProps> = ({ user }) => {
+const ChatContainer = () => {
   const [clickedChat, setClickedChat] = useState(false);
   const[fetchedMatches, setFetchedMatches] = useState(false)
   const[fetchedMessages, setFetchedMessages] = useState(false)

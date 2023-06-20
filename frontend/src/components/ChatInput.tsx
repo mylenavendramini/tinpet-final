@@ -14,10 +14,10 @@ const ChatInput = () => {
       sender: id,
       receiver: contexts?.selectedDog?.id as number,
     };
-    console.log(contexts?.selectedDog, contexts?.currentDog)
+    // console.log(contexts?.selectedDog, contexts?.currentDog)
     apiService.sendMessage(id, newMessage).then((res) => {
       contexts?.updateMessages([...contexts.messages, res]);
-      console.log(contexts?.messages)
+      // console.log(contexts?.messages)
     });
   };
 

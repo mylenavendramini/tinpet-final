@@ -20,7 +20,7 @@ const Login = () => {
     } else {
       try {
         apiService.login(email, password).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.username) {
             contexts?.updateAuthenticated(true);
             contexts?.updateUser(res);

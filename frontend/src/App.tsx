@@ -18,10 +18,11 @@ const App = () => {
   const getAllTheDogs = async () => {
     apiService.getDogsofUSer(userId).then((data) => {
       contexts?.updateMyDogs(data);
-      if (data.length > 0) {
-        contexts?.updateCurrentDog(data[0]);
-      }
+      // if (data.length > 0) {
+      //   contexts?.updateCurrentDog(data[0]);
+      // }
       // setGotDogs(true);
+      console.log('APP REFETCHED')
     });
   };
 
@@ -57,7 +58,8 @@ const App = () => {
     });
   }, []);
 
-  console.log(contexts?.myDogs, 'here');
+  // console.log(contexts?.myDogs, 'here');
+  
 
   return (
     <>
@@ -65,7 +67,7 @@ const App = () => {
         <Routes>
           {<Route path='/' element={<Home />} />}
           {<Route path='/myDogs' element={<MyDogs />} />}
-          {<Route path='/dashboard' element={<Dashboard />} />}
+          {<Route path='/dashboard/:id' element={<Dashboard />} />}
           {<Route path='/onboarding/:id' element={<Onboarding />} />}
           {<Route path='/login' element={<Login />} />}
           {<Route path='/register' element={<AuthModal />} />}
