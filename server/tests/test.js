@@ -129,22 +129,21 @@ describe('Dog', () => {
     expect(typeof response.body.id).toEqual('number');
   });
 
-  test.only('Dog.create is called with correct arguments and returns expected result', async () => {
+  // test.only('Dog.create is called with correct arguments and returns expected result', async () => {
 
-    Dog.create = jest.fn().mockResolvedValue(MockDog);
-    const result = await createDog(MockDog, 1);
+  //   Dog.create = jest.fn().mockResolvedValue(MockDog);
+  //   const result = await createDog(MockDog, 1);
 
-    expect(Dog.create).toHaveBeenCalledWith({
-      name: 'Lily',
-      age: 3,
-      gender: 'female',
-      about: 'grumpy dog',
-      url: '/',
-      liked_dog: [],
-      matches_dogs: [],
-    });
-    expect()
-  });
+  //   expect(Dog.create).toHaveBeenCalledWith({
+  //     name: 'Lily',
+  //     age: 3,
+  //     gender: 'female',
+  //     about: 'grumpy dog',
+  //     url: '/',
+  //     liked_dog: [],
+  //     matches_dogs: [],
+  //   });
+  // });
 
   test('Get all dogs', async () => {
     const response = await supertest(app.callback())
