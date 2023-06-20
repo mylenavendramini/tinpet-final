@@ -76,6 +76,8 @@ nav .logo-container .logo {
 }
 
 nav .btn-nav {
+  display: flex;
+  align-items: center;
   color: #025464;
   background-color: #fbffdc;
   font-size: 1rem;
@@ -90,9 +92,22 @@ nav .btn-nav:disabled {
   color: #025464;
 }
 
+nav .btn-nav span {
+  margin-left: 0.5rem;
+}
+
+nav .btn-nav.blue {
+  background-color: #025464;
+  color: #fbffdc;
+}
+
 nav .dropdown-btns {
   display: flex;
   flex-direction: column;
+}
+
+nav .dropdown-btns button {
+  margin: 0.3rem 0;
 }
 
 /* HomePage */

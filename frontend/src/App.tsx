@@ -59,21 +59,19 @@ const App = () => {
 
   console.log(contexts?.myDogs, 'here');
 
-  if (gotDogs) {
-    return (
-      <>
-        <BrowserRouter>
-          <Routes>
-            {<Route path='/' element={<Home />} />}
-            {<Route path='/myDogs' element={<MyDogs />} />}
-            {<Route path='/dashboard' element={<Dashboard />} />}
-            {<Route path='/onboarding/:id' element={<Onboarding />} />}
-            {<Route path='/login' element={<Login />} />}
-            {<Route path='/register' element={<AuthModal />} />}
-          </Routes>
-        </BrowserRouter>
-      </>
-    );
-  }
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          {<Route path='/' element={<Home />} />}
+          {<Route path='/myDogs' element={<MyDogs />} />}
+          {<Route path='/dashboard' element={<Dashboard />} />}
+          {<Route path='/onboarding/:id' element={<Onboarding />} />}
+          {<Route path='/login' element={<Login />} />}
+          {<Route path='/register' element={<AuthModal />} />}
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 };
 export default App;

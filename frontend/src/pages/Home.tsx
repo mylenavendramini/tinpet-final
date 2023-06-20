@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import Nav from '../components/Nav';
 import { useNavigate } from 'react-router';
 import { Context } from '../Context/Context';
-import MyDogs from '../components/Mydogs';
 
 const Home = () => {
   const contexts = useContext(Context);

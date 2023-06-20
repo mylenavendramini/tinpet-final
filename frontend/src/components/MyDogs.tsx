@@ -3,6 +3,7 @@ import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router';
 import { Dog } from '../types/Types';
 import apiService from '../services/APIServices';
+import Nav from './Nav';
 
 const MyDogs = () => {
   const [gotDogs, setGotDogs] = useState(false);
@@ -38,6 +39,7 @@ const MyDogs = () => {
   return (
     <>
       <div className='overlay'>
+        <Nav />
         <h2 id='my-dogs-title'>My dogs</h2>
         <div className='my-dogs-container'>
           {gotDogs &&
