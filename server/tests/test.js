@@ -1,8 +1,8 @@
 
 const { describe, expect, test } = require('@jest/globals')
-const { MockDog, MockUser } = require('./mocks');
-const { createUserController, getDogsOfUser } = require('../compiled/controllers/user')
-const { createDogController } = require('../compiled/controllers/dog')
+const { MockUser, MockDog } = require('./mocks');
+const { createUserController, getUserController } = require('../compiled/controllers/user')
+const { createDogController, getDogsOfUser } = require('../compiled/controllers/dog')
 const Sequelize = require('sequelize')
 const { initModels } = require('../compiled/models/associations');
 const Koa = require('koa');
@@ -36,50 +36,17 @@ let db_test = new Sequelize(
 );
 const { Dog, User } = initModels(db_test);
 
-// router.post('/user', async (ctx) => {
-//   const user = ctx.request.body;
-//   const { username, email, password } = user;
-//   try {
-//     const newUser = await User.create({
-//       username,
-//       email,
-//       password,
-//     });
-//     ctx.body = newUser;
-//     ctx.status = 201;
-//   } catch (error) {
-//     console.log(error)
-//   }
-// });
 
 router.post('/user', createUserController);
 router.post('/dogs/:id', createDogController);
 router.get('/dogs/:id', getDogsOfUser);
+router.get('/user/:id', getUserController);
 
-// router.post('/dogs/2', async (ctx) => {
-//   console.log('Start here before:')
-//   try {
-//     console.log('Start here:')
-//     const user = await User.findOne({
-//       where: { id: 2 },
-//       include: { model: Dog, as: 'dogs' },
-//     });
-//     console.log({ user })
-//     console.log(user?.dogs);
-//     const dogs = user.dogs;
-//     console.log({ dogs })
-//     ctx.body = dogs;
-//     ctx.status = 201;
-//   } catch (error) {
-//     console.log(error)
-//   }
-// });
 
 router.get('/dogs/1', (ctx) => {
   ctx.body = 'Hello World';
 });
 
-// router.post('/user', createUserController);
 
 app
   .use(bodyParser())
@@ -127,6 +94,21 @@ describe('User', () => {
     expect(response.body.username).toEqual('Mike');
     expect(typeof response.body.id).toEqual('number');
   });
+
+  describe('Get user', () => {
+    beforeEach(async () => {
+      const mock = MockUser;
+      const response = await supertest(app.callback())
+        .post('/user',)
+        .send(mock);
+    });
+    test('Get user', async () => {
+      const response = await supertest(app.callback())
+        .get('/user/1');
+      expect(response.statusCode).toEqual(200);
+      expect(response.body.username).toEqual(MockUser.username);
+    });
+  })
 })
 
 describe('Dog', () => {
@@ -150,8 +132,7 @@ describe('Dog', () => {
     const response = await supertest(app.callback())
       .get('/dogs/1');
     expect(response.statusCode).toEqual(200);
-    console.log(response)
-    expect(response.body).toEqual(MockDog);
+    expect(response.body[0].name).toEqual(MockDog.name);
   });
 })
 
