@@ -6,17 +6,15 @@ import { Context } from '../Context/Context';
 const Home = () => {
   const contexts = useContext(Context);
   const authenticated = contexts?.authenticated;
-
   const navigate = useNavigate();
 
-  const handleAuth = (path:string) => {
+  const handleAuth = (path: string) => {
     if (path === 'register') {
-      contexts?.updateSignUp(true)
+      contexts?.updateSignUp(true);
     } else if (path === 'login') {
-      contexts?.updateSignUp(false)
+      contexts?.updateSignUp(false);
     }
-    navigate(`/${path}`)
-
+    navigate(`/${path}`);
   };
 
   return (
@@ -30,6 +28,9 @@ const Home = () => {
             you can contact other people who are also looking for friends for
             their pets, where you can make friends .... among other things...
           </p>
+          <button className='btn-primary' onClick={() => navigate('/myDogs')}>
+            See my dogs
+          </button>
 
           {!authenticated && (
             <>

@@ -1,5 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import logo from '../assets/dog-face-svgrepo-com.svg';
+import HomeIcon from '@mui/icons-material/Home';
+import PetsIcon from '@mui/icons-material/Pets';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ChatIcon from '@mui/icons-material/Chat';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
@@ -13,7 +17,7 @@ const Nav = () => {
   const contexts = useContext(Context);
   const userId = contexts?.user?.id as number;
   const myDogs = contexts?.myDogs;
-  const matchedIds = contexts?.currentDog?.matches_dogs
+  const matchedIds = contexts?.currentDog?.matches_dogs;
   const dogs = contexts?.dogs;
 
   const getAllUserDogs = async () => {
@@ -39,11 +43,11 @@ const Nav = () => {
     const matchedDogs: Dog[] = [];
     matchedIds?.forEach((id) => {
       dogs?.map((dog) => {
-        if(dog.id === id) matchedDogs.push(dog)
-      })
-    })
-    contexts?.updateMatches(matchedDogs)
-  }
+        if (dog.id === id) matchedDogs.push(dog);
+      });
+    });
+    contexts?.updateMatches(matchedDogs);
+  };
 
   useEffect(() => {
     if (contexts?.authenticated) {
@@ -79,32 +83,42 @@ const Nav = () => {
         <img className='logo' src={logo} onClick={handleOpen} />
         {open && (
           <div className='dropdown-btns'>
+            <button className='btn-nav' onClick={() => navigate('/')}>
+              <HomeIcon />
+              <span>Home</span>
+            </button>
             {!contexts?.authenticated ? (
-              <button id='login' className='btn-nav' onClick={login}>
+              <button id='login' className='btn-nav blue' onClick={login}>
                 Log In
               </button>
             ) : (
               <>
-                <button id='logout' className='btn-nav' onClick={logout}>
-                  Log Out
-                </button>
                 {myDogs?.map((dog, idx) => (
                   <button
                     className='btn-nav'
                     onClick={() => handleClickDog(dog)}
                     key={idx}
                   >
-                    {dog.name}
+                    <PetsIcon />
+                    <span>{dog.name}</span>
                   </button>
                 ))}
-                <button className='btn-nav' onClick={() => navigate('/dashboard')}>
-                  Start chat
+                <button
+                  className='btn-nav'
+                  onClick={() => navigate('/dashboard')}
+                >
+                  <ChatIcon />
+                  <span>Start chat</span>
                 </button>
                 <button
                   className='btn-nav'
                   onClick={() => navigate(`/onboarding/${userId}`)}
                 >
-                  Add new dog
+                  <AddCircleIcon />
+                  <span>Add new dog</span>
+                </button>
+                <button id='logout' className='btn-nav blue' onClick={logout}>
+                  Log Out
                 </button>
               </>
             )}

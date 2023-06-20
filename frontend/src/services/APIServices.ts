@@ -1,6 +1,5 @@
 const PORT = 'http://localhost:3001';
 import { Dog, User, Message } from '../types/Types';
-// import axios from 'axios';
 
 const apiService = {
   register: async (username: string, email: string, password: string) => {

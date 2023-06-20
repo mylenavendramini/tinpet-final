@@ -76,6 +76,8 @@ nav .logo-container .logo {
 }
 
 nav .btn-nav {
+  display: flex;
+  align-items: center;
   color: #025464;
   background-color: #fbffdc;
   font-size: 1rem;
@@ -90,9 +92,22 @@ nav .btn-nav:disabled {
   color: #025464;
 }
 
+nav .btn-nav span {
+  margin-left: 0.5rem;
+}
+
+nav .btn-nav.blue {
+  background-color: #025464;
+  color: #fbffdc;
+}
+
 nav .dropdown-btns {
   display: flex;
   flex-direction: column;
+}
+
+nav .dropdown-btns button {
+  margin: 0.3rem 0;
 }
 
 /* HomePage */
@@ -100,7 +115,7 @@ nav .dropdown-btns {
   margin-top: 30vh;
 }
 
-.home p {
+p {
   padding: 0 10rem;
   font-style: italic;
   font-weight: bold;
@@ -117,6 +132,37 @@ nav .dropdown-btns {
     rgba(208, 245, 190, 1) 0%,
     rgba(251, 255, 220, 1) 100%
   );
+}
+
+/* My dogs */
+.my-dogs-container {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+#my-dogs-title {
+  font-size: 2rem;
+  color: #025464;
+  margin: 2rem;
+}
+
+.my-dog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 3rem;
+}
+
+.my-dog img {
+  border-radius: 50%;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.my-dog p {
+  cursor: pointer;
 }
 
 /* Auth Modal */
