@@ -16,6 +16,7 @@ function getAllDogsController(ctx) {
         try {
             const dogs = yield (0, index_1.getAllDogs)();
             ctx.body = dogs;
+            ctx.status = 200;
         }
         catch (error) {
             console.log(error);
@@ -33,6 +34,7 @@ function getDogsOfUser(ctx) {
             const dogs = yield (0, index_1.getDogsByUserId)(user_id);
             console.log({ dogs });
             ctx.body = dogs;
+            ctx.status = 200;
         }
         catch (error) {
             console.log(error);
@@ -48,6 +50,7 @@ function createDogController(ctx) {
         try {
             const newDog = yield (0, index_1.createDog)(dog, user_id);
             ctx.body = newDog;
+            ctx.status = 201;
             console.log(newDog, 'controller');
         }
         catch (e) {
@@ -65,6 +68,7 @@ function putLikeDogController(ctx) {
         try {
             const likedDog = yield (0, index_1.putAndCheckMatch)(myDogIdObj, likedDogId);
             console.log({ likedDog });
+            ctx.status = 200;
             ctx.body = likedDog;
         }
         catch (error) {

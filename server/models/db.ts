@@ -1,10 +1,12 @@
-import { Sequelize, Options } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { initModels } from './associations';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const dbName = process.env.JEST_WORKER_ID ? 'dog_test' : 'dog';
+
 const db = new Sequelize(
-  'dog',
+  dbName,
   'postgres',
   `${process.env.POSTGRES_DB_PASSWORD}`,
   {
@@ -19,6 +21,7 @@ const { Dog, User } = initModels(db);
 (async function authenticate() {
   try {
     await db.sync();
+
     await db.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {

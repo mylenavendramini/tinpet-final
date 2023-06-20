@@ -26,6 +26,7 @@ function getUser(userId) {
         }
         catch (error) {
             console.log(error);
+            throw new Error('Unable to get the user');
         }
     });
 }
@@ -41,6 +42,7 @@ function login(body) {
         }
         catch (error) {
             console.log('Well thats funny cause something went wrong while logging in.');
+            throw new Error('Unable to login');
         }
     });
 }
@@ -72,6 +74,7 @@ function getAllDogs() {
         }
         catch (error) {
             console.log(error);
+            throw new Error('Unable to get all the dogs');
         }
     });
 }
@@ -100,6 +103,7 @@ function createDog(dog, userId) {
         }
         catch (error) {
             console.log(error);
+            throw new Error('Unable to create a dog');
         }
     });
 }
@@ -125,7 +129,7 @@ function getDogsByUserId(userId) {
         }
         catch (error) {
             console.log(error);
-            return undefined;
+            throw new Error('Unable to get a dog');
         }
     });
 }
@@ -176,6 +180,7 @@ function putAndCheckMatch(myDogIdObj, theOtherDogId) {
         }
         catch (error) {
             console.log(error);
+            throw new Error('Unable to like a dog');
         }
     });
 }
@@ -189,6 +194,7 @@ function getDogMatchesArray(dogId) {
         }
         catch (error) {
             console.log(error);
+            throw new Error('Unable to get the matches');
         }
     });
 }
@@ -205,8 +211,9 @@ function createMessage(body) {
             });
             return newMessage;
         }
-        catch (e) {
-            console.log('DAWG creating a message is simple dont be stupid and go modify your model function');
+        catch (error) {
+            console.log(error);
+            throw new Error('Unable to create a message');
         }
     });
 }
@@ -218,8 +225,9 @@ function getMessages(id) {
             const messages = yield Message_1.Message.findAll({ where: { sender: id } });
             return messages;
         }
-        catch (e) {
-            console.log('Yo open your eyes Im sure you can find those messages go back to your model function');
+        catch (error) {
+            console.log('Yo open your eyes Im sure you can find those messages');
+            throw new Error('Unable to get a message');
         }
     });
 }

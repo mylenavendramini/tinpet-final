@@ -12,6 +12,7 @@ async function getAllDogsController(ctx: Context) {
   try {
     const dogs = await getAllDogs();
     ctx.body = dogs;
+    ctx.status = 200;
   } catch (error) {
     console.log(error);
     ctx.status = 500;
@@ -26,6 +27,7 @@ async function getDogsOfUser(ctx: Context) {
     const dogs = await getDogsByUserId(user_id);
     console.log({ dogs });
     ctx.body = dogs;
+    ctx.status = 200;
   } catch (error) {
     console.log(error);
     ctx.status = 500;
@@ -38,6 +40,7 @@ async function createDogController(ctx: Context) {
   try {
     const newDog = await createDog(dog, user_id);
     ctx.body = newDog;
+    ctx.status = 201;
     console.log(newDog, 'controller');
   } catch (e) {
     console.log(e);
@@ -52,6 +55,7 @@ async function putLikeDogController(ctx: Context) {
   try {
     const likedDog = await putAndCheckMatch(myDogIdObj, likedDogId);
     console.log({ likedDog });
+    ctx.status = 200;
     ctx.body = likedDog;
   } catch (error) {
     console.log(error);

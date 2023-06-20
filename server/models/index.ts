@@ -14,6 +14,7 @@ async function getUser(userId: number): Promise<User | null | undefined> {
     return user;
   } catch (error) {
     console.log(error);
+    throw new Error('Unable to get the user');
   }
 }
 
@@ -28,6 +29,7 @@ async function login(body: IUser) {
     console.log(
       'Well thats funny cause something went wrong while logging in.'
     );
+    throw new Error('Unable to login');
   }
 }
 
@@ -53,6 +55,7 @@ async function getAllDogs() {
     return dogs;
   } catch (error) {
     console.log(error);
+    throw new Error('Unable to get all the dogs');
   }
 }
 
@@ -78,6 +81,7 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
     return newDog;
   } catch (error) {
     console.log(error);
+    throw new Error('Unable to create a dog');
   }
 }
 
@@ -99,7 +103,7 @@ async function getDogsByUserId(userId: number): Promise<Dog[] | undefined> {
     }
   } catch (error) {
     console.log(error);
-    return undefined;
+    throw new Error('Unable to get a dog');
   }
 }
 
@@ -166,6 +170,7 @@ async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
     }
   } catch (error) {
     console.log(error);
+    throw new Error('Unable to like a dog');
   }
 }
 
@@ -176,6 +181,7 @@ async function getDogMatchesArray(dogId: number) {
     return matches;
   } catch (error) {
     console.log(error);
+    throw new Error('Unable to get the matches');
   }
 }
 
@@ -189,10 +195,9 @@ async function createMessage(body: {}):Promise<IMessage | undefined> {
       receiver,
     });
     return newMessage;
-  } catch (e) {
-    console.log(
-      'DAWG creating a message is simple dont be stupid and go modify your model function'
-    );
+  } catch (error) {
+    console.log(error);
+    throw new Error('Unable to create a message');
   }
 }
 
@@ -201,14 +206,12 @@ async function getMessages(id: number):Promise<IMessage[] | undefined> {
   try {
     const messages = await Message.findAll({ where: { sender: id } });
     return messages;
-  } catch (e) {
-    console.log('Yo open your eyes Im sure you can find those messages go back to your model function');
+  } catch (error) {
+    console.log('Yo open your eyes Im sure you can find those messages');
+    throw new Error('Unable to get a message');
   }
 }
 
-// (async () => {
-//   await db.sync();
-// })();
 
 export {
   getUser,
