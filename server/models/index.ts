@@ -105,13 +105,15 @@ async function addMatch(
   theOtherDog: IDog,
   myDog: IDog
 ) {
-  const newMatch = await Dog.update(
-    {
-      matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
-    },
-    { where: { id: Number(myDog.id) } }
-  );
-  return newMatch;
+  if (!myDog.matches_dogs.includes(Number(theOtherDog.id))) {
+    const newMatch = await Dog.update(
+      {
+        matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
+      },
+      { where: { id: Number(myDog.id) } }
+    );
+    return newMatch;
+  }
 }
 
 async function addLike(
@@ -119,13 +121,18 @@ async function addLike(
   theOtherDog: IDog,
   myDog: IDog
 ) {
-  const likeDog = await Dog.update(
-    {
-      liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
-    },
-    { where: { id: Number(myDog.id) } }
-  );
-  return likeDog;
+  if (
+    !myDog.matches_dogs.includes(Number(theOtherDog.id)) &&
+    !myDog.liked_dog.includes(Number(theOtherDog.id))
+  ) {
+    const likeDog = await Dog.update(
+      {
+        liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
+      },
+      { where: { id: Number(myDog.id) } }
+    );
+    return likeDog;
+  }
 }
 
 async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {

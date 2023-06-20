@@ -127,18 +127,23 @@ function filterDogArray(array, myDogId, theOtherDogId) {
 }
 function addMatch(myDogMatches, theOtherDog, myDog) {
     return __awaiter(this, void 0, void 0, function* () {
-        const newMatch = yield Dog.update({
-            matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
-        }, { where: { id: Number(myDog.id) } });
-        return newMatch;
+        if (!myDog.matches_dogs.includes(Number(theOtherDog.id))) {
+            const newMatch = yield Dog.update({
+                matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
+            }, { where: { id: Number(myDog.id) } });
+            return newMatch;
+        }
     });
 }
 function addLike(myDogLikesArray, theOtherDog, myDog) {
     return __awaiter(this, void 0, void 0, function* () {
-        const likeDog = yield Dog.update({
-            liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
-        }, { where: { id: Number(myDog.id) } });
-        return likeDog;
+        if (!myDog.matches_dogs.includes(Number(theOtherDog.id)) &&
+            !myDog.liked_dog.includes(Number(theOtherDog.id))) {
+            const likeDog = yield Dog.update({
+                liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
+            }, { where: { id: Number(myDog.id) } });
+            return likeDog;
+        }
     });
 }
 function likeAndMatch(myDogIdObj, theOtherDogId) {
