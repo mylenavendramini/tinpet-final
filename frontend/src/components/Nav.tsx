@@ -15,18 +15,30 @@ const Nav = () => {
   const userId = contexts?.user?.id as number;
   console.log(userId);
   const myDogs = contexts?.myDogs;
+  const matchedIds = contexts?.currentDog?.matches_dogs
+  const dogs = contexts?.dogs;
 
-  const getAllTheDogs = async () => {
+  const getAllUserDogs = async () => {
     apiService.getDogsofUSer(userId).then((data) => {
       contexts?.updateMyDogs(data);
     });
   };
 
+  const getMatches = async () => {
+    const matchedDogs: Dog[] = [];
+    matchedIds?.forEach((id) => {
+      dogs?.map((dog) => {
+        if(dog.id === id) matchedDogs.push(dog)
+      })
+    })
+    contexts?.updateMatches(matchedDogs)
+  }
+
 
   useEffect(() => {
     if (contexts?.authenticated) {
       console.log(contexts?.user);
-      getAllTheDogs();
+      getAllUserDogs();
     } else {
       console.log('no users');
     }

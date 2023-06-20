@@ -13,9 +13,6 @@ const App = () => {
   const contexts = useContext(Context);
   const [gotDogs, setGotDogs] = useState(false)
   const userId = contexts?.user?.id as number;
-  const dogs = contexts?.dogs;
-  const matchedIds = contexts?.currentDog?.matches_dogs
-
 
   const getAllTheDogs = async () => {
     apiService.getDogsofUSer(userId).then((data) => {
@@ -33,16 +30,6 @@ const App = () => {
     });
   }
 
-  const getMatches = async () => {
-    const matchedDogs: Dog[] = [];
-    matchedIds?.forEach((id) => {
-      dogs?.map((dog) => {
-        if(dog.id === id) matchedDogs.push(dog)
-      })
-    })
-    contexts?.updateMatches(matchedDogs)
-  }
-
   useEffect(() => {
     if (contexts?.authenticated) {
       getAllTheDogs();
@@ -58,7 +45,6 @@ const App = () => {
       const { email, password } = JSON.parse(user);
       login(email, password)
       contexts?.updateAuthenticated(true);
-      getMatches()
     } else {
       console.log('no users');
     }
