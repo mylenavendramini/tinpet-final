@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Close_1 = __importDefault(require("@mui/icons-material/Close"));
 const react_1 = require("react");
 const react_router_dom_1 = require("react-router-dom");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Context_1 = require("../Context/Context");
 const AuthModal = () => {
     var _a;
@@ -28,7 +28,7 @@ const AuthModal = () => {
         }
         else {
             try {
-                apiservices_1.default.register(username, email, password).then((res) => {
+                APIServices_1.default.register(username, email, password).then((res) => {
                     if (res.username) {
                         localStorage.setItem('user', JSON.stringify(res));
                         contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
