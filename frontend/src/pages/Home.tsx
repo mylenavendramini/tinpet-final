@@ -1,7 +1,7 @@
-import { useContext } from 'react';
-import Nav from '../components/Nav';
-import { useNavigate } from 'react-router';
-import { Context } from '../Context/Context';
+import { useContext } from "react";
+import Nav from "../components/Nav";
+import { useNavigate } from "react-router";
+import { Context } from "../Context/Context";
 
 const Home = () => {
   const contexts = useContext(Context);
@@ -9,22 +9,21 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleAuth = (path:string) => {
-    if (path === 'register') {
-      contexts?.updateSignUp(true)
-    } else if (path === 'login') {
-      contexts?.updateSignUp(false)
+  const handleAuth = (path: string) => {
+    if (path === "register") {
+      contexts?.updateSignUp(true);
+    } else if (path === "login") {
+      contexts?.updateSignUp(false);
     }
-    navigate(`/${path}`)
-
+    navigate(`/${path}`);
   };
 
   return (
     <>
-      <div className='overlay'>
+      <div className="overlay">
         <Nav />
-        <div className='home'>
-          <h1 className='primary-title'>TinPet</h1>
+        <div className="home">
+          <h1 className="primary-title" data-testid="tinPet">TinPet</h1>
           <p>
             Your pet is lonely and has no friends? TinPet is the solution, here
             you can contact other people who are also looking for friends for
@@ -34,14 +33,14 @@ const Home = () => {
           {!authenticated && (
             <>
               <button
-                className='btn-primary'
-                onClick={() => handleAuth('register')}
+                className="btn-primary"
+                onClick={() => handleAuth("register")}
               >
                 Create Account
               </button>
               <button
-                className='btn-primary'
-                onClick={() => handleAuth('login')}
+                className="btn-primary"
+                onClick={() => handleAuth("login")}
               >
                 Login
               </button>
