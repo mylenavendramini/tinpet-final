@@ -17,10 +17,12 @@ function getUserController(ctx) {
             const userId = parseInt(ctx.params.id);
             const user = yield (0, index_1.getUser)(userId);
             ctx.body = user;
+            ctx.status = 200;
         }
         catch (error) {
+            console.log(error);
             ctx.status = 500;
-            ctx.body = { error: 'Internal server error' };
+            ctx.body = { error: 'Failed to retrieve user' };
         }
     });
 }
@@ -29,13 +31,14 @@ function createUserController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = ctx.request.body;
-            const { id, username, email, password } = user;
             const newUser = yield (0, index_1.createUser)(user);
             ctx.body = newUser;
+            ctx.status = 201;
         }
         catch (error) {
             console.log(error);
             ctx.status = 500;
+            ctx.body = { error: 'Failed to create user' };
         }
     });
 }
@@ -46,10 +49,11 @@ function loginController(ctx) {
             const user = ctx.request.body;
             const res = yield (0, index_1.login)(user);
             ctx.body = res;
+            ctx.status = 201;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = JSON.stringify('Unable to find user');
+            ctx.body = { error: 'Failed to login' };
         }
     });
 }

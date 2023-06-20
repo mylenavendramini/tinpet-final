@@ -1,15 +1,10 @@
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
 
 const ChatHeader: React.FC = () => {
-  // const [cookies, setCookie, removeCookie] = useCookies(['user']);
   const contexts = useContext(Context);
-  const dogs = contexts?.dogs;
-  const dogName = dogs?.map((dog) => dog.name);
-  const dogUrl = dogs?.map((dog) => dog.url);
   const navigate = useNavigate();
 
   return (

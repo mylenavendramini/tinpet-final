@@ -17,14 +17,14 @@ export type Dog = {
   matches_dogs: number[];
   createdAt?: Date;
   updatedAt?: Date;
-  userId: number;
+  userId?: number;
 };
 
 export type Message = {
   id?: number;
   content: string;
   sender: number;
-  receiver: string;
+  receiver: number;
   createdAt?: Date;
   updatedAt?: Date;
 };

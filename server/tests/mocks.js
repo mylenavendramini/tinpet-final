@@ -1,136 +1,55 @@
 'use strict';
-// export const MockDog = jest.mock('../compiled/models/Dog', () => {
-//   class MockDog {
-//     id = 1;
-//     name = 'Bob';
-//     age = 3;
-//     gender = 'Male';
-//     about = 'sweet dog';
-//     url = 'https://mockdog.com';
-//     liked_dog = [];
-//     matches_dogs = [];
-//     createdAt = new Date();
-//     updatedAt = new Date();
-
-//     static associations = {
-//       user: {},
-//       matches: {},
-//     };
-
-//     static initModel = jest.fn();
-//   }
-
-//   return {
-//     Dog: MockDog,
-//   };
-// });
-
-// export const MockAnotherDog = jest.mock('../compiled/models/Dog', () => {
-//   class MockAnotherDog {
-//     id = 2;
-//     name = 'Lily';
-//     age = 2;
-//     gender = 'Female';
-//     about = 'grumpy dog';
-//     url = 'https://mockdog2.com';
-//     liked_dog = [];
-//     matches_dogs = [];
-//     createdAt = new Date();
-//     updatedAt = new Date();
-
-//     static associations = {
-//       user: {},
-//       matches: {},
-//     };
-
-//     static initModel = jest.fn();
-
-//   }
-
-//   return {
-//     Dog: MockAnotherDog,
-//   };
-// });
-
-// export const MockOneAnotherDog = jest.mock('../compiled/models/Dog', () => {
-//   class MockOneAnotherDog {
-//     id = 3;
-//     name = 'Courage';
-//     age = 7;
-//     gender = 'Male';
-//     about = 'cowardly dog';
-//     url = 'https://mockdog2.com';
-//     liked_dog = [];
-//     matches_dogs = [];
-//     createdAt = new Date();
-//     updatedAt = new Date();
-
-//     static associations = {
-//       user: {},
-//       matches: {},
-//     };
-
-//     static initModel = jest.fn();
-//   }
-
-//   return {
-//     Dog: MockOneAnotherDog,
-//   };
-// });
-
-
-
-// const MockUser = jest.mock('../compiled/models/User', () => {
-//   class MockUser {
-//     id = 1;
-//     username = 'Mike';
-//     email = 'mike@example.com';
-//     password = 'mockpassword';
-//     createdAt = new Date();
-//     updatedAt = new Date();
-
-//     static associations = {
-//       dogs: {},
-//     };
-
-//     static create = jest.fn();
-//     static initModel = jest.fn();
-//   }
-
-//   return {
-//     User: MockUser,
-//   };
-// });
-
-// export const MockAnotherUser = jest.mock('../compiled/models/User', () => {
-//   class MockAnotherUser {
-//     id = 2;
-//     username = 'Sara';
-//     email = 'sara@example.com';
-//     password = 'mockpassword';
-//     createdAt = new Date();
-//     updatedAt = new Date();
-
-//     static associations = {
-//       dogs: {},
-//     };
-
-//     static initModel = jest.fn();
-//   }
-
-//   return {
-//     User: MockAnotherUser,
-//   };
-// });
+const { createDog } = require('../compiled/models/index')
 
 const MockUser = {
-  // id: 1,
   username: 'Mike',
   email: 'mike@example.com',
   password: 'mockpassword',
-  // createdAt: new Date(),
-  // updatedAt: new Date(),
 }
 
+const MockDog = {
+  name: 'Lily',
+  age: 3,
+  gender: 'female',
+  about: 'grumpy dog',
+  url: '/',
+}
 
-module.exports = { MockUser }
+const MockUserOutput = {
+  id: 1,
+  username: 'Mike',
+  email: 'mike@example.com',
+  password: 'mockpassword',
+  createdAt: new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }),
+  updatedAt: new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }),
+}
+
+const MockFnCreateDog = jest.fn(createDog(MockDog, 1));
+
+// const MockDogOutput = {
+//   id: 1,
+//   name: 'Lily',
+//   age: 3,
+//   gender: 'female',
+//   about: 'grumpy dog',
+//   url: '/',
+//   liked_dog: [],
+//   matches_dog: [],
+//   userId: 1,
+//   likedDogId: null,
+//   dogId: null,
+//   updatedAt: new Date(),
+//   createdAt: new Date(),
+// }
+
+
+
+module.exports = { MockUser, MockDog, MockFnCreateDog }

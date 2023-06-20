@@ -1,6 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
 import { Dog, User, Message } from '../types/Types';
-
 interface ContextType {
   user: User | null;
   currentDog: Dog | null;
@@ -15,8 +14,8 @@ interface ContextType {
   updateUser: (newUser: User | null) => void;
   updateDogs: (newDog: Dog[] | null) => void;
   updateModal: () => void;
-  updateSignUp: () => void;
-  updateMyDogs: (myDog: Dog[]) => Dog[];
+  updateSignUp: (signup:boolean) => void;
+  updateMyDogs: (myDog: Dog[]) => void;
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
   updateAuthenticated: (auth: boolean) => void;
@@ -38,7 +37,6 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [selectedDog, setSelectedDog] = useState<Dog | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
-
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
   };
@@ -48,8 +46,8 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateModal = () => {
     setShowModal(!showModal);
   };
-  const updateSignUp = () => {
-    setIsSignUp(!isSignUp);
+  const updateSignUp = (signup:boolean) => {
+    setIsSignUp(signup);
   };
   const updateMyDogs = (myDogs: Dog[]) => {
     setMyDogs(myDogs);

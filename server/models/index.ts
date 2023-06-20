@@ -1,48 +1,39 @@
-// import { Dog } from './Dog';
-import { IUser, IDog } from './Interfaces';
-// import { User } from './User';
-import { Message } from './Messages';
-
+import { IUser, IDog, IdObject } from './Interfaces';
+import { Message } from './Message';
 import db from './db';
 
 const User = db.User;
 const Dog = db.Dog;
 
-async function getUser(userId: number): Promise<User | null | undefined> {
+async function getUser(userId: number) {
   try {
     const user = await User.findOne({ where: { id: userId } });
     return user;
   } catch (error) {
-    console.log(error);
+    throw new Error('Unable to get the user');
   }
 }
 
 async function login(body: IUser) {
   try {
-    console.log(body);
-    const user = await User.findOne({ where: { email: body.email } });
-    if (user?.password == body.password) {
-      return user;
-    }
+    const { email, password } = body;
+    const user = await User.findOne({ where: { email, password } });
+    return user;
   } catch (error) {
-    console.log(
-      'Well thats funny cause something went wrong while logging in.'
-    );
+    throw new Error('Unable to login');
   }
 }
 
-async function createUser(user: IUser): Promise<User | undefined> {
+async function createUser(user: IUser) {
   try {
     const { username, email, password } = user;
-    const newUser = (await User.create({
+    const newUser = await User.create({
       username,
       email,
       password,
-    })) as User;
-    console.log(newUser);
+    });
     return newUser;
   } catch (error) {
-    console.error('Error creating user:', error);
     throw new Error('User creation failed.');
   }
 }
@@ -52,14 +43,14 @@ async function getAllDogs() {
     const dogs = await Dog.findAll();
     return dogs;
   } catch (error) {
-    console.log(error);
+    throw new Error('Unable to get all the dogs');
   }
 }
 
-async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
+async function createDog(dog: IDog, userId: number) {
   try {
     const { name, age, gender, about, url } = dog;
-    const user_id = Number(userId);
+    const parsedId = Number(userId);
     const newDog = await Dog.create({
       name,
       age,
@@ -69,37 +60,29 @@ async function createDog(dog: IDog, userId: number): Promise<Dog | undefined> {
       liked_dog: [],
       matches_dogs: [],
     });
-    // console.log(newDog)
-    const user = await User.findOne({ where: { id: user_id } });
-    // user?.addDog(newDog);
-    await newDog.setUser(user_id);
-    console.log(newDog, 'MODEL');
-    console.log(user?.dogs);
+    const user = await User.findOne({ where: { id: parsedId } });
+    await newDog.setUser(parsedId);
     return newDog;
   } catch (error) {
-    console.log(error);
+    throw new Error('Unable to create a dog');
   }
 }
 
-async function getDogsByUserId(userId: number): Promise<Dog[] | undefined> {
+async function getDogsByUserId(userId: number) {
   try {
     const user = await User.findOne({
       where: { id: userId },
       include: { model: Dog, as: 'dogs' },
     });
-    // console.log({ user });
-    console.log(user?.dogs);
     if (user && user.dogs) {
       const dogs = user.dogs;
-      // console.log(dogs, 'model');
       return dogs;
     } else {
       console.log('Dogs not found');
       return undefined;
     }
   } catch (error) {
-    console.log(error);
-    return undefined;
+    throw new Error('Unable to get a dog');
   }
 }
 
@@ -108,7 +91,7 @@ async function filterDogArray(
   myDogId: number,
   theOtherDogId: number
 ) {
-  const filteredDog = array.filter((el) => el !== theOtherDogId);
+  const filteredDog = array.filter((dogId) => dogId !== theOtherDogId);
   await Dog.update(
     {
       liked_dog: [...filteredDog],
@@ -117,55 +100,67 @@ async function filterDogArray(
   );
 }
 
-async function putAndCheckMatch(myDogIdObj: {}, theOtherDogId: number) {
-  console.log('before the try');
+async function addMatch(
+  myDogMatches: number[],
+  theOtherDog: IDog,
+  myDog: IDog
+) {
+  if (!myDog.matches_dogs.includes(Number(theOtherDog.id))) {
+    const newMatch = await Dog.update(
+      {
+        matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
+      },
+      { where: { id: Number(myDog.id) } }
+    );
+    return newMatch;
+  }
+}
+
+async function addLike(
+  myDogLikesArray: number[],
+  theOtherDog: IDog,
+  myDog: IDog
+) {
+  if (
+    !myDog.matches_dogs.includes(Number(theOtherDog.id)) &&
+    !myDog.liked_dog.includes(Number(theOtherDog.id))
+  ) {
+    const likeDog = await Dog.update(
+      {
+        liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
+      },
+      { where: { id: Number(myDog.id) } }
+    );
+    return likeDog;
+  }
+}
+
+async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
   try {
-    console.log('inside the try');
-    console.log({ myDogIdObj });
-    console.log({ theOtherDogId });
-    const myDog = await Dog.findOne({ where: myDogIdObj });
-    const theOtherDog = await Dog.findOne({
+    const myDog = (await Dog.findOne({ where: { id: myDogIdObj.id } })) as IDog;
+    const theOtherDog = (await Dog.findOne({
       where: { id: Number(theOtherDogId) },
-    });
-    console.log({ myDog });
-    const myDogArray = myDog?.liked_dog as number[];
-    const theOtherDogArray = theOtherDog?.liked_dog as number[];
+    })) as IDog;
+    const myDogLikesArray = myDog?.liked_dog as number[];
+    const theOtherDogLikesArray = theOtherDog?.liked_dog as number[];
     const myDogMatches = myDog?.matches_dogs as number[];
     const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
 
     // Check if it's a match and add to matches_dogs:
-    if (theOtherDogArray.includes(myDog?.id as number)) {
-      const newMatch = await Dog.update(
-        {
-          matches_dogs: [...myDogMatches, Number(theOtherDogId)],
-        },
-        { where: myDogIdObj }
-      );
-      await Dog.update(
-        {
-          matches_dogs: [...theOtherDogMatches, Number(myDog!.id)],
-        },
-        { where: { id: theOtherDogId } }
-      );
-
-      filterDogArray(myDogArray, myDog?.id as number, theOtherDogId);
-      filterDogArray(theOtherDogArray, theOtherDogId, myDog?.id as number);
-
+    if (theOtherDogLikesArray.includes(myDog?.id as number)) {
+      addMatch(myDogMatches, theOtherDog, myDog);
+      addMatch(theOtherDogMatches, myDog, theOtherDog);
+      filterDogArray(myDogLikesArray, myDog?.id as number, theOtherDogId);
+      filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog?.id as number);
       return myDog;
     }
-
     // Add the dog that my dog like:
-    if (!myDogArray.includes(theOtherDogId)) {
-      const likeDog = await Dog.update(
-        {
-          liked_dog: [...myDogArray, Number(theOtherDogId)],
-        },
-        { where: myDogIdObj }
-      );
+    if (!myDogLikesArray.includes(theOtherDogId)) {
+      addLike(myDogLikesArray, theOtherDog, myDog);
       return myDog;
     }
   } catch (error) {
-    console.log(error);
+    throw new Error('Unable to like a dog');
   }
 }
 
@@ -175,12 +170,12 @@ async function getDogMatchesArray(dogId: number) {
     const matches = dog?.matches_dogs;
     return matches;
   } catch (error) {
-    console.log(error);
+    throw new Error('Unable to get the matches');
   }
 }
 
-async function createMessage(body: {}) {
-  const { content, sender, receiver } = body as Message;
+async function createMessage(body: Message) {
+  const { content, sender, receiver } = body;
   try {
     const newMessage = await Message.create({
       content,
@@ -188,25 +183,20 @@ async function createMessage(body: {}) {
       receiver,
     });
     return newMessage;
-  } catch (e) {
-    console.log(
-      'DAWG this function is simple are you that stupid not to make it work???'
-    );
+  } catch (error) {
+    throw new Error('Unable to create a message');
   }
 }
 
 async function getMessages(id: number) {
   try {
-    const messages = Message.findAll({ where: { sender: id } });
+    const messages = await Message.findAll({ where: { sender: id } });
     return messages;
-  } catch (e) {
-    console.log('Yo open your eyes Im sure you can find those messages');
+  } catch (error) {
+    console.log(error);
+    throw new Error('Unable to get a message');
   }
 }
-
-// (async () => {
-//   await db.sync();
-// })();
 
 export {
   getUser,
@@ -214,7 +204,7 @@ export {
   createDog,
   getAllDogs,
   getDogsByUserId,
-  putAndCheckMatch,
+  likeAndMatch,
   getDogMatchesArray,
   createMessage,
   getMessages,

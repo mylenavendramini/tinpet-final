@@ -25,7 +25,6 @@ export class User extends Model<
   declare password: string;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
-  // declare messages: number[]//for messages might not be needed depends on the message model
 
   // User hasMany Dog
   declare dogs?: NonAttribute<Dog[]>;

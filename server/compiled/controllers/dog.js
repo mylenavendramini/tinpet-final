@@ -9,16 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDogMatches = exports.putLikeDogController = exports.createDogController = exports.getDogsOfUser = exports.getAllDogsController = void 0;
+exports.getAllDogMatches = exports.likeAndMatchController = exports.createDogController = exports.getDogsOfUser = exports.getAllDogsController = void 0;
 const index_1 = require("../models/index");
 function getAllDogsController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dogs = yield (0, index_1.getAllDogs)();
             ctx.body = dogs;
+            ctx.status = 200;
         }
         catch (error) {
             console.log(error);
+            ctx.body = { error: 'Failed to retrieve dogs' };
             ctx.status = 500;
         }
     });
@@ -26,16 +28,15 @@ function getAllDogsController(ctx) {
 exports.getAllDogsController = getAllDogsController;
 function getDogsOfUser(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('working');
         const user_id = ctx.params.id;
-        console.log(user_id);
         try {
             const dogs = yield (0, index_1.getDogsByUserId)(user_id);
-            console.log({ dogs });
             ctx.body = dogs;
+            ctx.status = 200;
         }
         catch (error) {
             console.log(error);
+            ctx.body = { error: "Failed to retrieve user's dogs" };
             ctx.status = 500;
         }
     });
@@ -48,32 +49,34 @@ function createDogController(ctx) {
         try {
             const newDog = yield (0, index_1.createDog)(dog, user_id);
             ctx.body = newDog;
+            ctx.status = 201;
             console.log(newDog, 'controller');
         }
-        catch (e) {
-            console.log(e);
+        catch (error) {
+            console.log(error);
             ctx.status = 500;
-            ctx.body = { error: 'Internal server error' };
+            ctx.body = { error: 'Failed to create the dog' };
         }
     });
 }
 exports.createDogController = createDogController;
-function putLikeDogController(ctx) {
+function likeAndMatchController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const myDogIdObj = ctx.request.body;
         const likedDogId = ctx.params.id;
         try {
-            const likedDog = yield (0, index_1.putAndCheckMatch)(myDogIdObj, likedDogId);
-            console.log({ likedDog });
+            const likedDog = yield (0, index_1.likeAndMatch)(myDogIdObj, likedDogId);
+            ctx.status = 200;
             ctx.body = likedDog;
         }
         catch (error) {
             console.log(error);
             ctx.status = 500;
+            ctx.body = { error: 'Failed to like/match dog' };
         }
     });
 }
-exports.putLikeDogController = putLikeDogController;
+exports.likeAndMatchController = likeAndMatchController;
 function getAllDogMatches(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         const dogId = ctx.params.id;
@@ -84,6 +87,7 @@ function getAllDogMatches(ctx) {
         catch (error) {
             console.log(error);
             ctx.status = 500;
+            ctx.body = { error: 'Failed to retrieve all dogs' };
         }
     });
 }

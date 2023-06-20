@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 
@@ -9,10 +9,11 @@ function MatchedDogs() {
 
   useEffect(() => {
     apiService.getDogs().then((res) => {
-      // setMyDogs(res.filter((el: Dog) => {el}));
       contexts?.updateMatches(
         res.filter((el) => {
-          return el.matches_dogs.includes(myDog!.id);
+          if(el.matches_dogs.includes(myDog?.id as number)) {
+            return el
+          }
         })
       );
     });
@@ -20,13 +21,13 @@ function MatchedDogs() {
 
   return (
     <>
-      {contexts?.matchedDogs.map((el) => {
+      {contexts?.matchedDogs.map((dog) => {
         return (
-          <div key={el.id}>
-            <span className='dog-name' key={el.id}>
-              {el.name}
+          <div key={dog.id}>
+            <span className='dog-name' key={dog.id}>
+              {dog.name}
             </span>
-            <img src={`${el.url}`}></img>
+            <img src={`${dog.url}`}></img>
           </div>
         );
       })}

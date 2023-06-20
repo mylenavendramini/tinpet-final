@@ -14,12 +14,13 @@ const models_1 = require("../models");
 function createMessageController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const newMessage = yield (0, models_1.createMessage)(ctx.body);
+            const newMessage = yield (0, models_1.createMessage)(ctx.request.body);
             ctx.body = newMessage;
+            ctx.status = 201;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Its funny cause it failed...' };
+            ctx.body = { error: 'Failed to create message' };
         }
     });
 }
@@ -28,12 +29,13 @@ function getMessagesController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const userId = parseInt(ctx.params.id);
-            const messages = (0, models_1.getMessages)(userId);
-            return messages;
+            const messages = yield (0, models_1.getMessages)(userId);
+            ctx.body = messages;
+            ctx.status = 200;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Come on man are you even trying???' };
+            ctx.body = { error: 'Failed to get messages' };
         }
     });
 }
