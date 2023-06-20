@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
 interface MatchesDisplayProps {
@@ -17,7 +17,7 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [matchedDog, setMatchedDog] = useState<Dog>();
   const context = useContext(Context);
-  const updateDog = context?.updateDog;
+  const updateDog = context?.updateDogs;
   const currentDog = context?.currentDog;
   const myDogs = context?.myDogs;
   const dogName = myDogs?.map((dog) => dog.name);
@@ -57,7 +57,7 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
         <div
           key={idx}
           className='match-card'
-          onClick={() => setClickedDog(matchProfile)}
+          onClick={() => context?.updateSelectedDog(matchProfile)}
         >
           <div className='img-container'>
             <img src={matchProfile?.url} alt='matched photo' />

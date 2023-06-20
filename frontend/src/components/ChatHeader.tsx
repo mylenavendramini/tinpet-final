@@ -1,5 +1,4 @@
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';

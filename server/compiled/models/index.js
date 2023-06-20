@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.getMessages = exports.createMessage = exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 // import { User } from './User';
-const Messages_1 = require("./Messages");
+const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
 const Dog = db_1.default.Dog;
@@ -197,7 +197,8 @@ function createMessage(body) {
     return __awaiter(this, void 0, void 0, function* () {
         const { content, sender, receiver } = body;
         try {
-            const newMessage = yield Messages_1.Message.create({
+            console.log(body);
+            const newMessage = yield Message_1.Message.create({
                 content,
                 sender,
                 receiver,
@@ -205,19 +206,20 @@ function createMessage(body) {
             return newMessage;
         }
         catch (e) {
-            console.log('DAWG this function is simple are you that stupid not to make it work???');
+            console.log('DAWG creating a message is simple dont be stupid and go modify your model function');
         }
     });
 }
 exports.createMessage = createMessage;
 function getMessages(id) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(id);
         try {
-            const messages = Messages_1.Message.findAll({ where: { sender: id } });
+            const messages = yield Message_1.Message.findAll({ where: { sender: id } });
             return messages;
         }
         catch (e) {
-            console.log('Yo open your eyes Im sure you can find those messages');
+            console.log('Yo open your eyes Im sure you can find those messages go back to your model function');
         }
     });
 }

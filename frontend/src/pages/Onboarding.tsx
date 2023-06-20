@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 import { useState, FormEvent, useEffect, useContext } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router-dom';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 

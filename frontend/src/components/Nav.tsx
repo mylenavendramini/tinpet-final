@@ -4,7 +4,7 @@ import logo from '../assets/dog-face-svgrepo-com.svg';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 const Nav = () => {
   const [open, setOpen] = useState(false);
 

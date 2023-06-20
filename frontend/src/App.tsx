@@ -6,15 +6,14 @@ import { useCookies } from 'react-cookie';
 import Login from './components/Login';
 import { useEffect, useContext } from 'react';
 import { Context } from './Context/Context';
-import apiService from './services/apiservices';
+import apiService from './services/APIServices';
 import AuthModal from './components/AuthModal';
 
 const App = () => {
   const contexts = useContext(Context);
-  const [cookies, setCookie, removeCookie] = useCookies(['user']);
+
   useEffect(() => {
-    const user = localStorage.getItem('user') as unknown as User;
-    // console.log(JSON.parse(user).username)
+    const user = localStorage.getItem('user');
     if (user) {
       const { email, password } = JSON.parse(user);
       contexts?.updateAuthenticated(true);

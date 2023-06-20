@@ -14,12 +14,12 @@ const models_1 = require("../models");
 function createMessageController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const newMessage = yield (0, models_1.createMessage)(ctx.body);
+            const newMessage = yield (0, models_1.createMessage)(ctx.request.body);
             ctx.body = newMessage;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Its funny cause it failed...' };
+            ctx.body = { error: 'Its funny cause you cant even create a message, BTW this is in the controller' };
         }
     });
 }
@@ -28,12 +28,12 @@ function getMessagesController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const userId = parseInt(ctx.params.id);
-            const messages = (0, models_1.getMessages)(userId);
-            return messages;
+            const messages = yield (0, models_1.getMessages)(userId);
+            ctx.body = messages;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Come on man are you even trying???' };
+            ctx.body = { error: 'Come on man are you even trying???PS: your getMessage broke on the controller' };
         }
     });
 }

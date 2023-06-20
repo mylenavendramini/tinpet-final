@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import ChatContainer from '../components/ChatContainer';
 import { Dog, User } from '../types/Types';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 import { useParams } from 'react-router';
 import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';

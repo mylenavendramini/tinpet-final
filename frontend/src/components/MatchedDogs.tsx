@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
-import apiService from '../services/apiservices';
+import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 
@@ -12,7 +12,7 @@ function MatchedDogs() {
       // setMyDogs(res.filter((el: Dog) => {el}));
       contexts?.updateMatches(
         res.filter((el) => {
-          return el.matches_dogs.includes(myDog!.id);
+          return el.matches_dogs.includes(myDog?.id as number);
         })
       );
     });

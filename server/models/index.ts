@@ -1,7 +1,7 @@
 // import { Dog } from './Dog';
-import { IUser, IDog } from './Interfaces';
+import { IUser, IDog, IMessage } from './Interfaces';
 // import { User } from './User';
-import { Message } from './Messages';
+import { Message } from './Message';
 
 import db from './db';
 
@@ -179,9 +179,10 @@ async function getDogMatchesArray(dogId: number) {
   }
 }
 
-async function createMessage(body: {}) {
+async function createMessage(body: {}):Promise<IMessage | undefined> {
   const { content, sender, receiver } = body as Message;
   try {
+    console.log(body)
     const newMessage = await Message.create({
       content,
       sender,
@@ -190,17 +191,18 @@ async function createMessage(body: {}) {
     return newMessage;
   } catch (e) {
     console.log(
-      'DAWG this function is simple are you that stupid not to make it work???'
+      'DAWG creating a message is simple dont be stupid and go modify your model function'
     );
   }
 }
 
-async function getMessages(id: number) {
+async function getMessages(id: number):Promise<IMessage[] | undefined> {
+  console.log(id)
   try {
-    const messages = Message.findAll({ where: { sender: id } });
+    const messages = await Message.findAll({ where: { sender: id } });
     return messages;
   } catch (e) {
-    console.log('Yo open your eyes Im sure you can find those messages');
+    console.log('Yo open your eyes Im sure you can find those messages go back to your model function');
   }
 }
 

@@ -19,3 +19,12 @@ export interface IDog {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface IMessage {
+  id?:number;
+  sender:number;
+  receiver:number;
+  content:string;
+  createdAt?:Date;
+  updatedAt?:Date;
+}
