@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const ChatContainer_1 = __importDefault(require("../components/ChatContainer"));
-const apiservices_1 = __importDefault(require("../services/apiservices"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const react_router_1 = require("react-router");
 const react_tinder_card_1 = __importDefault(require("react-tinder-card"));
 const Context_1 = require("../Context/Context");
@@ -42,7 +42,7 @@ const Dashboard = () => {
     //   }
     // }, [user]);
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
-        apiservices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
+        APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
                 alert('Its a maaaatch');
             }
