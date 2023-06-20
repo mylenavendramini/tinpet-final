@@ -13,7 +13,7 @@ describe("Home", () => {
         </Routes>
       </BrowserRouter>
     );
-    let pet = screen.getByTestId('tinPet')
-    expect(pet)
+    const pet = screen.getByTestId('tinPet')
+    expect(pet).toBe('TinPet')
   });
 });
