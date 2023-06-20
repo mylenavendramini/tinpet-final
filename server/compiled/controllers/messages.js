@@ -16,10 +16,11 @@ function createMessageController(ctx) {
         try {
             const newMessage = yield (0, models_1.createMessage)(ctx.request.body);
             ctx.body = newMessage;
+            ctx.status = 201;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Its funny cause you cant even create a message, BTW this is in the controller' };
+            ctx.body = { error: 'Failed to create message' };
         }
     });
 }
@@ -30,10 +31,11 @@ function getMessagesController(ctx) {
             const userId = parseInt(ctx.params.id);
             const messages = yield (0, models_1.getMessages)(userId);
             ctx.body = messages;
+            ctx.status = 200;
         }
         catch (error) {
             ctx.status = 500;
-            ctx.body = { error: 'Come on man are you even trying???PS: your getMessage broke on the controller' };
+            ctx.body = { error: 'Failed to get messages' };
         }
     });
 }

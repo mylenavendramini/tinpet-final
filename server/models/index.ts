@@ -1,4 +1,4 @@
-import { IUser, IDog, IMessage, IdObject } from './Interfaces';
+import { IUser, IDog, IdObject } from './Interfaces';
 import { Message } from './Message';
 import db from './db';
 
