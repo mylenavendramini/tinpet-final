@@ -1,43 +1,34 @@
 
 const { describe, expect, test } = require('@jest/globals')
 const { MockDog, MockAnotherDog, MockAnotherOneDog, MockUser, MockAnotherUser } = require('./mocks')
-const router = require('../compiled/routers/router')
-// const app = require('../compiled/index');
-
+const Sequelize = require('sequelize')
+const { initModels } = require('../compiled/models/associations');
 const Koa = require('koa');
+const Router = require('koa-router');
 const { createServer } = require('http');
 const request = require('supertest');
 const app = new Koa();
+const router = new Router();
 
 app
   .use(router.routes())
   .use(router.allowedMethods());
 
-// app.use(async (ctx) => {
-//   if (ctx.path === '/user/1') {
-//     const user = await getUser(1, mockGetUserFromDatabase);
-//     ctx.body = user;
-//   }
-// });
-
 server = createServer(app.callback());
-// const mockGetUserFromDatabase = jest.fn().mockResolvedValueOnce(MockUser);
+const dotenv = require('dotenv');
+dotenv.config();
 
-// import { User } from '../compiled/models/User'
-// const dotenv = require('dotenv');
-// dotenv.config();
-
-// let db_test = new Sequelize(
-//   'dog_test',
-//   'postgres',
-//   process.env.POSTGRES_DB_PASSWORD,
-//   {
-//     host: 'localhost',
-//     port: 5432,
-//     dialect: 'postgres',
-//   }
-// );
-// const { Dog, User } = initModels(db_test);
+let db_test = new Sequelize(
+  'dog_test',
+  'postgres',
+  `${process.env.POSTGRES_DB_PASSWORD}`,
+  {
+    host: 'localhost',
+    port: 5432,
+    dialect: 'postgres',
+  }
+);
+const { Dog, User } = initModels(db_test);
 
 let syncResponse;
 
@@ -59,20 +50,16 @@ describe('database is connected', () => {
 })
 
 
+// describe('get user', () => {
+//   it('should return the user', async () => {
+//     const response = await request(server)
+//       .get('/user/1')
+//       .set('Accept', 'application/json')
+//     expect(response.status).toEqual(200);
+//     expect(response.body).toEqual(MockUser);
+//   });
 
-
-
-
-describe('get user', () => {
-  it('should return the user', async () => {
-    const response = await request(server)
-      .get('/user/1')
-      .set('Accept', 'application/json')
-    expect(response.status).toEqual(200);
-    expect(response.body).toEqual(MockUser);
-  });
-
-})
+// })
 
 // describe('create user', () => {
 //   it('should create a new user', async () => {

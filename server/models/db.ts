@@ -1,4 +1,4 @@
-import { Sequelize, Options } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import { initModels } from './associations';
 import dotenv from 'dotenv';
 dotenv.config();
