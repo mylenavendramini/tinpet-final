@@ -1,12 +1,12 @@
 import {
   getAllDogs,
   createDog,
-  putAndCheckMatch,
+  likeAndMatch,
   getDogMatchesArray,
   getDogsByUserId,
 } from '../models/index';
 import { Context } from 'koa';
-import { IDog } from '../models/Interfaces';
+import { IDog, IdObject } from '../models/Interfaces';
 
 async function getAllDogsController(ctx: Context) {
   try {
@@ -50,10 +50,10 @@ async function createDogController(ctx: Context) {
 }
 
 async function putLikeDogController(ctx: Context) {
-  const myDogIdObj = ctx.request.body as number;
+  const myDogIdObj = ctx.request.body as IdObject;
   const likedDogId = ctx.params.id;
   try {
-    const likedDog = await putAndCheckMatch(myDogIdObj, likedDogId);
+    const likedDog = await likeAndMatch(myDogIdObj, likedDogId);
     console.log({ likedDog });
     ctx.status = 200;
     ctx.body = likedDog;

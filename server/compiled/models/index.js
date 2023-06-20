@@ -12,8 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.getMessages = exports.createMessage = exports.getDogMatchesArray = exports.putAndCheckMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
-// import { User } from './User';
+exports.login = exports.getMessages = exports.createMessage = exports.getDogMatchesArray = exports.likeAndMatch = exports.getDogsByUserId = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
@@ -25,7 +24,6 @@ function getUser(userId) {
             return user;
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to get the user');
         }
     });
@@ -34,14 +32,11 @@ exports.getUser = getUser;
 function login(body) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log(body);
-            const user = yield User.findOne({ where: { email: body.email } });
-            if ((user === null || user === void 0 ? void 0 : user.password) == body.password) {
-                return user;
-            }
+            const { email, password } = body;
+            const user = yield User.findOne({ where: { email, password } });
+            return user;
         }
         catch (error) {
-            console.log('Well thats funny cause something went wrong while logging in.');
             throw new Error('Unable to login');
         }
     });
@@ -51,16 +46,14 @@ function createUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { username, email, password } = user;
-            const newUser = (yield User.create({
+            const newUser = yield User.create({
                 username,
                 email,
                 password,
-            }));
-            console.log(newUser);
+            });
             return newUser;
         }
         catch (error) {
-            console.error('Error creating user:', error);
             throw new Error('User creation failed.');
         }
     });
@@ -73,7 +66,6 @@ function getAllDogs() {
             return dogs;
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to get all the dogs');
         }
     });
@@ -83,7 +75,7 @@ function createDog(dog, userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { name, age, gender, about, url } = dog;
-            const user_id = Number(userId);
+            const parsedId = Number(userId);
             const newDog = yield Dog.create({
                 name,
                 age,
@@ -93,16 +85,11 @@ function createDog(dog, userId) {
                 liked_dog: [],
                 matches_dogs: [],
             });
-            // console.log(newDog)
-            const user = yield User.findOne({ where: { id: user_id } });
-            // user?.addDog(newDog);
-            yield newDog.setUser(user_id);
-            console.log(newDog, 'MODEL');
-            console.log(user === null || user === void 0 ? void 0 : user.dogs);
+            const user = yield User.findOne({ where: { id: parsedId } });
+            yield newDog.setUser(parsedId);
             return newDog;
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to create a dog');
         }
     });
@@ -115,11 +102,8 @@ function getDogsByUserId(userId) {
                 where: { id: userId },
                 include: { model: Dog, as: 'dogs' },
             });
-            // console.log({ user });
-            console.log(user === null || user === void 0 ? void 0 : user.dogs);
             if (user && user.dogs) {
                 const dogs = user.dogs;
-                // console.log(dogs, 'model');
                 return dogs;
             }
             else {
@@ -128,7 +112,6 @@ function getDogsByUserId(userId) {
             }
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to get a dog');
         }
     });
@@ -136,55 +119,59 @@ function getDogsByUserId(userId) {
 exports.getDogsByUserId = getDogsByUserId;
 function filterDogArray(array, myDogId, theOtherDogId) {
     return __awaiter(this, void 0, void 0, function* () {
-        const filteredDog = array.filter((el) => el !== theOtherDogId);
+        const filteredDog = array.filter((dogId) => dogId !== theOtherDogId);
         yield Dog.update({
             liked_dog: [...filteredDog],
         }, { where: { id: myDogId } });
     });
 }
-function putAndCheckMatch(myDogIdObj, theOtherDogId) {
+function addMatch(myDogMatches, theOtherDog, myDog) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('before the try');
+        const newMatch = yield Dog.update({
+            matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
+        }, { where: { id: Number(myDog.id) } });
+        return newMatch;
+    });
+}
+function addLike(myDogLikesArray, theOtherDog, myDog) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const likeDog = yield Dog.update({
+            liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
+        }, { where: { id: Number(myDog.id) } });
+        return likeDog;
+    });
+}
+function likeAndMatch(myDogIdObj, theOtherDogId) {
+    return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log('inside the try');
-            console.log({ myDogIdObj });
-            console.log({ theOtherDogId });
-            const myDog = yield Dog.findOne({ where: myDogIdObj });
-            const theOtherDog = yield Dog.findOne({
+            const myDog = (yield Dog.findOne({ where: { id: myDogIdObj.id } }));
+            const theOtherDog = (yield Dog.findOne({
                 where: { id: Number(theOtherDogId) },
-            });
-            console.log({ myDog });
-            const myDogArray = myDog === null || myDog === void 0 ? void 0 : myDog.liked_dog;
-            const theOtherDogArray = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.liked_dog;
+            }));
+            const myDogLikesArray = myDog === null || myDog === void 0 ? void 0 : myDog.liked_dog;
+            const theOtherDogLikesArray = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.liked_dog;
             const myDogMatches = myDog === null || myDog === void 0 ? void 0 : myDog.matches_dogs;
             const theOtherDogMatches = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.matches_dogs;
             // Check if it's a match and add to matches_dogs:
-            if (theOtherDogArray.includes(myDog === null || myDog === void 0 ? void 0 : myDog.id)) {
-                const newMatch = yield Dog.update({
-                    matches_dogs: [...myDogMatches, Number(theOtherDogId)],
-                }, { where: myDogIdObj });
-                yield Dog.update({
-                    matches_dogs: [...theOtherDogMatches, Number(myDog.id)],
-                }, { where: { id: theOtherDogId } });
-                filterDogArray(myDogArray, myDog === null || myDog === void 0 ? void 0 : myDog.id, theOtherDogId);
-                filterDogArray(theOtherDogArray, theOtherDogId, myDog === null || myDog === void 0 ? void 0 : myDog.id);
+            if (theOtherDogLikesArray.includes(myDog === null || myDog === void 0 ? void 0 : myDog.id)) {
+                addMatch(myDogMatches, theOtherDog, myDog);
+                addMatch(theOtherDogMatches, myDog, theOtherDog);
+                filterDogArray(myDogLikesArray, myDog === null || myDog === void 0 ? void 0 : myDog.id, theOtherDogId);
+                filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog === null || myDog === void 0 ? void 0 : myDog.id);
                 return myDog;
             }
             // Add the dog that my dog like:
-            if (!myDogArray.includes(theOtherDogId)) {
-                const likeDog = yield Dog.update({
-                    liked_dog: [...myDogArray, Number(theOtherDogId)],
-                }, { where: myDogIdObj });
+            if (!myDogLikesArray.includes(theOtherDogId)) {
+                addLike(myDogLikesArray, theOtherDog, myDog);
                 return myDog;
             }
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to like a dog');
         }
     });
 }
-exports.putAndCheckMatch = putAndCheckMatch;
+exports.likeAndMatch = likeAndMatch;
 function getDogMatchesArray(dogId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -193,7 +180,6 @@ function getDogMatchesArray(dogId) {
             return matches;
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to get the matches');
         }
     });
@@ -203,7 +189,6 @@ function createMessage(body) {
     return __awaiter(this, void 0, void 0, function* () {
         const { content, sender, receiver } = body;
         try {
-            console.log(body);
             const newMessage = yield Message_1.Message.create({
                 content,
                 sender,
@@ -212,7 +197,6 @@ function createMessage(body) {
             return newMessage;
         }
         catch (error) {
-            console.log(error);
             throw new Error('Unable to create a message');
         }
     });
@@ -220,13 +204,12 @@ function createMessage(body) {
 exports.createMessage = createMessage;
 function getMessages(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(id);
         try {
             const messages = yield Message_1.Message.findAll({ where: { sender: id } });
             return messages;
         }
         catch (error) {
-            console.log('Yo open your eyes Im sure you can find those messages');
+            console.log(error);
             throw new Error('Unable to get a message');
         }
     });

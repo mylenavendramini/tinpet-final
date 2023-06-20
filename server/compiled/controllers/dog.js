@@ -66,7 +66,7 @@ function putLikeDogController(ctx) {
         const myDogIdObj = ctx.request.body;
         const likedDogId = ctx.params.id;
         try {
-            const likedDog = yield (0, index_1.putAndCheckMatch)(myDogIdObj, likedDogId);
+            const likedDog = yield (0, index_1.likeAndMatch)(myDogIdObj, likedDogId);
             console.log({ likedDog });
             ctx.status = 200;
             ctx.body = likedDog;
