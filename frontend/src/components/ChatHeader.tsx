@@ -15,7 +15,7 @@ const ChatHeader: React.FC = () => {
         </div>
         <h3>{contexts?.currentDog?.name}</h3>
       </div>
-      <i className='logout-icon' onClick={() => navigate('/')}>
+      <i className='logout-icon' onClick={() => navigate('/myDogs')}>
         <ArrowCircleLeftIcon />
       </i>
     </div>
