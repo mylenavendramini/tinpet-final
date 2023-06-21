@@ -21,13 +21,16 @@ const MessageModel = db_1.default.Message;
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // const user = await User.findOne(include: [{}]{ where: { id: userId } });
             const user = yield User.findOne({
                 include: [{
                         model: Dog,
                         required: true,
                         as: 'dogs',
                         where: { userId: userId },
+                        include: [{
+                                model: MessageModel,
+                                as: 'messages'
+                            }]
                     }],
                 where: {
                     id: userId
@@ -49,7 +52,11 @@ function login(body) {
                 include: [{
                         model: Dog,
                         required: true,
-                        as: 'dogs'
+                        as: 'dogs',
+                        include: [{
+                                model: MessageModel,
+                                as: 'messages'
+                            }]
                     }],
                 where: { email, password }
             });
@@ -78,34 +85,13 @@ function createUser(user) {
     });
 }
 exports.createUser = createUser;
-// where: { post_url: post_url },
-// include: [
-//    { association: 'postAuthor', attributes: ['name'] },
-//    {
-//       association: 'comments', attributes: ['comment'],
-//       include: [{
-//          association: 'commentAuthor',
-//          attributes: ['name']
-//       }]
-//    }
-// ]
-// });
-// model: Dog,
-// required: true,
-// as:'likedDogs'
-// include: [{
-//   model: Dog,
-//   required: true,
-//   as:'dogs',
-//   where:{userId: userId},
-// }],
 function getAllDogs() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dogs = yield Dog.findAll({
                 include: [{
                         model: MessageModel,
-                        as: 'message'
+                        as: 'messages'
                     }],
             });
             return dogs;
@@ -116,19 +102,6 @@ function getAllDogs() {
     });
 }
 exports.getAllDogs = getAllDogs;
-// async function getAllDogs() {
-//   try {
-//     const dogs = await Dog.findAll({
-//       include: [
-//         {association:'likedDogs'},
-//         {association: 'matchedDogs'}
-//       ],
-//     });
-//     return dogs;
-//   } catch (error) {
-//     throw new Error('Unable to get all the dogs');
-//   }
-// }
 function createDog(dog, userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -143,7 +116,6 @@ function createDog(dog, userId) {
                 liked_dog: [],
                 matches_dogs: [],
             });
-            // const user = await User.findOne({ where: { id: parsedId } });
             yield newDog.setUser(parsedId);
             return newDog;
         }
@@ -280,13 +252,13 @@ function createMessage(body, sender_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const { content, receiver_id, receiver_name } = body;
         try {
-            console.log(content, receiver_id, receiver_name, sender_id);
+            const sender = yield Dog.findOne({ where: { id: sender_id } });
             const newMessage = yield MessageModel.create({
                 content,
                 receiver_id,
                 receiver_name
             });
-            yield newMessage.setMessage(sender_id);
+            sender === null || sender === void 0 ? void 0 : sender.addMessage(newMessage);
             return newMessage;
         }
         catch (error) {
@@ -295,21 +267,6 @@ function createMessage(body, sender_id) {
     });
 }
 exports.createMessage = createMessage;
-// async function createMessage(body: Message) {
-//   const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
-//   try {
-//     const newMessage = await Message.create({
-//       content,
-//       sender_id,
-//       sender_name,
-//       receiver_id,
-//       receiver_name,
-//     });
-//     return newMessage;
-//   } catch (error) {
-//     throw new Error('Unable to create a message');
-//   }
-// }
 function getMessages() {
     return __awaiter(this, void 0, void 0, function* () {
         try {

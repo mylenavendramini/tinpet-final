@@ -6,16 +6,18 @@ const User = db.User;
 const Dog = db.Dog;
 const MessageModel = db.Message
 
-
 async function getUser(userId: number) {
   try {
-    // const user = await User.findOne(include: [{}]{ where: { id: userId } });
     const user = await User.findOne({
       include: [{
           model: Dog,
           required: true,
           as:'dogs',
           where:{userId: userId},
+          include: [{
+            model: MessageModel,
+            as:'messages'
+        }]
       }],
       where: {
          id: userId
@@ -34,7 +36,11 @@ async function login(body: IUser) {
       include: [{
         model: Dog,
         required: true,
-        as:'dogs'
+        as:'dogs',
+        include: [{
+          model: MessageModel,
+          as:'messages'
+      }]
     }],
      where: { email, password } });
     return user;
@@ -56,36 +62,14 @@ async function createUser(user: IUser) {
     throw new Error('User creation failed.');
   }
 }
-// where: { post_url: post_url },
-// include: [
-//    { association: 'postAuthor', attributes: ['name'] },
-//    {
-//       association: 'comments', attributes: ['comment'],
-//       include: [{
-//          association: 'commentAuthor',
-//          attributes: ['name']
-//       }]
-//    }
-// ]
-// });
 
 
-// model: Dog,
-// required: true,
-// as:'likedDogs'
-
-// include: [{
-//   model: Dog,
-//   required: true,
-//   as:'dogs',
-//   where:{userId: userId},
-// }],
 async function getAllDogs() {
   try {
     const dogs = await Dog.findAll({
       include: [{
         model: MessageModel,
-        as:'message'
+        as:'messages'
       }],
     });
     return dogs;
@@ -93,19 +77,7 @@ async function getAllDogs() {
     throw new Error('Unable to get all the dogs');
   }
 }
-// async function getAllDogs() {
-//   try {
-//     const dogs = await Dog.findAll({
-//       include: [
-//         {association:'likedDogs'},
-//         {association: 'matchedDogs'}
-//       ],
-//     });
-//     return dogs;
-//   } catch (error) {
-//     throw new Error('Unable to get all the dogs');
-//   }
-// }
+
 
 async function createDog(dog: IDog, userId: number) {
   try {
@@ -120,7 +92,6 @@ async function createDog(dog: IDog, userId: number) {
       liked_dog: [],
       matches_dogs: [],
     });
-    // const user = await User.findOne({ where: { id: parsedId } });
     await newDog.setUser(parsedId);
     return newDog;
   } catch (error) {
@@ -267,36 +238,18 @@ async function getDogMatchesArray(dogId: number) {
 async function createMessage(body: Message, sender_id:number) {
   const { content, receiver_id, receiver_name } = body;
   try {
-    console.log(content,
-      receiver_id,
-      receiver_name,
-      sender_id)
+    const sender = await Dog.findOne({ where: { id: sender_id } });
     const newMessage = await MessageModel.create({
       content,
       receiver_id,
       receiver_name
     });
-    await newMessage.setMessage(sender_id)
+    sender?.addMessage(newMessage)
     return newMessage;
   } catch (error) {
     throw new Error('Unable to create a message');
   }
 }
-// async function createMessage(body: Message) {
-//   const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
-//   try {
-//     const newMessage = await Message.create({
-//       content,
-//       sender_id,
-//       sender_name,
-//       receiver_id,
-//       receiver_name,
-//     });
-//     return newMessage;
-//   } catch (error) {
-//     throw new Error('Unable to create a message');
-//   }
-// }
 
 async function getMessages() {
   try {
