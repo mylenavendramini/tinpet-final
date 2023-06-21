@@ -8,15 +8,19 @@ const Context_1 = require("../Context/Context");
 const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
 const MatchesDisplay = () => {
+    var _a;
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const matchedProfiles = contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs;
     const [openChat, setOpenChat] = (0, react_1.useState)(false);
     console.log(openChat);
     return (<div className='matches-display'>
       {openChat ? (<div className='option'>
-          <span onClick={() => setOpenChat(false)}>
-            <ArrowCircleLeft_1.default />
-          </span>
+          <div className='chat-header'>
+            <span onClick={() => setOpenChat(false)}>
+              <ArrowCircleLeft_1.default />
+            </span>
+            <h2> {(_a = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _a === void 0 ? void 0 : _a.name}</h2>
+          </div>
           <ChatDisplay_1.default />
         </div>) : (<>
           <h2 className=''>Matches</h2>

@@ -12,9 +12,12 @@ const MatchesDisplay = () => {
     <div className='matches-display'>
       {openChat ? (
         <div className='option'>
-          <span onClick={() => setOpenChat(false)}>
-            <ArrowCircleLeftIcon />
-          </span>
+          <div className='chat-header'>
+            <span onClick={() => setOpenChat(false)}>
+              <ArrowCircleLeftIcon />
+            </span>
+            <h2> {contexts?.selectedDog?.name}</h2>
+          </div>
           <ChatDisplay />
         </div>
       ) : (

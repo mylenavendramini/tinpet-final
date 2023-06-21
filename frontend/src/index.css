@@ -378,6 +378,12 @@ p {
   border-radius: 10px;
 }
 
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .chat-container .option span {
   cursor: pointer;
 }
@@ -447,8 +453,8 @@ p {
 /*-------- Chat Display --------*/
 .chat-display,
 .matches-display {
-  padding: 20px;
-  height: 60vh;
+  /* padding: 20px; */
+  /* height: 60vh; */
   overflow-y: auto;
 }
 
