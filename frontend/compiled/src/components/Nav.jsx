@@ -81,7 +81,8 @@ const Nav = () => {
     const handleClickDog = (dog) => {
         contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(dog);
         getMatches();
-        navigate('/dashboard');
+        console.log('it came in handleclick');
+        navigate(`/dashboard/${dog.id}`);
     };
     return (<nav>
       <div className='logo-container'>

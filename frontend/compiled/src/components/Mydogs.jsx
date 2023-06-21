@@ -14,7 +14,7 @@ const MyDogs = () => {
     const myDogs = contexts === null || contexts === void 0 ? void 0 : contexts.myDogs;
     const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
     const navigate = (0, react_router_1.useNavigate)();
-    console.log({ myDogs });
+    // console.log({ myDogs });
     const handleClickDog = (dog) => {
         contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(dog);
         navigate(`/dashboard/${dog.id}`);
