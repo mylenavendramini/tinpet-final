@@ -21,6 +21,7 @@ const Dashboard = () => {
     var _a;
     const [lastDirection, setLastDirection] = (0, react_1.useState)('');
     const contexts = (0, react_1.useContext)(Context_1.Context);
+    const dogId = useParams();
     const currentUser = contexts === null || contexts === void 0 ? void 0 : contexts.user;
     const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -31,7 +32,7 @@ const Dashboard = () => {
         });
     });
     const swiped = (direction, otherDogId) => {
-        console.log(direction);
+        // console.log(direction);
         if (direction == 'right') {
             updateMatches(otherDogId);
         }

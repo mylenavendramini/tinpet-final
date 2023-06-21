@@ -11,7 +11,7 @@ const MyDogs = () => {
   const userId = contexts?.user?.id as number;
   const navigate = useNavigate();
 
-  console.log({ myDogs });
+  // console.log({ myDogs });
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
     navigate(`/dashboard/${dog.id}`);

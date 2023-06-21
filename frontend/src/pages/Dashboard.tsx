@@ -8,6 +8,7 @@ import DogProfile from '../components/DogProfile';
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
   const contexts = useContext(Context);
+  const dogId = useParams()
   const currentUser = contexts?.user;
   const currentDog = contexts?.currentDog as Dog;
 
@@ -20,7 +21,7 @@ const Dashboard: React.FC = () => {
   };
 
   const swiped = (direction: string, otherDogId: number) => {
-    console.log(direction);
+    // console.log(direction);
     if (direction == 'right') {
       updateMatches(otherDogId);
     }

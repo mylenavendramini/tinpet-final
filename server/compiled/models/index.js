@@ -17,10 +17,31 @@ const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
 const Dog = db_1.default.Dog;
+// User.findAll({
+//   include: [{
+//       model: Dog,
+//       required: true,
+//       where:{userId: userId},
+//   }],
+//   where: {
+//      id: userId
+//   }
+// })
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield User.findOne({ where: { id: userId } });
+            // const user = await User.findOne(include: [{}]{ where: { id: userId } });
+            const user = yield User.findOne({
+                include: [{
+                        model: Dog,
+                        required: true,
+                        as: 'dogs',
+                        where: { userId: userId },
+                    }],
+                where: {
+                    id: userId
+                }
+            });
             return user;
         }
         catch (error) {
