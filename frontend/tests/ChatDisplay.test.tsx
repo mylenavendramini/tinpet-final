@@ -15,7 +15,7 @@ import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
 
   describe('ChatDisplay', () => {
 
-    it("renders the component", () => {
+    it("Renders ChatDisplay component correctly", () => {
     render( 
     <BrowserRouter>
       <Routes>
@@ -23,7 +23,6 @@ import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
       </Routes>
     </BrowserRouter>);
     })
-
 
     it('displays button to submit a message', () => {
       render(

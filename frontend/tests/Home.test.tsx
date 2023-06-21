@@ -1,11 +1,11 @@
-import {  afterEach, describe, expect, it, vi  } from "vitest";
-import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
+import { describe, expect, it, } from "vitest";
+import { Routes, Route, BrowserRouter, } from "react-router-dom";
 import Home from "../../frontend/src/pages/Home";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, } from "@testing-library/react";
 import React from 'react'
 
 describe("Home", () => {
-  it("renders", () => {
+  it("renders Home with correct information", () => {
     render(
       <BrowserRouter>
         <Routes>

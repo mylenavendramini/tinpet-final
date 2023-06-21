@@ -15,7 +15,7 @@ import React from 'react'
 // });
 
 describe('Dashboard', () => {
-    it("Renders component correctly", () => {
+    it("Renders Dashboard component correctly", () => {
         render(<Dashboard />);
         // const userProfile = screen.getByTestId('user-profile');
         // expect(userProfile).toBeDefined()
