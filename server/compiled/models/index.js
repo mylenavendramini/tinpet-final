@@ -22,7 +22,8 @@ function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const user = yield User.findOne({
-                include: [{
+                include: [
+                    {
                         model: Dog,
                         required: true,
                         as: 'dogs',
@@ -33,10 +34,11 @@ function getUser(userId) {
                             { model: MessageModel,
                                 as: 'messages' }
                         ],
-                    }],
+                    }
+                ],
                 where: {
-                    id: userId
-                }
+                    id: userId,
+                },
             });
             return user;
         }
