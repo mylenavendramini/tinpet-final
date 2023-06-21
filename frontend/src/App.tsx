@@ -7,38 +7,39 @@ import Login from './components/Login';
 import { useEffect, useContext, useState } from 'react';
 import { Context } from './Context/Context';
 import apiService from './services/APIServices';
-import AuthModal from './components/AuthModal';
-import MyDogs from './components/Mydogs';
+import AuthModal from './components/Register';
+import MyDogs from './components/MyDogs';
 
 const App = () => {
   const contexts = useContext(Context);
   const [gotDogs, setGotDogs] = useState(false);
   const userId = contexts?.user?.id as number;
-
-  const getAllTheDogs = async () => {
-    apiService.getDogsofUSer(userId).then((data) => {
-      contexts?.updateMyDogs(data);
-      // if (data.length > 0) {
-      //   contexts?.updateCurrentDog(data[0]);
-      // }
-      // setGotDogs(true);
-      console.log('APP REFETCHED')
-    });
-  };
-
-  const login = async (email: string, password: string) => {
-    apiService.login(email, password).then((res) => {
-      contexts?.updateUser(res);
-    });
-  };
+  const matches = contexts?.currentDog?.matches_dogs;
+  const liked = contexts?.currentDog?.liked_dog;
 
   useEffect(() => {
     if (contexts?.authenticated) {
       getAllTheDogs();
     } else {
-      console.log('no users');
+      console.log('You need to login first');
     }
   }, []);
+
+  const getAllTheDogs = async () => {
+    apiService.getDogsofUser(userId).then((dogs) => {
+      contexts!.updateMyDogs([...dogs]);
+      // if (dogs.length > 0) {
+      //   contexts?.updateCurrentDog(dogs[0]);
+      // }
+      // setGotDogs(true);
+    });
+  };
+
+  const login = async (email: string, password: string) => {
+    apiService.login(email, password).then((user) => {
+      contexts?.updateUser(user);
+    });
+  };
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -47,19 +48,16 @@ const App = () => {
       login(email, password);
       contexts?.updateAuthenticated(true);
     } else {
-      console.log('no users');
+      console.log('You need to login first');
     }
   }, []);
 
   useEffect(() => {
-    apiService.getDogs().then((data) => {
-      contexts?.updateDogs(data);
-      setGotDogs(true);
+    apiService.getDogs().then((dogs) => {
+      contexts?.updateDogs([...dogs]);
+      // setGotDogs(true);
     });
-  }, []);
-
-  // console.log(contexts?.myDogs, 'here');
-  
+  }, [matches, liked]);
 
   return (
     <>

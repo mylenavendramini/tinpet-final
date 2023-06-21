@@ -19,7 +19,7 @@ const Nav = () => {
   const dogs = contexts?.dogs;
 
   const getAllUserDogs = async () => {
-    apiService.getDogsofUSer(userId).then((data) => {
+    apiService.getDogsofUser(userId).then((data) => {
       contexts?.updateMyDogs(data);
     });
   };
@@ -30,12 +30,11 @@ const Nav = () => {
     const matchedDogs: Dog[] = [];
     matchedIds?.forEach((id) => {
       dogs?.map((dog) => {
-        if(dog.id === id) matchedDogs.push(dog)
-      })
-    })
-    contexts?.updateMatches(matchedDogs)
-  }
-
+        if (dog.id === id) matchedDogs.push(dog);
+      });
+    });
+    console.log('it came in getMatches');
+  };
 
   useEffect(() => {
     if (contexts?.authenticated) {
@@ -64,9 +63,8 @@ const Nav = () => {
     //and when it goes to the dashboard it would still hold the previous value
     //even though we have updated it
     contexts?.updateCurrentDog(dog);
-    console.log(contexts?.currentDog)
-    console.log(dog)
-    getMatches(dog.id as number)
+    getMatches();
+    console.log('it came in handleclick');
     navigate(`/dashboard/${dog.id}`);
   };
 
@@ -95,11 +93,7 @@ const Nav = () => {
                   >
                     {dog.name}
                   </button>
-                  )
-                })}
-                <button className='btn-nav' onClick={() => navigate('/dashboard')}>
-                  Start chat
-                </button>
+                ))}
                 <button
                   className='btn-nav'
                   onClick={() => navigate(`/onboarding/${userId}`)}

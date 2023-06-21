@@ -1,67 +1,98 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Chat_1 = __importDefault(require("./Chat"));
-const ChatInput_1 = __importDefault(require("./ChatInput"));
 const react_1 = require("react");
 const Context_1 = require("../Context/Context");
-//TODO:
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const ChatDisplay = () => {
+    const [message, setMessage] = (0, react_1.useState)('');
+    const [showMessages, setShowMessages] = (0, react_1.useState)([]);
     const contexts = (0, react_1.useContext)(Context_1.Context);
+    const addMessage = () => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b, _c, _d;
+        const sender_id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
+        const sender_name = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.name;
+        const receiver_id = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _c === void 0 ? void 0 : _c.id;
+        const receiver_name = (_d = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _d === void 0 ? void 0 : _d.name;
+        const newMessage = {
+            content: message,
+            sender_id,
+            sender_name,
+            receiver_id,
+            receiver_name,
+        };
+        APIServices_1.default.sendMessage(sender_id, newMessage).then((message) => {
+            setShowMessages([...showMessages, message]);
+        });
+        setMessage('');
+    });
+    const getMessages = () => __awaiter(void 0, void 0, void 0, function* () {
+        APIServices_1.default.getMessages().then((messagesArray) => {
+            const showMessages = messagesArray.filter((message) => {
+                var _a, _b;
+                console.log({ message });
+                console.log(contexts === null || contexts === void 0 ? void 0 : contexts.currentDog);
+                return (message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id) ||
+                    message.receiver_id === ((_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.id));
+            });
+            setShowMessages(showMessages);
+        });
+    });
+    (0, react_1.useEffect)(() => {
+        getMessages();
+    }, []);
+    // useEffect(() => {
+    //   setShowMessages(showMessages);
+    //   console.log({ showMessages });
+    // }, []);
     return (<>
-      {/*<Chat descendingOrderMessages={descendingOrderMessages} />*/}
-      <Chat_1.default />
-      <ChatInput_1.default />
+      <div className='chat-display'>
+        <div className='right'></div>
+        {showMessages.map((message) => {
+            var _a, _b, _c, _d;
+            if (message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id)) {
+                return (<div className='left'>
+                <div key={message.id}>
+                  <div className='chat-message-header'>
+                    <div className='img-container'>
+                      <img src={(_b = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _b === void 0 ? void 0 : _b.url} alt={message.receiver_name + ' profile'}/>
+                    </div>
+                  </div>
+                  <p>{message.content}</p>
+                </div>
+              </div>);
+            }
+            else if (message.sender_id !== ((_c = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _c === void 0 ? void 0 : _c.id)) {
+                return (<div className=''>
+                <div key={message.id}>
+                  <div className='chat-message-header'>
+                    <div className='img-container'>
+                      <img src={(_d = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _d === void 0 ? void 0 : _d.url} alt={message.receiver_name + ' profile'}/>
+                    </div>
+                  </div>
+                  <p>{message.content}</p>
+                </div>
+              </div>);
+            }
+        })}
+      </div>
+      <div className='chat-input'>
+        <textarea value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+        <button className='btn-secondary' onClick={addMessage}>
+          Submit
+        </button>
+      </div>
     </>);
 };
 exports.default = ChatDisplay;
-// const userId = user?.user_id;
-// const clickedUserId = clickedUSer?.user_id;
-// const [usersMessages, setUsersMessages] = useState(null);
-// const [clickedUsersMessages, setClickedUsersMessages] = useState(null);
-// const getUsersMessages = async () => {
-//   try {
-//     const response = await axios.get('http://localhost:3000/messages', {
-//       params: { userId: userId, correspondingUserId: clickedUserId },
-//     });
-//     setUsersMessages(response.data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-// const getClickedUsersMessages = async () => {
-//   try {
-//     const response = await axios.get('http://localhost:3000/messages', {
-//       params: { userId: clickedUserId, correspondingUserId: userId },
-//     });
-//     setClickedUsersMessages(response.data);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-// useEffect(() => {
-//   getUsersMessages();
-//   getClickedUsersMessages();
-// }, []);
-// const messages = [];
-// usersMessages?.forEach((message) => {
-//   const formattedMessage = {};
-//   formattedMessage['name'] = user?.name;
-//   formattedMessage['img'] = user?.url;
-//   formattedMessage['message'] = message.message;
-//   formattedMessage['timestamp'] = message.timestamp;
-//   messages.push(formattedMessage);
-// });
-// clickedUsersMessages?.forEach((message) => {
-//   const formattedMessage = {};
-//   formattedMessage['name'] = clickedUSer?.name;
-//   formattedMessage['img'] = clickedUSer?.url;
-//   formattedMessage['message'] = message.message;
-//   formattedMessage['timestamp'] = message.timestamp;
-//   messages.push(formattedMessage);
-// });
-// const descendingOrderMessages = messages?.sort((a, b) =>
-//   a.timestamp.localeCompare(b.timestamp)
-// );

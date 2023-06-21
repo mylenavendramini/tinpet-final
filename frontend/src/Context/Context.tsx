@@ -14,7 +14,7 @@ interface ContextType {
   updateUser: (newUser: User | null) => void;
   updateDogs: (newDog: Dog[] | null) => void;
   updateModal: () => void;
-  updateSignUp: (signup:boolean) => void;
+  updateSignUp: (signup: boolean) => void;
   updateMyDogs: (myDog: Dog[]) => void;
   updateCurrentDog: (dog: Dog | null) => void;
   updateMatches: (matchedDogs: Dog[]) => void;
@@ -26,17 +26,19 @@ interface MyProviderProps {
   children: ReactNode;
 }
 export const Context = createContext<ContextType | undefined>(undefined);
+
 export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [dogs, setDogs] = useState<Dog[] | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
   const [matchedDogs, setMatchedDogs] = useState<Dog[]>([]);
-  const [myDogs, setMyDogs] = useState<Dog[]>([]);
+  const [myDogs, setMyDogs] = useState<Dog[] | []>([]);
   const [currentDog, setCurrentDog] = useState<Dog | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [selectedDog, setSelectedDog] = useState<Dog | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
   };
@@ -46,7 +48,7 @@ export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
   const updateModal = () => {
     setShowModal(!showModal);
   };
-  const updateSignUp = (signup:boolean) => {
+  const updateSignUp = (signup: boolean) => {
     setIsSignUp(signup);
   };
   const updateMyDogs = (myDogs: Dog[]) => {

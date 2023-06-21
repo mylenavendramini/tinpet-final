@@ -23,8 +23,8 @@ const MyProvider = ({ children }) => {
     const updateModal = () => {
         setShowModal(!showModal);
     };
-    const updateSignUp = () => {
-        setIsSignUp(!isSignUp);
+    const updateSignUp = (signup) => {
+        setIsSignUp(signup);
     };
     const updateMyDogs = (myDogs) => {
         setMyDogs(myDogs);

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
 
-const ChatHeader: React.FC = () => {
+const ProfileHeader: React.FC = () => {
   const contexts = useContext(Context);
   const navigate = useNavigate();
 
@@ -21,4 +21,4 @@ const ChatHeader: React.FC = () => {
     </div>
   );
 };
-export default ChatHeader;
+export default ProfileHeader;

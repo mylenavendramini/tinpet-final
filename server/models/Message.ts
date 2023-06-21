@@ -14,11 +14,13 @@ export class Message extends Model<
 > {
   declare id?: CreationOptional<number>
   declare content: string
-  declare sender: number
-  declare receiver: number
+  declare sender_id: number
+  declare receiver_id: number
+  declare sender_name: string
+  declare receiver_name: string
   declare createdAt: CreationOptional<Date>
   declare updatedAt: CreationOptional<Date>
-  
+
   static initModel(sequelize: Sequelize): typeof Message {
     Message.init({
       id: {
@@ -32,12 +34,20 @@ export class Message extends Model<
         allowNull: false,
         unique: false,
       },
-      sender: {
+      sender_id: {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      receiver: {
+      receiver_id: {
         type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      sender_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      receiver_name: {
+        type: DataTypes.STRING,
         allowNull: false
       },
       createdAt: {
@@ -49,7 +59,7 @@ export class Message extends Model<
     }, {
       sequelize
     })
-    
+
     return Message
   }
 }

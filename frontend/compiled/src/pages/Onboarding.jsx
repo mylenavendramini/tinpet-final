@@ -12,38 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-unused-vars */
 const Nav_1 = __importDefault(require("../components/Nav"));
 const react_1 = require("react");
-const react_cookie_1 = require("react-cookie");
 const react_router_dom_1 = require("react-router-dom");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Context_1 = require("../Context/Context");
 const Onboarding = () => {
-    const navigate = (0, react_router_dom_1.useNavigate)();
-    const { id } = (0, react_router_dom_1.useParams)();
-    const parsedId = Number(id);
-    const contexts = (0, react_1.useContext)(Context_1.Context);
-    const myDogs = contexts === null || contexts === void 0 ? void 0 : contexts.myDogs;
-    const [cookies, setCookies, removeCookies] = (0, react_cookie_1.useCookies)(['user']);
-    // const [formData, setFormData] = useState<Dog>({
-    //   name: '',
-    //   age: 0,
-    //   gender: '',
-    //   url: '',
-    //   about: '',
-    //   liked_dog: [],
-    //   matches_dogs: [],
-    // });
     const [name, setName] = (0, react_1.useState)('');
     const [age, setAge] = (0, react_1.useState)(0);
     const [gender, setGender] = (0, react_1.useState)('');
     const [url, setUrl] = (0, react_1.useState)('');
     const [about, setAbout] = (0, react_1.useState)('');
+    const navigate = (0, react_router_dom_1.useNavigate)();
+    const contexts = (0, react_1.useContext)(Context_1.Context);
     const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
         e.preventDefault();
-        console.log('Submitted');
         const newDog = {
             name,
             age,
@@ -53,30 +37,17 @@ const Onboarding = () => {
             liked_dog: [],
             matches_dogs: [],
         };
-        // console.log({ newDog });
-        const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
-        console.log(id);
-        console.log(contexts === null || contexts === void 0 ? void 0 : contexts.user);
-        apiservices_1.default.createDog(id, newDog).then((data) => {
-            console.log(data);
-            contexts === null || contexts === void 0 ? void 0 : contexts.myDogs.push(data);
-            navigate('/dashboard');
+        const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
+        APIServices_1.default.createDog(userId, newDog).then((dog) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.myDogs.push(dog);
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(dog);
+            navigate(`/dashboard/${dog.id}`);
         });
     });
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const value = e?.target.value;
-    //   const name = e.target.name;
-    //   setName();
-    //   setFormData((prevState) => ({
-    //     ...prevState,
-    //     [name]: value,
-    //   }));
-    // };
     return (<>
       <Nav_1.default />
       <div className='onboarding'>
         <h2>Create a dog</h2>
-
         <form onSubmit={handleSubmit}>
           <section>
             <label htmlFor='first_name'>Name</label>
@@ -89,7 +60,6 @@ const Onboarding = () => {
             <label>Gender</label>
             <div className='multiple-input-container'>
               <input id='male-gender' type='radio' name='gender' placeholder='Gender' value='male' checked={gender === 'male'} onChange={(e) => setGender(e.target.value)}/>
-
               <label htmlFor='male-gender'>Male</label>
               <input id='female-gender' type='radio' name='gender' placeholder='Gender' value='female' checked={gender === 'female'} onChange={(e) => setGender(e.target.value)}/>
               <label htmlFor='female-gender'>Female</label>
@@ -99,7 +69,6 @@ const Onboarding = () => {
             <input id='about' type='text' name='about' required={true} placeholder='Friendly and playful' value={about} onChange={(e) => setAbout(e.target.value)}/>
             <input type='submit' value='Submit'/>
           </section>
-
           <section>
             <label htmlFor='url'>Profile Picture</label>
             <input id='url' type='url' name='url' required={true} onChange={(e) => setUrl(e.target.value)}/>
