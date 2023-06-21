@@ -8,41 +8,31 @@ const MatchesDisplay_1 = __importDefault(require("./MatchesDisplay"));
 const ChatHeader_1 = __importDefault(require("./ChatHeader"));
 const react_1 = require("react");
 const Context_1 = require("../Context/Context");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
 const ChatContainer = ({ user }) => {
-    const [clickedDog, setClickedDog] = (0, react_1.useState)(null);
+    const [clickedChat, setClickedChat] = (0, react_1.useState)(false);
+    const [fetchedMatches, setFetchedMatches] = (0, react_1.useState)(false);
+    const [fetchedMessages, setFetchedMessages] = (0, react_1.useState)(false);
     const context = (0, react_1.useContext)(Context_1.Context);
     const myDogs = context === null || context === void 0 ? void 0 : context.myDogs;
-    const dogsMatches = myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => dog.matches_dogs); //TODO:something tells me this will not work because MatchesDisplay is expecting an array of Dogs but will will be an
-    //array of numbers... - Harold
-    // would make more sense to use the matches in the context...
-    //i think this would make more sense then map over the context.matchedDogs
-    (0, react_1.useEffect)(() => {
-        var _a;
-        apiservices_1.default.getMatches((_a = context === null || context === void 0 ? void 0 : context.currentDog) === null || _a === void 0 ? void 0 : _a.id).then((res) => {
-            context === null || context === void 0 ? void 0 : context.updateMatches(res);
-        });
-    }, []);
+    // useEffect(() => {
+    //   apiService.getMatches(context?.currentDog?.id as number).then((res) => {
+    //     context?.updateMatches(res);
+    //     console.log(res, 'RESULT')
+    //   });
+    // }, []);
     return (<div className='chat-container'>
-      {/*TODO:*/}
       <ChatHeader_1.default />
-      {/* <ChatHeader user={user} /> */}
       <div>
-        <button className='option' onClick={() => setClickedDog(null)}>
+        <button className='option' onClick={() => setClickedChat(false)}>
           Matches
         </button>
-        <button className='option' disabled={!clickedDog}>
+        <button className='option' onClick={() => setClickedChat(true)}>
           Chat
         </button>
       </div>
 
-      {!clickedDog && (<MatchesDisplay_1.default />
-        //  <MatchesDisplay matches={contexts?.matchedDogs as Dog[]} setClickedDog={contexts?.updateSelectedDog as Function} />
-        )}
-
-      {/* clickedDog && <ChatDisplay user={user} clickedDog={clickedDog} />*/}
-      {clickedDog && <ChatDisplay_1.default />}
-      {/* ChatDisplay wont need any props cause its now using Context to access the props it needs */}
+      {!clickedChat && (<MatchesDisplay_1.default />)}
+      {clickedChat && <ChatDisplay_1.default />}
     </div>);
 };
 exports.default = ChatContainer;

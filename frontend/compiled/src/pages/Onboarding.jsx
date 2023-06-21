@@ -17,7 +17,7 @@ const Nav_1 = __importDefault(require("../components/Nav"));
 const react_1 = require("react");
 const react_cookie_1 = require("react-cookie");
 const react_router_dom_1 = require("react-router-dom");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Context_1 = require("../Context/Context");
 const Onboarding = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
@@ -53,25 +53,16 @@ const Onboarding = () => {
             liked_dog: [],
             matches_dogs: [],
         };
-        // console.log({ newDog });
         const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
         console.log(id);
         console.log(contexts === null || contexts === void 0 ? void 0 : contexts.user);
-        apiservices_1.default.createDog(id, newDog).then((data) => {
+        APIServices_1.default.createDog(id, newDog).then((data) => {
             console.log(data);
             contexts === null || contexts === void 0 ? void 0 : contexts.myDogs.push(data);
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(data);
             navigate('/dashboard');
         });
     });
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const value = e?.target.value;
-    //   const name = e.target.name;
-    //   setName();
-    //   setFormData((prevState) => ({
-    //     ...prevState,
-    //     [name]: value,
-    //   }));
-    // };
     return (<>
       <Nav_1.default />
       <div className='onboarding'>

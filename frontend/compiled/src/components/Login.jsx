@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Close_1 = __importDefault(require("@mui/icons-material/Close"));
 const react_1 = require("react");
 const react_router_dom_1 = require("react-router-dom");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Context_1 = require("../Context/Context");
 const Login = () => {
     var _a;
@@ -26,7 +26,7 @@ const Login = () => {
         }
         else {
             try {
-                apiservices_1.default.login(email, password).then((res) => {
+                APIServices_1.default.login(email, password).then((res) => {
                     console.log(res);
                     if (res.username) {
                         contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
@@ -43,7 +43,7 @@ const Login = () => {
                 });
             }
             catch (e) {
-                console.log('OMEGA LUL your login function failed');
+                setError('OMEGA LUL your login function failed');
             }
         }
     }
