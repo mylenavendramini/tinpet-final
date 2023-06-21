@@ -13,13 +13,6 @@ const ChatContainer = () => {
   const contexts = useContext(Context);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    apiService.getMatches(contexts?.currentDog?.id as number).then((res) => {
-      contexts?.updateMatches(res);
-      console.log(res, 'RESULT');
-    });
-  }, []);
-
   return (
     <div className='chat-container'>
       <div className='chat-container-header'>

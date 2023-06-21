@@ -7,7 +7,6 @@ const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const MatchesDisplay_1 = __importDefault(require("./MatchesDisplay"));
 const react_1 = require("react");
 const Context_1 = require("../Context/Context");
-const APIServices_1 = __importDefault(require("../services/APIServices"));
 const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
 const react_router_1 = require("react-router");
 const ChatContainer = () => {
@@ -17,13 +16,6 @@ const ChatContainer = () => {
     const [fetchedMessages, setFetchedMessages] = (0, react_1.useState)(false);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const navigate = (0, react_router_1.useNavigate)();
-    (0, react_1.useEffect)(() => {
-        var _a;
-        APIServices_1.default.getMatches((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id).then((res) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMatches(res);
-            console.log(res, 'RESULT');
-        });
-    }, []);
     return (<div className='chat-container'>
       <div className='chat-container-header'>
         <div className='profile'>

@@ -26,7 +26,8 @@ const Dashboard = () => {
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
-                // alert('Its a maaaatch');
+                alert('Its a maaaatch');
+                contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs.push(theOtherDog);
             }
         });
     });
