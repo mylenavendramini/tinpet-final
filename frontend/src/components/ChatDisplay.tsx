@@ -54,38 +54,17 @@ const ChatDisplay = () => {
   return (
     <>
       <div className='chat-display'>
-        <div className='right'></div>
         {showMessages.map((message: Message) => {
           if (message.sender_id === contexts?.currentDog?.id) {
             return (
-              <div className='left'>
-                <div key={message.id}>
-                  <div className='chat-message-header'>
-                    <div className='img-container'>
-                      <img
-                        src={contexts?.selectedDog?.url}
-                        alt={message.receiver_name + ' profile'}
-                      />
-                    </div>
-                  </div>
-                  <p>{message.content}</p>
-                </div>
+              <div className='chat-message-header left'>
+                <p>{message.content}</p>
               </div>
             );
           } else if (message.sender_id !== contexts?.currentDog?.id) {
             return (
-              <div className=''>
-                <div key={message.id}>
-                  <div className='chat-message-header'>
-                    <div className='img-container'>
-                      <img
-                        src={contexts?.selectedDog?.url}
-                        alt={message.receiver_name + ' profile'}
-                      />
-                    </div>
-                  </div>
-                  <p>{message.content}</p>
-                </div>
+              <div className='chat-message-header right'>
+                <p>{message.content}</p>
               </div>
             );
           }

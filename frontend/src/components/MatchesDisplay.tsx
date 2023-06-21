@@ -33,7 +33,13 @@ const MatchesDisplay = () => {
             <span onClick={() => setOpenChat(false)}>
               <ArrowCircleLeftIcon />
             </span>
-            <h2> {contexts?.selectedDog?.name}</h2>
+            <div className='selected-dog'>
+              <h2> {contexts?.selectedDog?.name}</h2>
+              <img
+                src={contexts?.selectedDog?.url}
+                alt={contexts?.selectedDog?.url}
+              />
+            </div>
           </div>
           <ChatDisplay />
         </div>

@@ -13,6 +13,7 @@ const ProfileHeader: React.FC = () => {
         <div className='img-container'>
           <img src={contexts?.currentDog?.url} alt='user photo' />
         </div>
+
         <h3>{contexts?.currentDog?.name}</h3>
       </div>
       <i className='logout-icon' onClick={() => navigate('/myDogs')}>

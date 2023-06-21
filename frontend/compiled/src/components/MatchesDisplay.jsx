@@ -9,7 +9,7 @@ const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const MatchesDisplay = () => {
-    var _a;
+    var _a, _b, _c;
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)([]);
     const [openChat, setOpenChat] = (0, react_1.useState)(false);
@@ -33,7 +33,10 @@ const MatchesDisplay = () => {
             <span onClick={() => setOpenChat(false)}>
               <ArrowCircleLeft_1.default />
             </span>
-            <h2> {(_a = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _a === void 0 ? void 0 : _a.name}</h2>
+            <div className='selected-dog'>
+              <h2> {(_a = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _a === void 0 ? void 0 : _a.name}</h2>
+              <img src={(_b = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _b === void 0 ? void 0 : _b.url} alt={(_c = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _c === void 0 ? void 0 : _c.url}/>
+            </div>
           </div>
           <ChatDisplay_1.default />
         </div>) : (<>
