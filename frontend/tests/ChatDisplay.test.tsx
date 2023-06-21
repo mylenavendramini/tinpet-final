@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import ChatDisplay from '../src/components/ChatDisplay';
 import apiService from '../src/services/APIServices';
 import { Message } from '../src/types/Types';
+import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
 
 
 
@@ -15,7 +16,12 @@ import { Message } from '../src/types/Types';
   describe('ChatDisplay', () => {
 
     it("renders the component", () => {
-    render(<ChatDisplay />);
+    render( 
+    <BrowserRouter>
+      <Routes>
+      {<Route path='/' element={<ChatDisplay />} />}
+      </Routes>
+    </BrowserRouter>);
     })
 
 

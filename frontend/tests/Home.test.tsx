@@ -1,12 +1,7 @@
 import {  afterEach, describe, expect, it, vi  } from "vitest";
-import userEvent from "@testing-library/user-event";
 import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
 import Home from "../../frontend/src/pages/Home";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { assertType, expectTypeOf } from "vitest";
-import { useNavigate } from "react-router";
-import { Context } from "../src/Context/Context";
-import { useContext } from "react";
 import React from 'react'
 
 describe("Home", () => {
@@ -24,6 +19,12 @@ describe("Home", () => {
     const paragraph = screen.queryByText(/Your dog is lonely and has no friends/i)
     expect(paragraph).toBeDefined()
   });
+
+
+
+  // fireEvent.click(screen.getByRole("button", { name: /Log In/i }));
+  //   expect(screen.getByText("LOG IN")).toBeInTheDocument();
+  // });
 
 
 it('displays buttons when not authenticated', () => {
@@ -53,5 +54,5 @@ render(
 expect(
   screen.getByRole("button", { name: /Create Account/i })
 ).toBeDefined()
-})
 });
+})
