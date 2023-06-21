@@ -4,7 +4,6 @@ const react_1 = require("react");
 const Context_1 = require("../Context/Context");
 const MatchesDisplay = () => {
     const contexts = (0, react_1.useContext)(Context_1.Context);
-    const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
     const matchedProfiles = contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs;
     return (<div className='matches-display'>
       {matchedProfiles === null || matchedProfiles === void 0 ? void 0 : matchedProfiles.map((matchProfile, idx) => (<div key={idx} className='match-card' onClick={() => contexts === null || contexts === void 0 ? void 0 : contexts.updateSelectedDog(matchProfile)}>

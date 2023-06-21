@@ -3,7 +3,6 @@ import { Context } from '../Context/Context';
 
 const MatchesDisplay = () => {
   const contexts = useContext(Context);
-  const currentDog = contexts?.currentDog;
   const matchedProfiles = contexts?.matchedDogs;
 
   return (
