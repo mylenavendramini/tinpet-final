@@ -17,12 +17,24 @@ const APIServices_1 = __importDefault(require("../services/APIServices"));
 const react_tinder_card_1 = __importDefault(require("react-tinder-card"));
 const Context_1 = require("../Context/Context");
 const DogProfile_1 = __importDefault(require("../components/DogProfile"));
+const Favorite_1 = __importDefault(require("@mui/icons-material/Favorite"));
+const HeartBroken_1 = __importDefault(require("@mui/icons-material/HeartBroken"));
+const material_1 = require("@mui/material");
 const Dashboard = () => {
     const [lastDirection, setLastDirection] = (0, react_1.useState)('');
     const [otherDogs, setOtherDogs] = (0, react_1.useState)([]);
+    const [likedMessage, setLikedMessage] = (0, react_1.useState)(false);
+    const [notLikedMessage, setNotLikedMessage] = (0, react_1.useState)(false);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const currentUser = contexts === null || contexts === void 0 ? void 0 : contexts.user;
     const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
+    const [open, setOpen] = (0, react_1.useState)(false);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
@@ -31,17 +43,22 @@ const Dashboard = () => {
         });
     });
     const swiped = (direction, otherDogId) => {
-        console.log({ otherDogId });
         setLastDirection(direction);
         const dogsLeft = otherDogs.filter((leftDog) => {
-            console.log(leftDog.id);
             return leftDog.id !== otherDogId;
         });
         if (direction == 'right') {
-            console.log('it was right');
-            console.log({ dogsLeft });
+            setOpen(true);
+            setNotLikedMessage(false);
+            setLikedMessage(true);
             setOtherDogs(dogsLeft);
             updateMatches(otherDogId);
+        }
+        else if (direction == 'left') {
+            setOpen(true);
+            setLikedMessage(false);
+            setNotLikedMessage(true);
+            setOtherDogs(dogsLeft);
         }
     };
     const outOfFrame = (dog) => {
@@ -79,8 +96,19 @@ const Dashboard = () => {
                   </div>
                 </react_tinder_card_1.default>
               </div>))}
-            <div className='swipe-info'>
-              {lastDirection && <p>You swiped {lastDirection}</p>}
+            <div className='message'>
+              {likedMessage && (<material_1.Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                  <material_1.Alert onClose={handleClose} icon={false} color='error' severity='warning' sx={{ width: '100%' }}>
+                    <Favorite_1.default />
+                    <span>You liked this dog</span>
+                  </material_1.Alert>
+                </material_1.Snackbar>)}
+              {notLikedMessage && (<material_1.Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
+                  <material_1.Alert onClose={handleClose} severity='warning' icon={false} color='error' sx={{ width: '100%' }}>
+                    <HeartBroken_1.default />
+                    <span>You didn't like this dog</span>
+                  </material_1.Alert>
+                </material_1.Snackbar>)}
             </div>
           </div>
         </div>

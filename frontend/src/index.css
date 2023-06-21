@@ -311,11 +311,6 @@ p {
   height: 80vh;
 }
 
-.dashboard .swipe-info {
-  /* position: absolute; */
-  margin-bottom: 5rem;
-  margin-top: 10px;
-}
 /* Card container */
 
 .swipe {
@@ -365,6 +360,22 @@ p {
   color: #fff;
   animation-name: popup;
   animation-duration: 800ms;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: red;
+  position: absolute;
+  left: 110px;
+  top: -60px;
+}
+
+.message span {
+  margin-left: 1rem;
+  font-size: 1.3rem;
+  color: #025464;
 }
 
 /* Chat container */
