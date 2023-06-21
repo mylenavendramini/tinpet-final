@@ -15,7 +15,8 @@ const Dashboard: React.FC = () => {
     apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
       if (theOtherDog.matches_dogs.includes(currentDog.id)) {
         alert('Its a maaaatch');
-        contexts?.matchedDogs.push(theOtherDog);
+        // contexts?.matchedDogs.push(theOtherDog);
+        contexts?.updateMatches([...contexts.matchedDogs, theOtherDog]);
       }
     });
   };
@@ -46,27 +47,23 @@ const Dashboard: React.FC = () => {
             {
               <div className='card-container'>
                 {otherDogs?.map((dog, idx) => (
-                  <>
-                    <TinderCard
-                      className='swipe'
-                      key={idx}
-                      onSwipe={(direction) =>
-                        swiped(direction, dog.id as number)
-                      }
-                      onCardLeftScreen={() => outOfFrame(dog.name)}
+                  <TinderCard
+                    className='swipe'
+                    key={idx}
+                    onSwipe={(direction) => swiped(direction, dog.id as number)}
+                    onCardLeftScreen={() => outOfFrame(dog.name)}
+                  >
+                    <div
+                      style={{ backgroundImage: 'url(' + dog.url + ')' }}
+                      className='card'
+                      onClick={() => swiped('right', dog.id as number)}
                     >
-                      <div
-                        style={{ backgroundImage: 'url(' + dog.url + ')' }}
-                        className='card'
-                        onClick={() => swiped('right', dog.id as number)}
-                      >
-                        <h3>
-                          {dog.name + ', Age: '}
-                          {dog.age}
-                        </h3>
-                      </div>
-                    </TinderCard>
-                  </>
+                      <h3>
+                        {dog.name + ', Age: '}
+                        {dog.age}
+                      </h3>
+                    </div>
+                  </TinderCard>
                 ))}
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}

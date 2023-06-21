@@ -371,10 +371,15 @@ p {
   border: none;
   background-color: white;
   border-bottom: solid 5px #025464;
+  color: #025464;
   font-size: 1.5rem;
   margin: 5px;
   padding: 0.8rem;
   border-radius: 10px;
+}
+
+.chat-container .option span {
+  cursor: pointer;
 }
 .chat-container button:hover {
   background-color: lightgray;
@@ -402,6 +407,7 @@ p {
   border-radius: 100rem;
   overflow: hidden;
   margin: 10px;
+  cursor: pointer;
 }
 
 .img-container img {
@@ -445,6 +451,8 @@ p {
   height: 60vh;
   overflow-y: auto;
 }
+
+/*-------- Matches Display --------*/
 
 /*-------- Chat Input --------*/
 .chat-input {

@@ -7,18 +7,30 @@ const ChatDisplay = () => {
   const contexts = useContext(Context);
 
   const addMessage = async () => {
-    const id = contexts?.currentDog?.id as number;
+    const sender_id = contexts?.currentDog?.id as number;
+    const sender_name = contexts?.currentDog?.name as string;
+    const receiver_id = contexts?.selectedDog?.id as number;
+    const receiver_name = contexts?.selectedDog?.name as string;
+
     const newMessage = {
       content: message,
-      sender: id,
-      receiver: contexts?.selectedDog?.id as number,
+      sender_id,
+      sender_name,
+      receiver_id,
+      receiver_name,
     };
-    console.log(contexts?.selectedDog, contexts?.currentDog);
-    apiService.sendMessage(id, newMessage).then((res) => {
-      contexts?.updateMessages([...contexts.messages, res]);
-      console.log(contexts?.messages);
+    console.log(newMessage);
+    apiService.sendMessage(sender_id, newMessage).then((message) => {
+      contexts?.updateMessages([...contexts.messages, message]);
     });
   };
+
+  console.log(contexts?.messages);
+
+  // const getMessages = async () => {
+  //   apiService.getMessages();
+  // };
+
   return (
     <>
       <div className='chat-display'>

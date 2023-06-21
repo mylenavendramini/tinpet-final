@@ -103,8 +103,8 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    sendMessage: (id, body) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/messages/${id}`, {
+    sendMessage: (senderId, body) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${senderId}`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -115,8 +115,8 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getMessages: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/messages/${id}`, {
+    getMessages: (senderId) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${senderId}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',

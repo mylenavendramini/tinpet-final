@@ -19,19 +19,27 @@ const ChatDisplay = () => {
     const [message, setMessage] = (0, react_1.useState)('');
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const addMessage = () => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
-        const id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
+        var _a, _b, _c, _d;
+        const sender_id = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
+        const sender_name = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.name;
+        const receiver_id = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _c === void 0 ? void 0 : _c.id;
+        const receiver_name = (_d = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _d === void 0 ? void 0 : _d.name;
         const newMessage = {
             content: message,
-            sender: id,
-            receiver: (_b = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _b === void 0 ? void 0 : _b.id,
+            sender_id,
+            sender_name,
+            receiver_id,
+            receiver_name,
         };
-        console.log(contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog, contexts === null || contexts === void 0 ? void 0 : contexts.currentDog);
-        APIServices_1.default.sendMessage(id, newMessage).then((res) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMessages([...contexts.messages, res]);
-            console.log(contexts === null || contexts === void 0 ? void 0 : contexts.messages);
+        console.log(newMessage);
+        APIServices_1.default.sendMessage(sender_id, newMessage).then((message) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateMessages([...contexts.messages, message]);
         });
     });
+    console.log(contexts === null || contexts === void 0 ? void 0 : contexts.messages);
+    // const getMessages = async () => {
+    //   apiService.getMessages();
+    // };
     return (<>
       <div className='chat-display'>
         {contexts === null || contexts === void 0 ? void 0 : contexts.messages.map((message) => {

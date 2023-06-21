@@ -27,7 +27,8 @@ const Dashboard = () => {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
                 alert('Its a maaaatch');
-                contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs.push(theOtherDog);
+                // contexts?.matchedDogs.push(theOtherDog);
+                contexts === null || contexts === void 0 ? void 0 : contexts.updateMatches([...contexts.matchedDogs, theOtherDog]);
             }
         });
     });
@@ -49,16 +50,14 @@ const Dashboard = () => {
           <DogProfile_1.default />
           <div className='swiper-container'>
             {<div className='card-container'>
-                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<>
-                    <react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog.id)} onCardLeftScreen={() => outOfFrame(dog.name)}>
-                      <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card' onClick={() => swiped('right', dog.id)}>
-                        <h3>
-                          {dog.name + ', Age: '}
-                          {dog.age}
-                        </h3>
-                      </div>
-                    </react_tinder_card_1.default>
-                  </>))}
+                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog.id)} onCardLeftScreen={() => outOfFrame(dog.name)}>
+                    <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card' onClick={() => swiped('right', dog.id)}>
+                      <h3>
+                        {dog.name + ', Age: '}
+                        {dog.age}
+                      </h3>
+                    </div>
+                  </react_tinder_card_1.default>))}
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>
