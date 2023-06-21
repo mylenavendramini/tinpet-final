@@ -7,7 +7,6 @@ import { assertType, expectTypeOf } from "vitest";
 import { useNavigate } from "react-router";
 import { Context } from "../src/Context/Context";
 import { useContext } from "react";
-import App from '../../frontend/src/App'
 import React from 'react'
 
 describe("Home", () => {
@@ -55,16 +54,6 @@ expect(
   screen.getByRole("button", { name: /Create Account/i })
 ).toBeDefined()
 })
-
-
-// it("opens the correct modal when the create account button is clicked", () => {
-// render(<App></App>);
-// fireEvent.click(screen.getByRole("button", { name: /Create Account/i }));
-// expect(
-// screen.queryByText(/confirm your password/i)
-// ).toBeDefined()
-// });
-
 
 
 });
