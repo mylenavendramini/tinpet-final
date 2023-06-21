@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../../frontend/src/pages/Home";
 import { render, screen } from "@testing-library/react";
 import { assertType, expectTypeOf } from "vitest";
+import { Context } from "../src/Context/Context";
 
 describe("Home", () => {
   it("renders", () => {
@@ -14,6 +15,15 @@ describe("Home", () => {
       </BrowserRouter>
     );
     const pet = screen.getByTestId('tinPet')
-    expect(pet).toBe('TinPet')
+    expect(pet).toBeInTheDocument()
   });
-});
+
+it('displays buttons when not authenticated', () => {
+const mockContext = {
+authenticated: false,
+updateS
+}
+})
+})
+    
+  
