@@ -17,22 +17,6 @@ const App = () => {
   const matches = contexts?.currentDog?.matches_dogs;
   const liked = contexts?.currentDog?.liked_dog;
 
-  useEffect(() => {
-    if (contexts?.authenticated) {
-      // getTheUser();
-      console.log('authenticated');
-    } else {
-      console.log('No dogs before login');
-    }
-  }, []);
-
-  // const getTheUser = () => {
-  //   apiService.getUser(userId).then((user) => {
-  //     console.log({ user });
-  //     contexts?.updateMyDogs(user.dogs);
-  //   });
-  // };
-
   const login = async (email: string, password: string) => {
     apiService.login(email, password).then((user) => {
       contexts?.updateUser(user);
@@ -41,16 +25,21 @@ const App = () => {
 
   useEffect(() => {
     const user = localStorage.getItem('user');
-    const userObj = JSON.parse(user as string) as User;
-    const userId = userObj.id as number;
-
-    apiService.getUser(userId).then((user) => {
-      contexts?.updateMyDogs(user.dogs);
-    });
     if (user) {
-      const { email, password } = JSON.parse(user);
-      login(email, password);
-      contexts?.updateAuthenticated(true);
+      const { id } = JSON.parse(user);
+      apiService.getUser(id).then((user) => {
+        contexts?.updateMyDogs(user.dogs);
+      });
+    }
+  }, [contexts?.authenticated]);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const { email, password, id } = JSON.parse(user);
+      login(email, password).then((data) => {
+        contexts?.updateAuthenticated(true);
+      });
     } else {
       console.log('You need to login first');
     }
@@ -59,7 +48,6 @@ const App = () => {
   useEffect(() => {
     apiService.getDogs().then((dogs) => {
       contexts?.updateDogs([...dogs]);
-      // setGotDogs(true);
     });
   }, [matches, liked]);
 

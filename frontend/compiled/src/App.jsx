@@ -29,21 +29,6 @@ const App = () => {
     const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
     const matches = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
     const liked = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _c === void 0 ? void 0 : _c.liked_dog;
-    (0, react_1.useEffect)(() => {
-        if (contexts === null || contexts === void 0 ? void 0 : contexts.authenticated) {
-            // getTheUser();
-            console.log('authenticated');
-        }
-        else {
-            console.log('No dogs before login');
-        }
-    }, []);
-    // const getTheUser = () => {
-    //   apiService.getUser(userId).then((user) => {
-    //     console.log({ user });
-    //     contexts?.updateMyDogs(user.dogs);
-    //   });
-    // };
     const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.login(email, password).then((user) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);
@@ -51,15 +36,20 @@ const App = () => {
     });
     (0, react_1.useEffect)(() => {
         const user = localStorage.getItem('user');
-        const userObj = JSON.parse(user);
-        const userId = userObj.id;
-        APIServices_1.default.getUser(userId).then((user) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(user.dogs);
-        });
         if (user) {
-            const { email, password } = JSON.parse(user);
-            login(email, password);
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
+            const { id } = JSON.parse(user);
+            APIServices_1.default.getUser(id).then((user) => {
+                contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(user.dogs);
+            });
+        }
+    }, [contexts === null || contexts === void 0 ? void 0 : contexts.authenticated]);
+    (0, react_1.useEffect)(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            const { email, password, id } = JSON.parse(user);
+            login(email, password).then((data) => {
+                contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
+            });
         }
         else {
             console.log('You need to login first');
@@ -68,7 +58,6 @@ const App = () => {
     (0, react_1.useEffect)(() => {
         APIServices_1.default.getDogs().then((dogs) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateDogs([...dogs]);
-            // setGotDogs(true);
         });
     }, [matches, liked]);
     return (<>
