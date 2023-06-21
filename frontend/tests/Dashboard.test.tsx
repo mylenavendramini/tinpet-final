@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect , vi} from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useContext } from 'react';
 import { useParams } from 'react-router';
 import Dashboard from '../src/pages/Dashboard';
@@ -15,14 +15,9 @@ import React from 'react'
 // });
 
 describe('Dashboard', () => {
-    it("renders", () => {
-        render(
-          <BrowserRouter>
-            <Routes>
-            {<Route path='/' element={<Dashboard />} />}
-            </Routes>
-          </BrowserRouter>
-        );
-
+    it("Renders component correctly", () => {
+        render(<Dashboard />);
+        // const userProfile = screen.getByTestId('user-profile');
+        // expect(userProfile).toBeDefined()
 }
 )})

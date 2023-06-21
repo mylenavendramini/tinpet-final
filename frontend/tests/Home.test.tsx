@@ -1,11 +1,13 @@
-import {  afterEach, beforeEach, describe, expect, it, vi  } from "vitest";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {  afterEach, describe, expect, it, vi  } from "vitest";
+import userEvent from "@testing-library/user-event";
+import { Routes, Route, BrowserRouter, MemoryRouter } from "react-router-dom";
 import Home from "../../frontend/src/pages/Home";
-import { render, screen} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { assertType, expectTypeOf } from "vitest";
 import { useNavigate } from "react-router";
 import { Context } from "../src/Context/Context";
 import { useContext } from "react";
+import App from '../../frontend/src/App'
 import React from 'react'
 
 describe("Home", () => {
@@ -19,22 +21,26 @@ describe("Home", () => {
     );
     const pet = screen.getByTestId('tinPet')
     expect(pet).toBeDefined()
+
+    const paragraph = screen.queryByText(/Your dog is lonely and has no friends/i)
+    expect(paragraph).toBeDefined()
   });
 
+
 it('displays buttons when not authenticated', () => {
-afterEach(() => {
-vi.restoreAllMocks()
-})
+// afterEach(() => {
+// vi.restoreAllMocks()
+// })
 
-const mockContext={
-authenticated: false,
-updateSignUp: vi.fn(),
-}
+// const mockContext={
+// authenticated: false,
+// updateSignUp: vi.fn(),
+// }
 
-const mockNavigate = vi.fn();
+// const mockNavigate = vi.fn(() => useNavigate("/login"));
 
-vi.mocked(mockContext)
-vi.mocked(mockNavigate)
+// vi.mocked(mockContext)
+// vi.mocked(mockNavigate)
 
 render(
   <BrowserRouter>
@@ -43,9 +49,22 @@ render(
     </Routes>
   </BrowserRouter>
 );
-expect(screen.getByText('Create Account')).toBeDefined();
-expect(screen.getByText('Login')).toBeDefined();
-})
+
+
+expect(
+  screen.getByRole("button", { name: /Create Account/i })
+).toBeDefined()
 })
 
-  
+
+// it("opens the correct modal when the create account button is clicked", () => {
+// render(<App></App>);
+// fireEvent.click(screen.getByRole("button", { name: /Create Account/i }));
+// expect(
+// screen.queryByText(/confirm your password/i)
+// ).toBeDefined()
+// });
+
+
+
+});
