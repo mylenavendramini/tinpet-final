@@ -51,7 +51,7 @@ const App = () => {
   }, [matches, liked]);
 
   return (
-    <>
+    <div className='app'>
       <BrowserRouter>
         <Routes>
           {<Route path='/' element={<Home />} />}
@@ -62,7 +62,7 @@ const App = () => {
           {<Route path='/register' element={<AuthModal />} />}
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 };
 export default App;

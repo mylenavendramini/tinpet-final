@@ -8,6 +8,15 @@
   text-align: center;
 }
 
+#root {
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  overflow: hidden;
+}
 body {
   background: linear-gradient(
     45deg,
@@ -289,7 +298,7 @@ p {
 }
 
 .dashboard .swiper-container {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -298,14 +307,14 @@ p {
 }
 
 .dashboard .card-container {
-  width: 400px;
-  height: 650px;
+  width: 50%;
+  height: 80vh;
 }
 
 .dashboard .swipe-info {
-  position: absolute;
-  bottom: 5rem;
-  padding: 10px;
+  /* position: absolute; */
+  margin-bottom: 5rem;
+  margin-top: 10px;
 }
 /* Card container */
 
@@ -314,18 +323,34 @@ p {
 }
 
 .card-container {
-  width: 90vw;
-  max-width: 260px;
-  height: 300px;
+  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.card-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card {
+  position: relative;
   width: 400px;
   height: 600px;
   /* box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30); */
   border-radius: 30px;
   background-size: cover;
   background-position: center;
+}
+
+.removed {
+  display: none;
 }
 
 .card h3 {

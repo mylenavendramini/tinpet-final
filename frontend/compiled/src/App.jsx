@@ -59,7 +59,7 @@ const App = () => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateDogs([...dogs]);
         });
     }, [matches, liked]);
-    return (<>
+    return (<div className='app'>
       <react_router_dom_1.BrowserRouter>
         <react_router_dom_1.Routes>
           {<react_router_dom_1.Route path='/' element={<Home_1.default />}/>}
@@ -70,6 +70,6 @@ const App = () => {
           {<react_router_dom_1.Route path='/register' element={<Register_1.default />}/>}
         </react_router_dom_1.Routes>
       </react_router_dom_1.BrowserRouter>
-    </>);
+    </div>);
 };
 exports.default = App;

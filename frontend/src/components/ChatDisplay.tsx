@@ -13,7 +13,6 @@ const ChatDisplay = () => {
     const sender_name = contexts?.currentDog?.name as string;
     const receiver_id = contexts?.selectedDog?.id as number;
     const receiver_name = contexts?.selectedDog?.name as string;
-
     const newMessage = {
       content: message,
       sender_id,
@@ -21,7 +20,6 @@ const ChatDisplay = () => {
       receiver_id,
       receiver_name,
     };
-
     apiService.sendMessage(sender_id, newMessage).then((message) => {
       setShowMessages([...showMessages, message]);
     });
@@ -31,8 +29,6 @@ const ChatDisplay = () => {
   const getMessages = async () => {
     apiService.getMessages().then((messagesArray) => {
       const showMessages = messagesArray.filter((message) => {
-        console.log({ message });
-        console.log(contexts?.currentDog);
         return (
           message.sender_id === (contexts?.currentDog?.id as number) ||
           message.receiver_id === (contexts?.currentDog?.id as number)
@@ -46,18 +42,13 @@ const ChatDisplay = () => {
     getMessages();
   }, []);
 
-  // useEffect(() => {
-  //   setShowMessages(showMessages);
-  //   console.log({ showMessages });
-  // }, []);
-
   return (
     <>
       <div className='chat-display'>
-        {showMessages.map((message: Message) => {
+        {showMessages.map((message: Message, idx: number) => {
           if (message.sender_id === contexts?.currentDog?.id) {
             return (
-              <div className='chat-message-header left'>
+              <div className='chat-message-header left' key={idx}>
                 <p>{message.content}</p>
               </div>
             );
