@@ -6,28 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const MatchesDisplay_1 = __importDefault(require("./MatchesDisplay"));
 const react_1 = require("react");
-const Context_1 = require("../Context/Context");
-const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
-const react_router_1 = require("react-router");
+const ProfileHeader_1 = __importDefault(require("./ProfileHeader"));
 const DogProfile = () => {
-    var _a, _b;
     const [clicked, setClicked] = (0, react_1.useState)(false);
     const [fetchedMatches, setFetchedMatches] = (0, react_1.useState)(false);
     const [fetchedMessages, setFetchedMessages] = (0, react_1.useState)(false);
-    const contexts = (0, react_1.useContext)(Context_1.Context);
-    const navigate = (0, react_router_1.useNavigate)();
     return (<div className='chat-container'>
-      <div className='chat-container-header'>
-        <div className='profile'>
-          <div className='img-container'>
-            <img src={(_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.url} alt='user photo'/>
-          </div>
-          <h3>{(_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.name}</h3>
-        </div>
-        <i className='logout-icon' onClick={() => navigate('/myDogs')}>
-          <ArrowCircleLeft_1.default />
-        </i>
-      </div>
+      <ProfileHeader_1.default />
       <div>
         <button className='option clicked' onClick={() => setClicked(true)}>
           Matches

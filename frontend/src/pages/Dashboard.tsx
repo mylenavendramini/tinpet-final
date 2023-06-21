@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Dog, User } from '../types/Types';
+import { Dog } from '../types/Types';
 import apiService from '../services/APIServices';
 import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
