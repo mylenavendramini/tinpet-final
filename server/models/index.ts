@@ -175,12 +175,14 @@ async function getDogMatchesArray(dogId: number) {
 }
 
 async function createMessage(body: Message) {
-  const { content, sender, receiver } = body;
+  const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
   try {
     const newMessage = await Message.create({
       content,
-      sender,
-      receiver,
+      sender_id,
+      sender_name,
+      receiver_id,
+      receiver_name,
     });
     return newMessage;
   } catch (error) {
@@ -190,7 +192,7 @@ async function createMessage(body: Message) {
 
 async function getMessages(id: number) {
   try {
-    const messages = await Message.findAll({ where: { sender: id } });
+    const messages = await Message.findAll({ where: { sender_id: id } });
     return messages;
   } catch (error) {
     console.log(error);
