@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Dog } from '../types/Types';
 import apiService from '../services/APIServices';
 import TinderCard from 'react-tinder-card';
@@ -8,7 +8,6 @@ import DogProfile from '../components/DogProfile';
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
   const contexts = useContext(Context);
-  const dogId = useParams()
   const currentUser = contexts?.user;
   const currentDog = contexts?.currentDog as Dog;
 
@@ -21,11 +20,9 @@ const Dashboard: React.FC = () => {
   };
 
   const swiped = (direction: string, otherDogId: number) => {
-    // console.log(direction);
     if (direction == 'right') {
       updateMatches(otherDogId);
     }
-
     setLastDirection(direction);
   };
 
@@ -37,41 +34,50 @@ const Dashboard: React.FC = () => {
     return dog?.userId !== currentUser?.id;
   });
 
+  useEffect(() => {
+    const dog = localStorage.getItem('currentDog');
+    if (dog) {
+      const parsedDog = JSON.parse(dog);
+      console.log(parsedDog);
+      contexts?.updateCurrentDog(parsedDog);
+    } else {
+      console.log('You need to login first');
+    }
+  }, []);
+
   return (
     <>
-      {currentUser && (
-        <div className='dashboard'>
-          <DogProfile />
-          <div className='swiper-container'>
-            {
-              <div className='card-container'>
-                {otherDogs?.map((dog, idx) => (
-                  <TinderCard
-                    className='swipe'
-                    key={idx}
-                    onSwipe={(direction) => swiped(direction, dog.id as number)}
-                    onCardLeftScreen={() => outOfFrame(dog.name)}
+      <div className='dashboard'>
+        <DogProfile />
+        <div className='swiper-container'>
+          {
+            <div className='card-container'>
+              {otherDogs?.map((dog, idx) => (
+                <TinderCard
+                  className='swipe'
+                  key={idx}
+                  onSwipe={(direction) => swiped(direction, dog.id as number)}
+                  onCardLeftScreen={() => outOfFrame(dog.name)}
+                >
+                  <div
+                    style={{ backgroundImage: 'url(' + dog.url + ')' }}
+                    className='card'
+                    onClick={() => swiped('right', dog.id as number)}
                   >
-                    <div
-                      style={{ backgroundImage: 'url(' + dog.url + ')' }}
-                      className='card'
-                      onClick={() => swiped('right', dog.id as number)}
-                    >
-                      <h3>
-                        {dog.name + ', Age: '}
-                        {dog.age}
-                      </h3>
-                    </div>
-                  </TinderCard>
-                ))}
-                <div className='swipe-info'>
-                  {lastDirection && <p>You swiped {lastDirection}</p>}
-                </div>
+                    <h3>
+                      {dog.name + ', Age: '}
+                      {dog.age}
+                    </h3>
+                  </div>
+                </TinderCard>
+              ))}
+              <div className='swipe-info'>
+                {lastDirection && <p>You swiped {lastDirection}</p>}
               </div>
-            }
-          </div>
+            </div>
+          }
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -16,19 +16,6 @@ const Nav = () => {
   const contexts = useContext(Context);
   const userId = contexts?.user?.id as number;
   const myDogs = contexts?.myDogs;
-  const matchedIds = contexts?.currentDog?.matches_dogs;
-  const dogs = contexts?.dogs;
-
-  const getMatches = () => {
-    const matchedDogs: Dog[] = [];
-    matchedIds?.forEach((id) => {
-      dogs?.map((dog) => {
-        if (dog.id === id) matchedDogs.push(dog);
-      });
-    });
-    console.log('it came in getMatches');
-  };
-
 
   const logout = () => {
     contexts?.updateModal();
@@ -45,8 +32,7 @@ const Nav = () => {
 
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
-    getMatches();
-    console.log('it came in handleclick');
+    localStorage.setItem('currentDog', JSON.stringify(dog));
     navigate(`/dashboard/${dog.id}`);
   };
 

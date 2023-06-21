@@ -11,13 +11,11 @@ const MyDogs = () => {
   const userId = contexts?.user?.id as number;
   const navigate = useNavigate();
 
-  // console.log({ myDogs });
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
+    localStorage.setItem('currentDog', JSON.stringify(dog));
     navigate(`/dashboard/${dog.id}`);
   };
-
-  console.log({ myDogs });
 
   return (
     <>

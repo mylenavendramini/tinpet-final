@@ -12,8 +12,7 @@ import MyDogs from './components/MyDogs';
 
 const App = () => {
   const contexts = useContext(Context);
-  const [gotDogs, setGotDogs] = useState(false);
-  const userId = contexts?.user?.id as number;
+  const currentDog = contexts?.currentDog;
   const matches = contexts?.currentDog?.matches_dogs;
   const liked = contexts?.currentDog?.liked_dog;
 

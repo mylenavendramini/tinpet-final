@@ -11,7 +11,7 @@ const AddCircle_1 = __importDefault(require("@mui/icons-material/AddCircle"));
 const Context_1 = require("../Context/Context");
 const react_router_dom_1 = require("react-router-dom");
 const Nav = () => {
-    var _a, _b;
+    var _a;
     const [open, setOpen] = (0, react_1.useState)(false);
     const handleOpen = () => {
         setOpen(!open);
@@ -19,18 +19,6 @@ const Nav = () => {
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
     const myDogs = contexts === null || contexts === void 0 ? void 0 : contexts.myDogs;
-    const matchedIds = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
-    const dogs = contexts === null || contexts === void 0 ? void 0 : contexts.dogs;
-    const getMatches = () => {
-        const matchedDogs = [];
-        matchedIds === null || matchedIds === void 0 ? void 0 : matchedIds.forEach((id) => {
-            dogs === null || dogs === void 0 ? void 0 : dogs.map((dog) => {
-                if (dog.id === id)
-                    matchedDogs.push(dog);
-            });
-        });
-        console.log('it came in getMatches');
-    };
     const logout = () => {
         contexts === null || contexts === void 0 ? void 0 : contexts.updateModal();
         contexts === null || contexts === void 0 ? void 0 : contexts.updateSignUp(false);
@@ -44,8 +32,7 @@ const Nav = () => {
     const navigate = (0, react_router_dom_1.useNavigate)();
     const handleClickDog = (dog) => {
         contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(dog);
-        getMatches();
-        console.log('it came in handleclick');
+        localStorage.setItem('currentDog', JSON.stringify(dog));
         navigate(`/dashboard/${dog.id}`);
     };
     return (<nav>

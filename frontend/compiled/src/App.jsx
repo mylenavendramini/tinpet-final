@@ -23,12 +23,11 @@ const APIServices_1 = __importDefault(require("./services/APIServices"));
 const Register_1 = __importDefault(require("./components/Register"));
 const MyDogs_1 = __importDefault(require("./components/MyDogs"));
 const App = () => {
-    var _a, _b, _c;
+    var _a, _b;
     const contexts = (0, react_1.useContext)(Context_1.Context);
-    const [gotDogs, setGotDogs] = (0, react_1.useState)(false);
-    const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
-    const matches = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
-    const liked = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _c === void 0 ? void 0 : _c.liked_dog;
+    const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
+    const matches = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.matches_dogs;
+    const liked = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.liked_dog;
     const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.login(email, password).then((user) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);

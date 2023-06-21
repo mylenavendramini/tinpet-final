@@ -7,21 +7,25 @@ const react_1 = require("react");
 const Context_1 = require("../Context/Context");
 const ChatDisplay_1 = __importDefault(require("./ChatDisplay"));
 const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
+const APIServices_1 = __importDefault(require("../services/APIServices"));
 const MatchesDisplay = () => {
     var _a;
     const contexts = (0, react_1.useContext)(Context_1.Context);
-    // const matchedProfiles = contexts?.matchedDogs;
     const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)([]);
     const [openChat, setOpenChat] = (0, react_1.useState)(false);
-    console.log(openChat);
     (0, react_1.useEffect)(() => {
-        var _a;
-        const showMatches = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.dogs) === null || _a === void 0 ? void 0 : _a.filter((dog) => {
-            var _a;
-            return dog.matches_dogs.includes((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id);
-        });
-        setMatchedProfiles(showMatches);
-        console.log({ showMatches });
+        const dog = localStorage.getItem('currentDog');
+        if (dog) {
+            const parsedDog = JSON.parse(dog);
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(contexts.currentDog);
+            APIServices_1.default.getDogs().then((dogs) => {
+                const showMatches = dogs.filter((dog) => {
+                    return dog.matches_dogs.includes(parsedDog.id);
+                });
+                setMatchedProfiles(showMatches);
+                console.log({ showMatches });
+            });
+        }
     }, []);
     return (<div className='matches-display'>
       {openChat ? (<div className='option'>
