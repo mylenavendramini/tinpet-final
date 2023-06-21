@@ -10,16 +10,26 @@ export function initModels(sequelize: Sequelize) {
 
   Dog.belongsTo(User, {});
   Dog.belongsToMany(Dog, {
-    as: 'likedDogs',
-    through: Dog,
+    as: 'matchedDogs',
+    through: 'Matches',
     onDelete: 'CASCADE',
+    foreignKey: "id"
   });
   User.hasMany(Dog, {
     as: 'dogs',
   });
+  Dog.hasMany(Message, {
+    as: 'messages',
+    foreignKey: 'dog_id'
+  })
+  Message.belongsTo(Dog, {
+    as: 'message',
+    foreignKey: 'message_id'
+  })
 
   return {
     Dog,
     User,
+    Message
   };
 }

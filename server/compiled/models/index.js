@@ -17,16 +17,7 @@ const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
 const Dog = db_1.default.Dog;
-// User.findAll({
-//   include: [{
-//       model: Dog,
-//       required: true,
-//       where:{userId: userId},
-//   }],
-//   where: {
-//      id: userId
-//   }
-// })
+const MessageModel = db_1.default.Message;
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -54,7 +45,14 @@ function login(body) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { email, password } = body;
-            const user = yield User.findOne({ where: { email, password } });
+            const user = yield User.findOne({
+                include: [{
+                        model: Dog,
+                        required: true,
+                        as: 'dogs'
+                    }],
+                where: { email, password }
+            });
             return user;
         }
         catch (error) {
@@ -80,10 +78,36 @@ function createUser(user) {
     });
 }
 exports.createUser = createUser;
+// where: { post_url: post_url },
+// include: [
+//    { association: 'postAuthor', attributes: ['name'] },
+//    {
+//       association: 'comments', attributes: ['comment'],
+//       include: [{
+//          association: 'commentAuthor',
+//          attributes: ['name']
+//       }]
+//    }
+// ]
+// });
+// model: Dog,
+// required: true,
+// as:'likedDogs'
+// include: [{
+//   model: Dog,
+//   required: true,
+//   as:'dogs',
+//   where:{userId: userId},
+// }],
 function getAllDogs() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const dogs = yield Dog.findAll();
+            const dogs = yield Dog.findAll({
+                include: [{
+                        model: MessageModel,
+                        as: 'message'
+                    }],
+            });
             return dogs;
         }
         catch (error) {
@@ -92,6 +116,19 @@ function getAllDogs() {
     });
 }
 exports.getAllDogs = getAllDogs;
+// async function getAllDogs() {
+//   try {
+//     const dogs = await Dog.findAll({
+//       include: [
+//         {association:'likedDogs'},
+//         {association: 'matchedDogs'}
+//       ],
+//     });
+//     return dogs;
+//   } catch (error) {
+//     throw new Error('Unable to get all the dogs');
+//   }
+// }
 function createDog(dog, userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -106,7 +143,7 @@ function createDog(dog, userId) {
                 liked_dog: [],
                 matches_dogs: [],
             });
-            const user = yield User.findOne({ where: { id: parsedId } });
+            // const user = await User.findOne({ where: { id: parsedId } });
             yield newDog.setUser(parsedId);
             return newDog;
         }
@@ -119,25 +156,38 @@ exports.createDog = createDog;
 function getDogsByUserId(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const user = yield User.findOne({
-                where: { id: userId },
-                include: { model: Dog, as: 'dogs' },
+            const dogs = yield Dog.findAll({
+                include: [
+                    { association: 'likedDogs' },
+                    { association: 'matchedDogs' }
+                ],
+                where: { id: userId }
             });
-            if (user && user.dogs) {
-                const dogs = user.dogs;
-                return dogs;
-            }
-            else {
-                console.log('Dogs not found');
-                return undefined;
-            }
+            return dogs;
         }
         catch (error) {
-            throw new Error('Unable to get a dog');
+            throw new Error('Unable to get all the dogs');
         }
     });
 }
 exports.getDogsByUserId = getDogsByUserId;
+// async function getDogsByUserId(userId: number) {
+//   try {
+//     const user = await User.findOne({
+//       where: { id: userId },
+//       include: { model: Dog, as: 'dogs' },
+//     });
+//     if (user && user.dogs) {
+//       const dogs = user.dogs;
+//       return dogs;
+//     } else {
+//       console.log('Dogs not found');
+//       return undefined;
+//     }
+//   } catch (error) {
+//     throw new Error('Unable to get a dog');
+//   }
+// }
 function filterDogArray(array, myDogId, theOtherDogId) {
     return __awaiter(this, void 0, void 0, function* () {
         const filteredDog = array.filter((dogId) => dogId !== theOtherDogId);
@@ -170,27 +220,13 @@ function addLike(myDogLikesArray, theOtherDog, myDog) {
 function likeAndMatch(myDogIdObj, theOtherDogId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const myDog = (yield Dog.findOne({ where: { id: myDogIdObj.id } }));
-            const theOtherDog = (yield Dog.findOne({
-                where: { id: Number(theOtherDogId) },
-            }));
-            const myDogLikesArray = myDog === null || myDog === void 0 ? void 0 : myDog.liked_dog;
-            const theOtherDogLikesArray = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.liked_dog;
-            const myDogMatches = myDog === null || myDog === void 0 ? void 0 : myDog.matches_dogs;
-            const theOtherDogMatches = theOtherDog === null || theOtherDog === void 0 ? void 0 : theOtherDog.matches_dogs;
-            // Check if it's a match and add to matches_dogs:
-            if (theOtherDogLikesArray.includes(myDog === null || myDog === void 0 ? void 0 : myDog.id)) {
-                addMatch(myDogMatches, theOtherDog, myDog);
-                addMatch(theOtherDogMatches, myDog, theOtherDog);
-                filterDogArray(myDogLikesArray, myDog === null || myDog === void 0 ? void 0 : myDog.id, theOtherDogId);
-                filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog === null || myDog === void 0 ? void 0 : myDog.id);
-                return myDog;
-            }
-            // Add the dog that my dog like:
-            if (!myDogLikesArray.includes(theOtherDogId)) {
-                addLike(myDogLikesArray, theOtherDog, myDog);
-                return myDog;
-            }
+            const parsedOtherDogId = Number(theOtherDogId);
+            const myDog = yield Dog.findOne({ where: { id: myDogIdObj.id } });
+            // const theOtherDog = await Dog.findOne({
+            //   where: { id: Number(theOtherDogId) },
+            // })
+            yield (myDog === null || myDog === void 0 ? void 0 : myDog.addDog(parsedOtherDogId));
+            return myDog;
         }
         catch (error) {
             throw new Error('Unable to like a dog');
@@ -198,6 +234,35 @@ function likeAndMatch(myDogIdObj, theOtherDogId) {
     });
 }
 exports.likeAndMatch = likeAndMatch;
+// const user = await User.findOne({ where: { id: parsedId } });
+// await newDog.setUser(parsedId);
+// async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
+//   try {
+//     const myDog = (await Dog.findOne({ where: { id: myDogIdObj.id } })) as IDog;
+//     const theOtherDog = (await Dog.findOne({
+//       where: { id: Number(theOtherDogId) },
+//     })) as IDog;
+//     const myDogLikesArray = myDog?.liked_dog as number[];
+//     const theOtherDogLikesArray = theOtherDog?.liked_dog as number[];
+//     const myDogMatches = myDog?.matches_dogs as number[];
+//     const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
+//     // Check if it's a match and add to matches_dogs:
+//     if (theOtherDogLikesArray.includes(myDog?.id as number)) {
+//       addMatch(myDogMatches, theOtherDog, myDog);
+//       addMatch(theOtherDogMatches, myDog, theOtherDog);
+//       filterDogArray(myDogLikesArray, myDog?.id as number, theOtherDogId);
+//       filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog?.id as number);
+//       return myDog;
+//     }
+//     // Add the dog that my dog like:
+//     if (!myDogLikesArray.includes(theOtherDogId)) {
+//       addLike(myDogLikesArray, theOtherDog, myDog);
+//       return myDog;
+//     }
+//   } catch (error) {
+//     throw new Error('Unable to like a dog');
+//   }
+// }
 function getDogMatchesArray(dogId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -211,17 +276,17 @@ function getDogMatchesArray(dogId) {
     });
 }
 exports.getDogMatchesArray = getDogMatchesArray;
-function createMessage(body) {
+function createMessage(body, sender_id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
+        const { content, receiver_id, receiver_name } = body;
         try {
-            const newMessage = yield Message_1.Message.create({
+            console.log(content, receiver_id, receiver_name, sender_id);
+            const newMessage = yield MessageModel.create({
                 content,
-                sender_id,
-                sender_name,
                 receiver_id,
-                receiver_name,
+                receiver_name
             });
+            yield newMessage.setMessage(sender_id);
             return newMessage;
         }
         catch (error) {
@@ -230,6 +295,21 @@ function createMessage(body) {
     });
 }
 exports.createMessage = createMessage;
+// async function createMessage(body: Message) {
+//   const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
+//   try {
+//     const newMessage = await Message.create({
+//       content,
+//       sender_id,
+//       sender_name,
+//       receiver_id,
+//       receiver_name,
+//     });
+//     return newMessage;
+//   } catch (error) {
+//     throw new Error('Unable to create a message');
+//   }
+// }
 function getMessages() {
     return __awaiter(this, void 0, void 0, function* () {
         try {

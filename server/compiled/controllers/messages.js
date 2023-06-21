@@ -14,7 +14,8 @@ const models_1 = require("../models");
 function createMessageController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const newMessage = yield (0, models_1.createMessage)(ctx.request.body);
+            const sender_id = ctx.params.id;
+            const newMessage = yield (0, models_1.createMessage)(ctx.request.body, sender_id);
             ctx.body = newMessage;
             ctx.status = 201;
         }

@@ -16,7 +16,7 @@ const db = new Sequelize(
   }
 );
 
-const { Dog, User } = initModels(db);
+const { Message, Dog, User } = initModels(db);
 
 (async function authenticate() {
   try {
@@ -28,4 +28,4 @@ const { Dog, User } = initModels(db);
   }
 })();
 
-export default { db, Dog, User };
+export default { db, Dog, User, Message };
