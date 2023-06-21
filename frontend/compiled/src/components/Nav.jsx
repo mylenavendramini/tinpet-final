@@ -32,22 +32,10 @@ const Nav = () => {
     const matchedIds = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
     const dogs = contexts === null || contexts === void 0 ? void 0 : contexts.dogs;
     const getAllUserDogs = () => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.getDogsofUser(userId).then((data) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(data);
+        APIServices_1.default.getDogsofUser(userId).then((dogs) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(dogs);
         });
     });
-    // console.log(contexts?.currentDog?.matches_dogs)
-    // const getMatches = () => {
-    //   apiService.getMatches(contexts?.currentDog?.id as number).then((res) => {
-    //     const matchedDogs: Dog[] = [];
-    //     console.log(res)
-    //     res.forEach((id:number) => {
-    //     dogs?.map((dog) => {
-    //       if(dog.id === id) matchedDogs.push(dog)
-    //     })
-    //   })
-    //   contexts?.updateMatches(matchedDogs)
-    //   }).then((res) => navigate('/dashboard'))
     const getMatches = () => {
         const matchedDogs = [];
         matchedIds === null || matchedIds === void 0 ? void 0 : matchedIds.forEach((id) => {
@@ -60,11 +48,10 @@ const Nav = () => {
     };
     (0, react_1.useEffect)(() => {
         if (contexts === null || contexts === void 0 ? void 0 : contexts.authenticated) {
-            console.log(contexts === null || contexts === void 0 ? void 0 : contexts.user);
             getAllUserDogs();
         }
         else {
-            console.log('no users');
+            console.log('You need to login first');
         }
     }, []);
     const logout = () => {
@@ -81,7 +68,8 @@ const Nav = () => {
     const handleClickDog = (dog) => {
         contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(dog);
         getMatches();
-        navigate('/dashboard');
+        console.log('it came in handleclick');
+        navigate(`/dashboard/${dog.id}`);
     };
     return (<nav>
       <div className='logo-container'>

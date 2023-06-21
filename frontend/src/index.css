@@ -359,7 +359,7 @@ p {
     rgba(208, 245, 190, 1) 0%,
     rgba(251, 255, 220, 1) 100%
   );
-  height: 6rem;
+  /* height: 3rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -408,9 +408,9 @@ p {
 .img-container {
   height: 50px;
   width: 50px;
-  border-radius: 100rem;
+  border-radius: 50%;
   overflow: hidden;
-  margin: 10px;
+  /* margin: 10px; */
   cursor: pointer;
 }
 

@@ -9,7 +9,6 @@ const react_router_1 = require("react-router");
 const Nav_1 = __importDefault(require("./Nav"));
 const MyDogs = () => {
     var _a;
-    const [gotDogs, setGotDogs] = (0, react_1.useState)(false);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const myDogs = contexts === null || contexts === void 0 ? void 0 : contexts.myDogs;
     const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
@@ -25,7 +24,7 @@ const MyDogs = () => {
         <Nav_1.default />
         <h2 id='my-dogs-title'>My dogs</h2>
         <div className='my-dogs-container'>
-          {myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => (<div className='my-dog'>
+          {myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog, idx) => (<div className='my-dog' key={idx}>
               <p onClick={() => handleClickDog(dog)}>{dog.name}</p>
               <img src={`${dog.url}`} alt={dog.name} onClick={() => handleClickDog(dog)}/>
             </div>))}

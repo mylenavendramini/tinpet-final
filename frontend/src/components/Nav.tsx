@@ -21,23 +21,10 @@ const Nav = () => {
   const dogs = contexts?.dogs;
 
   const getAllUserDogs = async () => {
-    apiService.getDogsofUser(userId).then((data) => {
-      contexts?.updateMyDogs(data);
+    apiService.getDogsofUser(userId).then((dogs) => {
+      contexts?.updateMyDogs(dogs);
     });
   };
-
-  // console.log(contexts?.currentDog?.matches_dogs)
-  // const getMatches = () => {
-  //   apiService.getMatches(contexts?.currentDog?.id as number).then((res) => {
-  //     const matchedDogs: Dog[] = [];
-  //     console.log(res)
-  //     res.forEach((id:number) => {
-  //     dogs?.map((dog) => {
-  //       if(dog.id === id) matchedDogs.push(dog)
-  //     })
-  //   })
-  //   contexts?.updateMatches(matchedDogs)
-  //   }).then((res) => navigate('/dashboard'))
 
   const getMatches = () => {
     const matchedDogs: Dog[] = [];
@@ -51,10 +38,9 @@ const Nav = () => {
 
   useEffect(() => {
     if (contexts?.authenticated) {
-      console.log(contexts?.user);
       getAllUserDogs();
     } else {
-      console.log('no users');
+      console.log('You need to login first');
     }
   }, []);
 

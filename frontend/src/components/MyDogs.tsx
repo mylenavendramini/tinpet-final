@@ -6,7 +6,6 @@ import apiService from '../services/APIServices';
 import Nav from './Nav';
 
 const MyDogs = () => {
-  const [gotDogs, setGotDogs] = useState(false);
   const contexts = useContext(Context);
   const myDogs = contexts?.myDogs;
   const userId = contexts?.user?.id as number;
@@ -26,8 +25,8 @@ const MyDogs = () => {
         <Nav />
         <h2 id='my-dogs-title'>My dogs</h2>
         <div className='my-dogs-container'>
-          {myDogs?.map((dog) => (
-            <div className='my-dog'>
+          {myDogs?.map((dog, idx) => (
+            <div className='my-dog' key={idx}>
               <p onClick={() => handleClickDog(dog)}>{dog.name}</p>
               <img
                 src={`${dog.url}`}
