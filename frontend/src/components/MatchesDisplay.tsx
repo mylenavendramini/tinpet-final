@@ -3,20 +3,26 @@ import { Context } from '../Context/Context';
 import ChatDisplay from './ChatDisplay';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { Dog } from '../types/Types';
+import apiService from '../services/APIServices';
 
 const MatchesDisplay = () => {
   const contexts = useContext(Context);
-  // const matchedProfiles = contexts?.matchedDogs;
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [openChat, setOpenChat] = useState(false);
-  console.log(openChat);
 
   useEffect(() => {
-    const showMatches = contexts?.dogs?.filter((dog) => {
-      return dog.matches_dogs.includes(contexts?.currentDog?.id as number);
-    }) as Dog[];
-    setMatchedProfiles(showMatches);
-    console.log({ showMatches });
+    const dog = localStorage.getItem('currentDog');
+    if (dog) {
+      const parsedDog = JSON.parse(dog);
+      contexts?.updateCurrentDog(contexts.currentDog);
+      apiService.getDogs().then((dogs) => {
+        const showMatches = dogs.filter((dog) => {
+          return dog.matches_dogs.includes(parsedDog.id as number);
+        }) as Dog[];
+        setMatchedProfiles(showMatches);
+        console.log({ showMatches });
+      });
+    }
   }, []);
 
   return (
@@ -27,7 +33,13 @@ const MatchesDisplay = () => {
             <span onClick={() => setOpenChat(false)}>
               <ArrowCircleLeftIcon />
             </span>
-            <h2> {contexts?.selectedDog?.name}</h2>
+            <div className='selected-dog'>
+              <h2> {contexts?.selectedDog?.name}</h2>
+              <img
+                src={contexts?.selectedDog?.url}
+                alt={contexts?.selectedDog?.url}
+              />
+            </div>
           </div>
           <ChatDisplay />
         </div>

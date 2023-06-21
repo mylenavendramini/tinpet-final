@@ -16,6 +16,7 @@ const ProfileHeader = () => {
         <div className='img-container'>
           <img src={(_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.url} alt='user photo'/>
         </div>
+
         <h3>{(_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.name}</h3>
       </div>
       <i className='logout-icon' onClick={() => navigate('/myDogs')}>

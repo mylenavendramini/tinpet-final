@@ -9,7 +9,8 @@ const MessageModel = db.Message
 async function getUser(userId: number) {
   try {
     const user = await User.findOne({
-      include: [{
+      include: [
+        {
           model: Dog,
           required: true,
           as:'dogs',
@@ -22,9 +23,9 @@ async function getUser(userId: number) {
           ],
       }],
       where: {
-         id: userId
-      }
-    })
+        id: userId,
+      },
+    });
     return user;
   } catch (error) {
     throw new Error('Unable to get the user');

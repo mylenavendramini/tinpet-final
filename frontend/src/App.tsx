@@ -2,7 +2,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Dog } from './types/Types';
+import { Dog, User } from './types/Types';
 import Login from './components/Login';
 import { useEffect, useContext, useState } from 'react';
 import { Context } from './Context/Context';
@@ -12,28 +12,9 @@ import MyDogs from './components/MyDogs';
 
 const App = () => {
   const contexts = useContext(Context);
-  const [gotDogs, setGotDogs] = useState(false);
-  const userId = contexts?.user?.id as number;
+  const currentDog = contexts?.currentDog;
   const matches = contexts?.currentDog?.matches_dogs;
   const liked = contexts?.currentDog?.liked_dog;
-
-  useEffect(() => {
-    if (contexts?.authenticated) {
-      getAllTheDogs();
-    } else {
-      console.log('You need to login first');
-    }
-  }, []);
-
-  const getAllTheDogs = async () => {
-    apiService.getDogsofUser(userId).then((dogs) => {
-      contexts!.updateMyDogs([...dogs]);
-      // if (dogs.length > 0) {
-      //   contexts?.updateCurrentDog(dogs[0]);
-      // }
-      // setGotDogs(true);
-    });
-  };
 
   const login = async (email: string, password: string) => {
     apiService.login(email, password).then((user) => {
@@ -44,9 +25,20 @@ const App = () => {
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
-      const { email, password } = JSON.parse(user);
-      login(email, password);
-      contexts?.updateAuthenticated(true);
+      const { id } = JSON.parse(user);
+      apiService.getUser(id).then((user) => {
+        contexts?.updateMyDogs(user.dogs);
+      });
+    }
+  }, [contexts?.authenticated]);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const { email, password, id } = JSON.parse(user);
+      login(email, password).then((data) => {
+        contexts?.updateAuthenticated(true);
+      });
     } else {
       console.log('You need to login first');
     }
@@ -55,12 +47,11 @@ const App = () => {
   useEffect(() => {
     apiService.getDogs().then((dogs) => {
       contexts?.updateDogs([...dogs]);
-      // setGotDogs(true);
     });
   }, [matches, liked]);
 
   return (
-    <>
+    <div className='app'>
       <BrowserRouter>
         <Routes>
           {<Route path='/' element={<Home />} />}
@@ -71,7 +62,7 @@ const App = () => {
           {<Route path='/register' element={<AuthModal />} />}
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 };
 export default App;

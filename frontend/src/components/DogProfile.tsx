@@ -1,4 +1,3 @@
-import ChatDisplay from './ChatDisplay';
 import MatchesDisplay from './MatchesDisplay';
 import { useState } from 'react';
 import ProfileHeader from './ProfileHeader';

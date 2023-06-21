@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import logo from '../assets/dog-face-svgrepo-com.svg';
+import HomeIcon from '@mui/icons-material/Home';
+import PetsIcon from '@mui/icons-material/Pets';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
@@ -11,39 +14,8 @@ const Nav = () => {
     setOpen(!open);
   };
   const contexts = useContext(Context);
-  // console.log(contexts?.user);
   const userId = contexts?.user?.id as number;
-  // console.log(userId);
   const myDogs = contexts?.myDogs;
-  const matchedIds = contexts?.currentDog?.matches_dogs
-  const dogs = contexts?.dogs;
-
-  const getAllUserDogs = async () => {
-    apiService.getDogsofUser(userId).then((data) => {
-      contexts?.updateMyDogs(data);
-    });
-  };
-
-  const getMatches = (dogId:number) => {
-    // console.log({dogId})
-    // console.log(contexts?.currentDog)
-    const matchedDogs: Dog[] = [];
-    matchedIds?.forEach((id) => {
-      dogs?.map((dog) => {
-        if (dog.id === id) matchedDogs.push(dog);
-      });
-    });
-    console.log('it came in getMatches');
-  };
-
-  useEffect(() => {
-    if (contexts?.authenticated) {
-      // console.log(contexts?.user);
-      getAllUserDogs();
-    } else {
-      console.log('no users');
-    }
-  }, []);
 
   const logout = () => {
     contexts?.updateModal();
@@ -59,12 +31,8 @@ const Nav = () => {
   const navigate = useNavigate();
 
   const handleClickDog = (dog: Dog) => {
-    //for some reason it doesnt update immediately
-    //and when it goes to the dashboard it would still hold the previous value
-    //even though we have updated it
     contexts?.updateCurrentDog(dog);
-    getMatches();
-    console.log('it came in handleclick');
+    localStorage.setItem('currentDog', JSON.stringify(dog));
     navigate(`/dashboard/${dog.id}`);
   };
 
@@ -74,31 +42,35 @@ const Nav = () => {
         <img className='logo' src={logo} onClick={handleOpen} />
         {open && (
           <div className='dropdown-btns'>
+            <button className='btn-nav' onClick={() => navigate('/')}>
+              <HomeIcon />
+              <span>Home</span>
+            </button>
             {!contexts?.authenticated ? (
-              <button id='login' className='btn-nav' onClick={login}>
+              <button id='login' className='btn-nav blue' onClick={login}>
                 Log In
               </button>
             ) : (
               <>
-                <button id='logout' className='btn-nav' onClick={logout}>
-                  Log Out
-                </button>
-                {myDogs?.map((dog, idx) => {
-                  return (
-                    <button
+                {myDogs?.map((dog, idx) => (
+                  <button
                     className='btn-nav'
                     onClick={() => handleClickDog(dog)}
-                    id={`${dog.id}`}
                     key={idx}
                   >
-                    {dog.name}
+                    <PetsIcon />
+                    <span>{dog.name}</span>
                   </button>
                 ))}
                 <button
                   className='btn-nav'
                   onClick={() => navigate(`/onboarding/${userId}`)}
                 >
-                  Add new dog
+                  <AddCircleIcon />
+                  <span>Add new dog</span>
+                </button>
+                <button id='logout' className='btn-nav blue' onClick={logout}>
+                  Log Out
                 </button>
               </>
             )}
