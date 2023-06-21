@@ -6,7 +6,7 @@ import { Context } from '../Context/Context';
 import DogProfile from '../components/DogProfile';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HeartBrokenIcon from '@mui/icons-material/HeartBroken';
-import { Snackbar, Alert, Button } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState<string | null>('');
@@ -25,7 +25,6 @@ const Dashboard: React.FC = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 

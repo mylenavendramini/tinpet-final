@@ -204,6 +204,7 @@ p {
 }
 
 .auth-modal input[type='password'],
+.auth-modal input[type='text'],
 .auth-modal input[type='email'] {
   padding: 0.5rem;
   margin: 0.5rem;
