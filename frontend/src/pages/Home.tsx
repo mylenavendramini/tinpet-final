@@ -8,15 +8,6 @@ const Home = () => {
   const authenticated = contexts?.authenticated;
   const navigate = useNavigate();
 
-  const handleAuth = (path: string) => {
-    if (path === 'register') {
-      contexts?.updateSignUp(true);
-    } else if (path === 'login') {
-      contexts?.updateSignUp(false);
-    }
-    navigate(`/${path}`);
-  };
-
   return (
     <>
       <div className='overlay'>
@@ -28,21 +19,26 @@ const Home = () => {
             you can contact other people who are also looking for friends for
             their pets, where you can make friends .... among other things...
           </p>
-          <button className='btn-primary' onClick={() => navigate('/myDogs')}>
-            See my dogs
-          </button>
-
-          {!authenticated && (
+          {authenticated ? (
             <>
               <button
                 className='btn-primary'
-                onClick={() => handleAuth('register')}
+                onClick={() => navigate('/myDogs')}
+              >
+                See my dogs
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                className='btn-primary'
+                onClick={() => navigate('/register')}
               >
                 Create Account
               </button>
               <button
                 className='btn-primary'
-                onClick={() => handleAuth('login')}
+                onClick={() => navigate('/login')}
               >
                 Login
               </button>

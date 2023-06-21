@@ -17,7 +17,6 @@ const dog_face_svgrepo_com_svg_1 = __importDefault(require("../assets/dog-face-s
 const Home_1 = __importDefault(require("@mui/icons-material/Home"));
 const Pets_1 = __importDefault(require("@mui/icons-material/Pets"));
 const AddCircle_1 = __importDefault(require("@mui/icons-material/AddCircle"));
-const Chat_1 = __importDefault(require("@mui/icons-material/Chat"));
 const Context_1 = require("../Context/Context");
 const react_router_dom_1 = require("react-router-dom");
 const APIServices_1 = __importDefault(require("../services/APIServices"));
@@ -33,7 +32,7 @@ const Nav = () => {
     const matchedIds = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
     const dogs = contexts === null || contexts === void 0 ? void 0 : contexts.dogs;
     const getAllUserDogs = () => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.getDogsofUSer(userId).then((data) => {
+        APIServices_1.default.getDogsofUser(userId).then((data) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(data);
         });
     });
@@ -57,7 +56,7 @@ const Nav = () => {
                     matchedDogs.push(dog);
             });
         });
-        contexts === null || contexts === void 0 ? void 0 : contexts.updateMatches(matchedDogs);
+        console.log('it came in getMatches');
     };
     (0, react_1.useEffect)(() => {
         if (contexts === null || contexts === void 0 ? void 0 : contexts.authenticated) {
@@ -99,10 +98,6 @@ const Nav = () => {
                     <Pets_1.default />
                     <span>{dog.name}</span>
                   </button>))}
-                <button className='btn-nav' onClick={() => navigate('/dashboard')}>
-                  <Chat_1.default />
-                  <span>Start chat</span>
-                </button>
                 <button className='btn-nav' onClick={() => navigate(`/onboarding/${userId}`)}>
                   <AddCircle_1.default />
                   <span>Add new dog</span>

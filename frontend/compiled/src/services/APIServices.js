@@ -24,7 +24,6 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     login: (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(email);
         return fetch(`${PORT}/login`, {
             method: 'POST',
             body: JSON.stringify({ email, password }),
@@ -37,7 +36,6 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     createDog: (user_id, dog) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(user_id);
         return fetch(`${PORT}/dogs/${user_id}`, {
             method: 'POST',
             body: JSON.stringify(dog),
@@ -71,7 +69,7 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getDogsofUSer: (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+    getDogsofUser: (user_id) => __awaiter(void 0, void 0, void 0, function* () {
         return fetch(`${PORT}/dogs/${user_id}`, {
             method: 'GET',
             headers: {
@@ -83,8 +81,6 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     getMatches: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log('GET MATCHEEES');
-        console.log({ id });
         return fetch(`${PORT}/matches/${id}`, {
             method: 'GET',
             headers: {
@@ -96,8 +92,6 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     addMatch: (myDog, otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(myDog);
-        console.log(otherDogId);
         return fetch(`${PORT}/dogs/${otherDogId}`, {
             method: 'PUT',
             body: JSON.stringify(myDog),
@@ -109,8 +103,8 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    sendMessage: (id, body) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/messages/${id}`, {
+    sendMessage: (senderId, body) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${senderId}`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -121,8 +115,8 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getMessages: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/messages/${id}`, {
+    getMessages: () => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',

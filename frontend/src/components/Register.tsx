@@ -3,7 +3,7 @@ import { FormEvent, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../services/APIServices';
 import { Context } from '../Context/Context';
-const AuthModal = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,18 +18,18 @@ const AuthModal = () => {
       setError('Passwords needs to match!');
     } else {
       try {
-        apiService.register(username, email, password).then((res) => {
-          if (res.username) {
-            localStorage.setItem('user', JSON.stringify(res));
+        apiService.register(username, email, password).then((user) => {
+          if (user.username) {
+            localStorage.setItem('user', JSON.stringify(user));
             contexts?.updateAuthenticated(true);
-            contexts?.updateUser(res);
-            navigate(`/onboarding/${res.id}`);
+            contexts?.updateUser(user);
+            navigate(`/onboarding/${user.id}`);
           } else {
             setError('Unable to login');
           }
         });
-      } catch (e) {
-        console.log('OMEGA LUL your authentication failed');
+      } catch (error) {
+        console.log('Authentication failed', error);
       }
     }
   }
@@ -40,7 +40,7 @@ const AuthModal = () => {
         <div onClick={() => navigate('/')}>
           <CloseIcon className='close-icon' />
         </div>
-        <h2>{contexts?.isSignUp ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
+        <h2>Create an account</h2>
         <form onSubmit={(e) => handleRegister(e)}>
           <input
             type='text'
@@ -66,23 +66,19 @@ const AuthModal = () => {
             required={true}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {contexts?.isSignUp && (
-            <input
-              type='password'
-              id='password-check'
-              name='password-check'
-              placeholder='confirm your password'
-              required={true}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          )}
+          <input
+            type='password'
+            id='password-check'
+            name='password-check'
+            placeholder='confirm your password'
+            required={true}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
           <input type='submit' className='btn-secondary' />
           <p>{error}</p>
         </form>
-        <hr />
-        <h2>GET THE APP</h2>
       </div>
     </div>
   );
 };
-export default AuthModal;
+export default Register;

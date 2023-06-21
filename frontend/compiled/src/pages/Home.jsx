@@ -11,15 +11,6 @@ const Home = () => {
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const authenticated = contexts === null || contexts === void 0 ? void 0 : contexts.authenticated;
     const navigate = (0, react_router_1.useNavigate)();
-    const handleAuth = (path) => {
-        if (path === 'register') {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateSignUp(true);
-        }
-        else if (path === 'login') {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateSignUp(false);
-        }
-        navigate(`/${path}`);
-    };
     return (<>
       <div className='overlay'>
         <Nav_1.default />
@@ -30,15 +21,15 @@ const Home = () => {
             you can contact other people who are also looking for friends for
             their pets, where you can make friends .... among other things...
           </p>
-          <button className='btn-primary' onClick={() => navigate('/myDogs')}>
-            See my dogs
-          </button>
-
-          {!authenticated && (<>
-              <button className='btn-primary' onClick={() => handleAuth('register')}>
+          {authenticated ? (<>
+              <button className='btn-primary' onClick={() => navigate('/myDogs')}>
+                See my dogs
+              </button>
+            </>) : (<>
+              <button className='btn-primary' onClick={() => navigate('/register')}>
                 Create Account
               </button>
-              <button className='btn-primary' onClick={() => handleAuth('login')}>
+              <button className='btn-primary' onClick={() => navigate('/login')}>
                 Login
               </button>
             </>)}

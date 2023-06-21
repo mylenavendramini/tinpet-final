@@ -8,7 +8,7 @@ const react_1 = require("react");
 const react_router_dom_1 = require("react-router-dom");
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const Context_1 = require("../Context/Context");
-const AuthModal = () => {
+const Register = () => {
     const [email, setEmail] = (0, react_1.useState)('');
     const [password, setPassword] = (0, react_1.useState)('');
     const [confirmPassword, setConfirmPassword] = (0, react_1.useState)('');
@@ -23,20 +23,20 @@ const AuthModal = () => {
         }
         else {
             try {
-                APIServices_1.default.register(username, email, password).then((res) => {
-                    if (res.username) {
-                        localStorage.setItem('user', JSON.stringify(res));
+                APIServices_1.default.register(username, email, password).then((user) => {
+                    if (user.username) {
+                        localStorage.setItem('user', JSON.stringify(user));
                         contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
-                        contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(res);
-                        navigate(`/onboarding/${res.id}`);
+                        contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);
+                        navigate(`/onboarding/${user.id}`);
                     }
                     else {
                         setError('Unable to login');
                     }
                 });
             }
-            catch (e) {
-                console.log('OMEGA LUL your authentication failed');
+            catch (error) {
+                console.log('Authentication failed', error);
             }
         }
     }
@@ -45,18 +45,16 @@ const AuthModal = () => {
         <div onClick={() => navigate('/')}>
           <Close_1.default className='close-icon'/>
         </div>
-        <h2>{(contexts === null || contexts === void 0 ? void 0 : contexts.isSignUp) ? 'CREATE AN ACCOUNT' : 'LOG IN'}</h2>
+        <h2>Create an account</h2>
         <form onSubmit={(e) => handleRegister(e)}>
           <input type='text' id='username' name='username' placeholder='username' required={true} onChange={(e) => setUsername(e.target.value)}/>
           <input type='email' id='email' name='email' placeholder='email' required={true} onChange={(e) => setEmail(e.target.value)}/>
           <input type='password' id='password' name='password' placeholder='password' required={true} onChange={(e) => setPassword(e.target.value)}/>
-          {(contexts === null || contexts === void 0 ? void 0 : contexts.isSignUp) && (<input type='password' id='password-check' name='password-check' placeholder='confirm your password' required={true} onChange={(e) => setConfirmPassword(e.target.value)}/>)}
+          <input type='password' id='password-check' name='password-check' placeholder='confirm your password' required={true} onChange={(e) => setConfirmPassword(e.target.value)}/>
           <input type='submit' className='btn-secondary'/>
           <p>{error}</p>
         </form>
-        <hr />
-        <h2>GET THE APP</h2>
       </div>
     </div>);
 };
-exports.default = AuthModal;
+exports.default = Register;

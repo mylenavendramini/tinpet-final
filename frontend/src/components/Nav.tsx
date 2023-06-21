@@ -21,7 +21,7 @@ const Nav = () => {
   const dogs = contexts?.dogs;
 
   const getAllUserDogs = async () => {
-    apiService.getDogsofUSer(userId).then((data) => {
+    apiService.getDogsofUser(userId).then((data) => {
       contexts?.updateMyDogs(data);
     });
   };
@@ -46,7 +46,7 @@ const Nav = () => {
         if (dog.id === id) matchedDogs.push(dog);
       });
     });
-    contexts?.updateMatches(matchedDogs);
+    console.log('it came in getMatches');
   };
 
   useEffect(() => {
@@ -73,8 +73,9 @@ const Nav = () => {
 
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
-    getMatches()
-    navigate('/dashboard');
+    getMatches();
+    console.log('it came in handleclick');
+    navigate(`/dashboard/${dog.id}`);
   };
 
   return (
@@ -103,13 +104,6 @@ const Nav = () => {
                     <span>{dog.name}</span>
                   </button>
                 ))}
-                <button
-                  className='btn-nav'
-                  onClick={() => navigate('/dashboard')}
-                >
-                  <ChatIcon />
-                  <span>Start chat</span>
-                </button>
                 <button
                   className='btn-nav'
                   onClick={() => navigate(`/onboarding/${userId}`)}

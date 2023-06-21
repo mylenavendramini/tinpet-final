@@ -20,35 +20,37 @@ const Login_1 = __importDefault(require("./components/Login"));
 const react_1 = require("react");
 const Context_1 = require("./Context/Context");
 const APIServices_1 = __importDefault(require("./services/APIServices"));
-const AuthModal_1 = __importDefault(require("./components/AuthModal"));
-const Mydogs_1 = __importDefault(require("./components/Mydogs"));
+const Register_1 = __importDefault(require("./components/Register"));
+const MyDogs_1 = __importDefault(require("./components/MyDogs"));
 const App = () => {
-    var _a;
+    var _a, _b, _c;
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const [gotDogs, setGotDogs] = (0, react_1.useState)(false);
     const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
-    const getAllTheDogs = () => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.getDogsofUSer(userId).then((data) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(data);
-            if (data.length > 0) {
-                contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(data[0]);
-            }
-            // setGotDogs(true);
-        });
-    });
-    const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.login(email, password).then((res) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(res);
-        });
-    });
+    const matches = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.matches_dogs;
+    const liked = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _c === void 0 ? void 0 : _c.liked_dog;
     (0, react_1.useEffect)(() => {
         if (contexts === null || contexts === void 0 ? void 0 : contexts.authenticated) {
             getAllTheDogs();
         }
         else {
-            console.log('no users');
+            console.log('You need to login first');
         }
     }, []);
+    const getAllTheDogs = () => __awaiter(void 0, void 0, void 0, function* () {
+        APIServices_1.default.getDogsofUser(userId).then((dogs) => {
+            contexts.updateMyDogs([...dogs]);
+            // if (dogs.length > 0) {
+            //   contexts?.updateCurrentDog(dogs[0]);
+            // }
+            // setGotDogs(true);
+        });
+    });
+    const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
+        APIServices_1.default.login(email, password).then((user) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);
+        });
+    });
     (0, react_1.useEffect)(() => {
         const user = localStorage.getItem('user');
         if (user) {
@@ -57,25 +59,24 @@ const App = () => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateAuthenticated(true);
         }
         else {
-            console.log('no users');
+            console.log('You need to login first');
         }
     }, []);
     (0, react_1.useEffect)(() => {
-        APIServices_1.default.getDogs().then((data) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateDogs(data);
-            setGotDogs(true);
+        APIServices_1.default.getDogs().then((dogs) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateDogs([...dogs]);
+            // setGotDogs(true);
         });
-    }, []);
-    console.log(contexts === null || contexts === void 0 ? void 0 : contexts.myDogs, 'here');
+    }, [matches, liked]);
     return (<>
       <react_router_dom_1.BrowserRouter>
         <react_router_dom_1.Routes>
           {<react_router_dom_1.Route path='/' element={<Home_1.default />}/>}
-          {<react_router_dom_1.Route path='/myDogs' element={<Mydogs_1.default />}/>}
-          {<react_router_dom_1.Route path='/dashboard' element={<Dashboard_1.default />}/>}
+          {<react_router_dom_1.Route path='/myDogs' element={<MyDogs_1.default />}/>}
+          {<react_router_dom_1.Route path='/dashboard/:id' element={<Dashboard_1.default />}/>}
           {<react_router_dom_1.Route path='/onboarding/:id' element={<Onboarding_1.default />}/>}
           {<react_router_dom_1.Route path='/login' element={<Login_1.default />}/>}
-          {<react_router_dom_1.Route path='/register' element={<AuthModal_1.default />}/>}
+          {<react_router_dom_1.Route path='/register' element={<Register_1.default />}/>}
         </react_router_dom_1.Routes>
       </react_router_dom_1.BrowserRouter>
     </>);

@@ -22,8 +22,10 @@ export interface IDog {
 
 export interface IMessage {
   id?: number;
-  sender: number;
-  receiver: number;
+  sender_id: number;
+  receiver_id: number;
+  sender_name: string;
+  receiver_name: string;
   content: string;
   createdAt?: Date;
   updatedAt?: Date;

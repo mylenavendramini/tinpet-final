@@ -8,31 +8,26 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const contexts = useContext(Context);
-  const userId = Number(contexts?.user?.id) as number;
   const navigate = useNavigate();
-  // const handleClick = () => {
-  //   contexts?.updateModal();
-  // };
+
   function login(e: FormEvent) {
     e.preventDefault();
     if (!password || !email) {
       setError('Missing credentials!');
     } else {
       try {
-        apiService.login(email, password).then((res) => {
-          console.log(res);
-          if (res.username) {
+        apiService.login(email, password).then((user) => {
+          if (user.username) {
             contexts?.updateAuthenticated(true);
-            contexts?.updateUser(res);
-            localStorage.setItem('user', JSON.stringify(res));
-            if (contexts?.myDogs && contexts?.myDogs.length > 0) navigate('/');
-            else navigate(`/onboarding/${res.id}`);
+            contexts?.updateUser(user);
+            localStorage.setItem('user', JSON.stringify(user));
+            navigate('/');
           } else {
             setError('Unable to login');
           }
         });
-      } catch (e) {
-        setError('OMEGA LUL your login function failed');
+      } catch (error) {
+        console.log('Authentication failed', error);
       }
     }
   }
@@ -43,7 +38,7 @@ const Login = () => {
         <div onClick={() => navigate('/')}>
           <CloseIcon className='close-icon' />
         </div>
-        <h2>LOG IN</h2>
+        <h2>Login</h2>
         <form onSubmit={(e) => login(e)}>
           <input
             type='email'
@@ -61,6 +56,7 @@ const Login = () => {
             required={true}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error}
           <input type='submit' className='btn-secondary' />
         </form>
       </div>
