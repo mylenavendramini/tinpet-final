@@ -15,23 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
 const react_2 = require("react");
 const Context_1 = require("../Context/Context");
-const apiservices_1 = __importDefault(require("../services/apiservices"));
-const MatchesDisplay = ({}) => {
-    const contexts = (0, react_2.useContext)(Context_1.Context);
-    const setClickedDog = contexts === null || contexts === void 0 ? void 0 : contexts.updateSelectedDog;
-    const matches = contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs;
+const APIServices_1 = __importDefault(require("../services/APIServices"));
+const MatchesDisplay = () => {
     const [matchedIds, setMatchedIds] = (0, react_1.useState)([]);
     const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)([]);
-    const [matchedDog, setMatchedDog] = (0, react_1.useState)();
-    const context = (0, react_2.useContext)(Context_1.Context);
-    const updateDog = context === null || context === void 0 ? void 0 : context.updateDog;
-    const currentDog = context === null || context === void 0 ? void 0 : context.currentDog;
-    const myDogs = context === null || context === void 0 ? void 0 : context.myDogs;
-    const dogName = myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => dog.name);
-    const dogUrl = myDogs === null || myDogs === void 0 ? void 0 : myDogs.map((dog) => dog.url);
+    const [gotMatches, setGotMatches] = (0, react_1.useState)(false);
+    const contexts = (0, react_2.useContext)(Context_1.Context);
+    const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
     const currentDogId = Number(currentDog === null || currentDog === void 0 ? void 0 : currentDog.id);
     const getDogMatchesIds = () => __awaiter(void 0, void 0, void 0, function* () {
-        apiservices_1.default
+        APIServices_1.default
             .getMatches(currentDogId)
             .then((data) => {
             setMatchedIds(data);
@@ -39,7 +32,7 @@ const MatchesDisplay = ({}) => {
             .catch((error) => console.log(error));
     });
     const getDogMatches = () => {
-        apiservices_1.default.getDogs().then((data) => {
+        APIServices_1.default.getDogs().then((data) => {
             const matchedDogs = [];
             console.log({ matchedIds });
             matchedIds.forEach((matchId) => {
@@ -49,14 +42,15 @@ const MatchesDisplay = ({}) => {
                 });
             });
             setMatchedProfiles(matchedDogs);
+            setGotMatches(true);
         });
     };
     (0, react_1.useEffect)(() => {
         getDogMatchesIds();
         getDogMatches();
-    }, [matches]);
+    }, []);
     return (<div className='matches-display'>
-      {matchedProfiles === null || matchedProfiles === void 0 ? void 0 : matchedProfiles.map((matchProfile, idx) => (<div key={idx} className='match-card' onClick={() => setClickedDog(matchProfile)}>
+      {matchedProfiles === null || matchedProfiles === void 0 ? void 0 : matchedProfiles.map((matchProfile, idx) => (<div key={idx} className='match-card' onClick={() => contexts === null || contexts === void 0 ? void 0 : contexts.updateSelectedDog(matchProfile)}>
           <div className='img-container'>
             <img src={matchProfile === null || matchProfile === void 0 ? void 0 : matchProfile.url} alt='matched photo'/>
           </div>

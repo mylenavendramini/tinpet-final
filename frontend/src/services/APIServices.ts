@@ -16,7 +16,6 @@ const apiService = {
   },
 
   login: async (email: string, password: string) => {
-    console.log(email);
     return fetch(`${PORT}/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
@@ -30,7 +29,6 @@ const apiService = {
   },
 
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
-    console.log(user_id);
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'POST',
       body: JSON.stringify(dog),
@@ -67,7 +65,7 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getDogsofUSer: async (user_id: number): Promise<Dog[]> => {
+  getDogsofUser: async (user_id: number): Promise<Dog[]> => {
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'GET',
       headers: {
@@ -80,8 +78,6 @@ const apiService = {
   },
 
   getMatches: async (id: number) => {
-    console.log('GET MATCHEEES');
-    console.log({ id });
     return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',
       headers: {
@@ -94,8 +90,6 @@ const apiService = {
   },
 
   addMatch: async (myDog: Dog, otherDogId: number) => {
-    console.log(myDog);
-    console.log(otherDogId);
     return fetch(`${PORT}/dogs/${otherDogId}`, {
       method: 'PUT',
       body: JSON.stringify(myDog),

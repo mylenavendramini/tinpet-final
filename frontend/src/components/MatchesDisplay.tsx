@@ -4,15 +4,10 @@ import { Context } from '../Context/Context';
 import apiService from '../services/APIServices';
 import { Dog } from '../types/Types';
 
-interface MatchesDisplayProps {
-  // matches: Dog[];
-  // setClickedDog: Function;
-  // setClickedDog: (dog: Dog) => void;
-}
-const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
+const MatchesDisplay = () => {
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
   const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
-  const [gotMatches, setGotMatches] = useState(false)
+  const [gotMatches, setGotMatches] = useState(false);
   const contexts = useContext(Context);
   const currentDog = contexts?.currentDog;
   const currentDogId = Number(currentDog?.id);
@@ -36,33 +31,30 @@ const MatchesDisplay: React.FC<MatchesDisplayProps> = ({}) => {
         });
       });
       setMatchedProfiles(matchedDogs);
-      setGotMatches(true)
+      setGotMatches(true);
     });
   };
-
 
   useEffect(() => {
     getDogMatchesIds();
     getDogMatches();
   }, []);
 
-  if(gotMatches) {
-    return (
-      <div className='matches-display'>
-        {matchedProfiles?.map((matchProfile, idx) => (
-          <div
-            key={idx}
-            className='match-card'
-            onClick={() => contexts?.updateSelectedDog(matchProfile)}
-          >
-            <div className='img-container'>
-              <img src={matchProfile?.url} alt='matched photo' />
-            </div>
-            <h3>{matchProfile?.name}</h3>
+  return (
+    <div className='matches-display'>
+      {matchedProfiles?.map((matchProfile, idx) => (
+        <div
+          key={idx}
+          className='match-card'
+          onClick={() => contexts?.updateSelectedDog(matchProfile)}
+        >
+          <div className='img-container'>
+            <img src={matchProfile?.url} alt='matched photo' />
           </div>
-        ))}
-      </div>
-    );
-  }
+          <h3>{matchProfile?.name}</h3>
+        </div>
+      ))}
+    </div>
+  );
 };
 export default MatchesDisplay;

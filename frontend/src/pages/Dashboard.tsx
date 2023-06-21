@@ -1,19 +1,15 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import ChatContainer from '../components/ChatContainer';
 import { Dog, User } from '../types/Types';
 import apiService from '../services/APIServices';
-import { useParams } from 'react-router';
 import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
 
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
-  const { id } = useParams<{ id: string }>();
   const contexts = useContext(Context);
   const currentUser = contexts?.user;
   const currentDog = contexts?.currentDog as Dog;
-  const currentDogId = contexts?.currentDog?.id as number;
-
 
   const updateMatches = async (otherDogId: number) => {
     apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
@@ -44,7 +40,7 @@ const Dashboard: React.FC = () => {
     <>
       {currentUser && (
         <div className='dashboard'>
-          <ChatContainer user={currentUser as User} />
+          <ChatContainer />
           <div className='swiper-container'>
             {
               <div className='card-container'>
@@ -71,7 +67,6 @@ const Dashboard: React.FC = () => {
                     </TinderCard>
                   </>
                 ))}
-
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>

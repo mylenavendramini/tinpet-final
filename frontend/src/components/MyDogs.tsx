@@ -15,11 +15,11 @@ const MyDogs = () => {
   console.log({ myDogs });
   const handleClickDog = (dog: Dog) => {
     contexts?.updateCurrentDog(dog);
-    navigate('/dashboard');
+    navigate(`/dashboard/${dog.id}`);
   };
 
   const getAllTheDogs = async () => {
-    apiService.getDogsofUSer(userId).then((data) => {
+    apiService.getDogsofUser(userId).then((data) => {
       contexts?.updateMyDogs(data);
       if (data.length > 0) {
         contexts?.updateCurrentDog(data[0]);

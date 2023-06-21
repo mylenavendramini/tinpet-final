@@ -1,38 +1,20 @@
-/* eslint-disable no-unused-vars */
 import Nav from '../components/Nav';
-import { useState, FormEvent, useEffect, useContext } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, FormEvent, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import apiService from '../services/APIServices';
-import { Dog } from '../types/Types';
 import { Context } from '../Context/Context';
 
 const Onboarding = () => {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const parsedId = Number(id);
-  const contexts = useContext(Context);
-  const myDogs = contexts?.myDogs;
-
-  const [cookies, setCookies, removeCookies] = useCookies(['user']);
-  // const [formData, setFormData] = useState<Dog>({
-  //   name: '',
-  //   age: 0,
-  //   gender: '',
-  //   url: '',
-  //   about: '',
-  //   liked_dog: [],
-  //   matches_dogs: [],
-  // });
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
   const [gender, setGender] = useState('');
   const [url, setUrl] = useState('');
   const [about, setAbout] = useState('');
+  const navigate = useNavigate();
+  const contexts = useContext(Context);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log('Submitted');
     const newDog = {
       name,
       age,
@@ -42,24 +24,19 @@ const Onboarding = () => {
       liked_dog: [],
       matches_dogs: [],
     };
-    const id = contexts?.user?.id as number;
-    console.log(id);
-    console.log(contexts?.user);
-    apiService.createDog(id, newDog).then((data) => {
-      console.log(data);
-      contexts?.myDogs.push(data);
-      contexts?.updateCurrentDog(data)
-      navigate('/dashboard');
+    const userId = contexts?.user?.id as number;
+    apiService.createDog(userId, newDog).then((dog) => {
+      contexts?.myDogs.push(dog);
+      contexts?.updateCurrentDog(dog);
+      navigate(`/dashboard/${dog.id}`);
     });
   };
-
 
   return (
     <>
       <Nav />
       <div className='onboarding'>
         <h2>Create a dog</h2>
-
         <form onSubmit={handleSubmit}>
           <section>
             <label htmlFor='first_name'>Name</label>
@@ -96,7 +73,6 @@ const Onboarding = () => {
                 checked={gender === 'male'}
                 onChange={(e) => setGender(e.target.value)}
               />
-
               <label htmlFor='male-gender'>Male</label>
               <input
                 id='female-gender'
@@ -122,7 +98,6 @@ const Onboarding = () => {
             />
             <input type='submit' value='Submit' />
           </section>
-
           <section>
             <label htmlFor='url'>Profile Picture</label>
             <input
