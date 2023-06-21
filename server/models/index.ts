@@ -5,31 +5,21 @@ import db from './db';
 const User = db.User;
 const Dog = db.Dog;
 
-// User.findAll({
-//   include: [{
-//       model: Dog,
-//       required: true,
-//       where:{userId: userId},
-//   }],
-//   where: {
-//      id: userId
-//   }
-// })
-
 async function getUser(userId: number) {
   try {
-    // const user = await User.findOne(include: [{}]{ where: { id: userId } });
     const user = await User.findOne({
-      include: [{
+      include: [
+        {
           model: Dog,
           required: true,
-          as:'dogs',
-          where:{userId: userId},
-      }],
+          as: 'dogs',
+          where: { userId: userId },
+        },
+      ],
       where: {
-         id: userId
-      }
-    })
+        id: userId,
+      },
+    });
     return user;
   } catch (error) {
     throw new Error('Unable to get the user');

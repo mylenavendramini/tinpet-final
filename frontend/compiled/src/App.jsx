@@ -31,21 +31,19 @@ const App = () => {
     const liked = (_c = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _c === void 0 ? void 0 : _c.liked_dog;
     (0, react_1.useEffect)(() => {
         if (contexts === null || contexts === void 0 ? void 0 : contexts.authenticated) {
-            getAllTheDogs();
+            // getTheUser();
+            console.log('authenticated');
         }
         else {
-            console.log('You need to login first');
+            console.log('No dogs before login');
         }
     }, []);
-    const getAllTheDogs = () => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.getDogsofUser(userId).then((dogs) => {
-            contexts.updateMyDogs([...dogs]);
-            // if (dogs.length > 0) {
-            //   contexts?.updateCurrentDog(dogs[0]);
-            // }
-            // setGotDogs(true);
-        });
-    });
+    // const getTheUser = () => {
+    //   apiService.getUser(userId).then((user) => {
+    //     console.log({ user });
+    //     contexts?.updateMyDogs(user.dogs);
+    //   });
+    // };
     const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.login(email, password).then((user) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);
@@ -53,6 +51,11 @@ const App = () => {
     });
     (0, react_1.useEffect)(() => {
         const user = localStorage.getItem('user');
+        const userObj = JSON.parse(user);
+        const userId = userObj.id;
+        APIServices_1.default.getUser(userId).then((user) => {
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateMyDogs(user.dogs);
+        });
         if (user) {
             const { email, password } = JSON.parse(user);
             login(email, password);

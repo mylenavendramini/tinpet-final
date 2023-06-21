@@ -2,7 +2,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Dog } from './types/Types';
+import { Dog, User } from './types/Types';
 import Login from './components/Login';
 import { useEffect, useContext, useState } from 'react';
 import { Context } from './Context/Context';
@@ -19,21 +19,19 @@ const App = () => {
 
   useEffect(() => {
     if (contexts?.authenticated) {
-      getAllTheDogs();
+      // getTheUser();
+      console.log('authenticated');
     } else {
-      console.log('You need to login first');
+      console.log('No dogs before login');
     }
   }, []);
 
-  const getAllTheDogs = async () => {
-    apiService.getDogsofUser(userId).then((dogs) => {
-      contexts!.updateMyDogs([...dogs]);
-      // if (dogs.length > 0) {
-      //   contexts?.updateCurrentDog(dogs[0]);
-      // }
-      // setGotDogs(true);
-    });
-  };
+  // const getTheUser = () => {
+  //   apiService.getUser(userId).then((user) => {
+  //     console.log({ user });
+  //     contexts?.updateMyDogs(user.dogs);
+  //   });
+  // };
 
   const login = async (email: string, password: string) => {
     apiService.login(email, password).then((user) => {
@@ -43,6 +41,12 @@ const App = () => {
 
   useEffect(() => {
     const user = localStorage.getItem('user');
+    const userObj = JSON.parse(user as string) as User;
+    const userId = userObj.id as number;
+
+    apiService.getUser(userId).then((user) => {
+      contexts?.updateMyDogs(user.dogs);
+    });
     if (user) {
       const { email, password } = JSON.parse(user);
       login(email, password);

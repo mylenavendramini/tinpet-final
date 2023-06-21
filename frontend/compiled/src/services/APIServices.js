@@ -48,6 +48,7 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     getUser: (user_id) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(user_id);
         return fetch(`${PORT}/user/${user_id}`, {
             method: 'GET',
             headers: {
@@ -69,17 +70,17 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getDogsofUser: (user_id) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/dogs/${user_id}`, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-            credentials: 'include',
-        })
-            .then((res) => res.json())
-            .then((parsedRes) => parsedRes);
-    }),
+    // getDogsofUser: async (user_id: number): Promise<Dog[]> => {
+    //   return fetch(`${PORT}/dogs/${user_id}`, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-type': 'application/json; charset=UTF-8',
+    //     },
+    //     credentials: 'include',
+    //   })
+    //     .then((res) => res.json())
+    //     .then((parsedRes) => parsedRes);
+    // },
     getMatches: (id) => __awaiter(void 0, void 0, void 0, function* () {
         return fetch(`${PORT}/matches/${id}`, {
             method: 'GET',

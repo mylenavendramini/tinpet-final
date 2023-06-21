@@ -19,12 +19,6 @@ const Nav = () => {
   const matchedIds = contexts?.currentDog?.matches_dogs;
   const dogs = contexts?.dogs;
 
-  const getAllUserDogs = async () => {
-    apiService.getDogsofUser(userId).then((dogs) => {
-      contexts?.updateMyDogs(dogs);
-    });
-  };
-
   const getMatches = () => {
     const matchedDogs: Dog[] = [];
     matchedIds?.forEach((id) => {
@@ -35,13 +29,6 @@ const Nav = () => {
     console.log('it came in getMatches');
   };
 
-  useEffect(() => {
-    if (contexts?.authenticated) {
-      getAllUserDogs();
-    } else {
-      console.log('You need to login first');
-    }
-  }, []);
 
   const logout = () => {
     contexts?.updateModal();
