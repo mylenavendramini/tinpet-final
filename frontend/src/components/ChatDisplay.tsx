@@ -21,52 +21,75 @@ const ChatDisplay = () => {
       receiver_id,
       receiver_name,
     };
-    console.log(newMessage);
+
     apiService.sendMessage(sender_id, newMessage).then((message) => {
       setShowMessages([...showMessages, message]);
     });
+    setMessage('');
   };
 
-  console.log(contexts?.messages);
-
   const getMessages = async () => {
-    apiService
-      .getMessages(contexts?.currentDog?.id as number)
-      .then((messagesArray) => setShowMessages(messagesArray));
+    apiService.getMessages().then((messagesArray) => {
+      const showMessages = messagesArray.filter((message) => {
+        console.log({ message });
+        console.log(contexts?.currentDog);
+        return (
+          message.sender_id === (contexts?.currentDog?.id as number) ||
+          message.receiver_id === (contexts?.currentDog?.id as number)
+        );
+      });
+      setShowMessages(showMessages);
+    });
   };
 
   useEffect(() => {
     getMessages();
   }, []);
 
-  useEffect(() => {
-    const showMessages = contexts?.messages?.filter((message) => {
-      return (
-        message.sender_id === (contexts?.currentDog?.id as number) ||
-        message.receiver_id === (contexts?.currentDog?.id as number)
-      );
-    }) as [];
-    setShowMessages(showMessages);
-    console.log({ showMessages });
-  }, []);
+  // useEffect(() => {
+  //   setShowMessages(showMessages);
+  //   console.log({ showMessages });
+  // }, []);
 
   return (
     <>
       <div className='chat-display'>
-        {showMessages.map((message: Message) => (
-          <div key={message.id}>
-            <div className='chat-message-header'>
-              <div className='img-container'>
-                <img
-                  src={contexts?.selectedDog?.url}
-                  alt={message.receiver_name + ' profile'}
-                />{' '}
-                {/*contexts?.selectedDog?.url} is subject to change */}
+        <div className='right'></div>
+        {showMessages.map((message: Message) => {
+          if (message.sender_id === contexts?.currentDog?.id) {
+            return (
+              <div className='left'>
+                <div key={message.id}>
+                  <div className='chat-message-header'>
+                    <div className='img-container'>
+                      <img
+                        src={contexts?.selectedDog?.url}
+                        alt={message.receiver_name + ' profile'}
+                      />
+                    </div>
+                  </div>
+                  <p>{message.content}</p>
+                </div>
               </div>
-            </div>
-            <p>{message.content}</p>
-          </div>
-        ))}
+            );
+          } else if (message.sender_id !== contexts?.currentDog?.id) {
+            return (
+              <div className=''>
+                <div key={message.id}>
+                  <div className='chat-message-header'>
+                    <div className='img-container'>
+                      <img
+                        src={contexts?.selectedDog?.url}
+                        alt={message.receiver_name + ' profile'}
+                      />
+                    </div>
+                  </div>
+                  <p>{message.content}</p>
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
       <div className='chat-input'>
         <textarea

@@ -116,10 +116,7 @@ nav .dropdown-btns button {
 }
 
 p {
-  padding: 0 10rem;
-  font-style: italic;
-  font-weight: bold;
-  font-size: larger;
+  padding: 0 1rem;
   color: rgb(106, 106, 106);
 }
 
@@ -421,6 +418,17 @@ p {
   width: 100%;
 }
 
+.img-container p {
+  font-size: 1rem;
+}
+
+.left {
+  background-color: red;
+}
+
+.right {
+  background-color: blue;
+}
 /* Chat display */
 
 .chat-display {

@@ -15,8 +15,7 @@ async function createMessageController(ctx: Context) {
 
 async function getMessagesController(ctx: Context) {
   try {
-    const userId: number = parseInt(ctx.params.id);
-    const messages = await getMessages(userId);
+    const messages = await getMessages();
     ctx.body = messages;
     ctx.status = 200;
   } catch (error) {

@@ -209,10 +209,10 @@ function createMessage(body) {
     });
 }
 exports.createMessage = createMessage;
-function getMessages(id) {
+function getMessages() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const messages = yield Message_1.Message.findAll({ where: { sender_id: id } });
+            const messages = yield Message_1.Message.findAll();
             return messages;
         }
         catch (error) {

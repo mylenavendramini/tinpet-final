@@ -190,9 +190,9 @@ async function createMessage(body: Message) {
   }
 }
 
-async function getMessages(id: number) {
+async function getMessages() {
   try {
-    const messages = await Message.findAll({ where: { sender_id: id } });
+    const messages = await Message.findAll();
     return messages;
   } catch (error) {
     console.log(error);
