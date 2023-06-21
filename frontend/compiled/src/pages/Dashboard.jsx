@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
-const ChatContainer_1 = __importDefault(require("../components/ChatContainer"));
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const react_tinder_card_1 = __importDefault(require("react-tinder-card"));
 const Context_1 = require("../Context/Context");
+const DogProfile_1 = __importDefault(require("../components/DogProfile"));
 const Dashboard = () => {
     var _a;
     const [lastDirection, setLastDirection] = (0, react_1.useState)('');
@@ -46,7 +46,7 @@ const Dashboard = () => {
     });
     return (<>
       {currentUser && (<div className='dashboard'>
-          <ChatContainer_1.default />
+          <DogProfile_1.default />
           <div className='swiper-container'>
             {<div className='card-container'>
                 {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<>

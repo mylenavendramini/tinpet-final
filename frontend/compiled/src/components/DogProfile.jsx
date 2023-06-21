@@ -9,7 +9,7 @@ const react_1 = require("react");
 const Context_1 = require("../Context/Context");
 const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCircleLeft"));
 const react_router_1 = require("react-router");
-const ChatContainer = () => {
+const DogProfile = () => {
     var _a, _b;
     const [clicked, setClicked] = (0, react_1.useState)(false);
     const [fetchedMatches, setFetchedMatches] = (0, react_1.useState)(false);
@@ -39,4 +39,4 @@ const ChatContainer = () => {
       {clicked ? <MatchesDisplay_1.default /> : <ChatDisplay_1.default />}
     </div>);
 };
-exports.default = ChatContainer;
+exports.default = DogProfile;

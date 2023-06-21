@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
-import ChatContainer from '../components/ChatContainer';
 import { Dog, User } from '../types/Types';
 import apiService from '../services/APIServices';
 import TinderCard from 'react-tinder-card';
 import { Context } from '../Context/Context';
+import DogProfile from '../components/DogProfile';
 
 const Dashboard: React.FC = () => {
   const [lastDirection, setLastDirection] = useState('');
@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
     <>
       {currentUser && (
         <div className='dashboard'>
-          <ChatContainer />
+          <DogProfile />
           <div className='swiper-container'>
             {
               <div className='card-container'>

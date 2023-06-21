@@ -1,12 +1,11 @@
 import ChatDisplay from './ChatDisplay';
 import MatchesDisplay from './MatchesDisplay';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { Context } from '../Context/Context';
-import apiService from '../services/APIServices';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { useNavigate } from 'react-router';
 
-const ChatContainer = () => {
+const DogProfile = () => {
   const [clicked, setClicked] = useState(false);
   const [fetchedMatches, setFetchedMatches] = useState(false);
   const [fetchedMessages, setFetchedMessages] = useState(false);
@@ -39,4 +38,4 @@ const ChatContainer = () => {
   );
 };
 
-export default ChatContainer;
+export default DogProfile;
