@@ -23,8 +23,10 @@ export type Dog = {
 export type Message = {
   id?: number;
   content: string;
-  sender: number;
-  receiver: number;
+  sender_id: number;
+  receiver_id: number;
+  sender_name: string;
+  receiver_name: string;
   createdAt?: Date;
   updatedAt?: Date;
 };

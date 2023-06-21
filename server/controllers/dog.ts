@@ -70,7 +70,7 @@ async function getAllDogMatches(ctx: Context) {
   } catch (error) {
     console.log(error);
     ctx.status = 500;
-    ctx.body = { error: 'Failed to retrieve all dogs' };
+    ctx.body = { error: 'Failed to retrieve all dog matches' };
   }
 }
 

@@ -28,8 +28,7 @@ exports.createMessageController = createMessageController;
 function getMessagesController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const userId = parseInt(ctx.params.id);
-            const messages = yield (0, models_1.getMessages)(userId);
+            const messages = yield (0, models_1.getMessages)();
             ctx.body = messages;
             ctx.status = 200;
         }

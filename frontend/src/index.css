@@ -76,6 +76,8 @@ nav .logo-container .logo {
 }
 
 nav .btn-nav {
+  display: flex;
+  align-items: center;
   color: #025464;
   background-color: #fbffdc;
   font-size: 1rem;
@@ -90,9 +92,22 @@ nav .btn-nav:disabled {
   color: #025464;
 }
 
+nav .btn-nav span {
+  margin-left: 0.5rem;
+}
+
+nav .btn-nav.blue {
+  background-color: #025464;
+  color: #fbffdc;
+}
+
 nav .dropdown-btns {
   display: flex;
   flex-direction: column;
+}
+
+nav .dropdown-btns button {
+  margin: 0.3rem 0;
 }
 
 /* HomePage */
@@ -100,11 +115,8 @@ nav .dropdown-btns {
   margin-top: 30vh;
 }
 
-.home p {
-  padding: 0 10rem;
-  font-style: italic;
-  font-weight: bold;
-  font-size: larger;
+p {
+  padding: 0 1rem;
   color: rgb(106, 106, 106);
 }
 
@@ -117,6 +129,39 @@ nav .dropdown-btns {
     rgba(208, 245, 190, 1) 0%,
     rgba(251, 255, 220, 1) 100%
   );
+}
+
+/* My dogs */
+.my-dogs-container {
+  display: flex;
+  justify-content: center;
+  /* height: 100%; */
+  flex-wrap: wrap;
+}
+
+#my-dogs-title {
+  font-size: 2rem;
+  color: #025464;
+  margin: 2rem;
+}
+
+.my-dog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 3rem;
+}
+
+.my-dog img {
+  border-radius: 10px;
+  margin-top: 2rem;
+  cursor: pointer;
+  width: 200px;
+}
+
+.my-dog p {
+  cursor: pointer;
 }
 
 /* Auth Modal */
@@ -324,10 +369,21 @@ nav .dropdown-btns {
   border: none;
   background-color: white;
   border-bottom: solid 5px #025464;
+  color: #025464;
   font-size: 1.5rem;
   margin: 5px;
   padding: 0.8rem;
   border-radius: 10px;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-container .option span {
+  cursor: pointer;
 }
 .chat-container button:hover {
   background-color: lightgray;
@@ -355,12 +411,24 @@ nav .dropdown-btns {
   border-radius: 100rem;
   overflow: hidden;
   margin: 10px;
+  cursor: pointer;
 }
 
 .img-container img {
   width: 100%;
 }
 
+.img-container p {
+  font-size: 1rem;
+}
+
+.left {
+  background-color: red;
+}
+
+.right {
+  background-color: blue;
+}
 /* Chat display */
 
 .chat-display {
@@ -394,10 +462,12 @@ nav .dropdown-btns {
 /*-------- Chat Display --------*/
 .chat-display,
 .matches-display {
-  padding: 20px;
-  height: 60vh;
+  /* padding: 20px; */
+  /* height: 60vh; */
   overflow-y: auto;
 }
+
+/*-------- Matches Display --------*/
 
 /*-------- Chat Input --------*/
 .chat-input {

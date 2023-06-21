@@ -1,6 +1,5 @@
 const PORT = 'http://localhost:3001';
 import { Dog, User, Message } from '../types/Types';
-// import axios from 'axios';
 
 const apiService = {
   register: async (username: string, email: string, password: string) => {
@@ -17,7 +16,6 @@ const apiService = {
   },
 
   login: async (email: string, password: string) => {
-    console.log(email);
     return fetch(`${PORT}/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
@@ -31,7 +29,6 @@ const apiService = {
   },
 
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
-    console.log(user_id);
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'POST',
       body: JSON.stringify(dog),
@@ -68,7 +65,7 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getDogsofUSer: async (user_id: number): Promise<Dog[]> => {
+  getDogsofUser: async (user_id: number): Promise<Dog[]> => {
     return fetch(`${PORT}/dogs/${user_id}`, {
       method: 'GET',
       headers: {
@@ -81,8 +78,6 @@ const apiService = {
   },
 
   getMatches: async (id: number) => {
-    console.log('GET MATCHEEES');
-    console.log({ id });
     return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',
       headers: {
@@ -95,8 +90,6 @@ const apiService = {
   },
 
   addMatch: async (myDog: Dog, otherDogId: number) => {
-    console.log(myDog);
-    console.log(otherDogId);
     return fetch(`${PORT}/dogs/${otherDogId}`, {
       method: 'PUT',
       body: JSON.stringify(myDog),
@@ -109,8 +102,8 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  sendMessage: async (id: number, body: Message): Promise<Message> => {
-    return fetch(`${PORT}/messages/${id}`, {
+  sendMessage: async (senderId: number, body: Message): Promise<Message> => {
+    return fetch(`${PORT}/messages/${senderId}`, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -122,8 +115,8 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getMessages: async (id: number): Promise<Message[]> => {
-    return fetch(`${PORT}/messages/${id}`, {
+  getMessages: async (): Promise<Message[]> => {
+    return fetch(`${PORT}/messages`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

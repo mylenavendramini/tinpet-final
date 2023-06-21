@@ -13,34 +13,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = require("react");
+<<<<<<< HEAD
 const ChatContainer_1 = __importDefault(require("../components/ChatContainer"));
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const react_router_1 = require("react-router");
+=======
+const APIServices_1 = __importDefault(require("../services/APIServices"));
+>>>>>>> develop
 const react_tinder_card_1 = __importDefault(require("react-tinder-card"));
 const Context_1 = require("../Context/Context");
+const DogProfile_1 = __importDefault(require("../components/DogProfile"));
 const Dashboard = () => {
-    var _a, _b;
+    var _a;
     const [lastDirection, setLastDirection] = (0, react_1.useState)('');
-    const { id } = (0, react_router_1.useParams)();
-    const parsedId = Number(id);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const currentUser = contexts === null || contexts === void 0 ? void 0 : contexts.user;
     const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
-    const currentDogId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id;
-    // function getUser() {
-    //   apiService.getUser(parsedId).then((data) => {
-    //     contexts?.updateUser(data);
-    //   });
-    // }
-    // useEffect(() => {
-    //   getUser();
-    // }, []);
-    //NOT USE:
-    // useEffect(() => {
-    //   if (user) {
-    //     getAllUsers();
-    //   }
-    // }, [user]);
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
@@ -58,30 +46,22 @@ const Dashboard = () => {
     const outOfFrame = (name) => {
         console.log(name + ' left the screen!');
     };
-    console.log({ currentUser });
-    const otherDogs = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.dogs) === null || _b === void 0 ? void 0 : _b.filter((dog) => {
+    const otherDogs = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.dogs) === null || _a === void 0 ? void 0 : _a.filter((dog) => {
         return (dog === null || dog === void 0 ? void 0 : dog.userId) !== (currentUser === null || currentUser === void 0 ? void 0 : currentUser.id);
     });
-    console.log({ otherDogs });
     return (<>
       {currentUser && (<div className='dashboard'>
-          <ChatContainer_1.default user={currentUser}/>
+          <DogProfile_1.default />
           <div className='swiper-container'>
             {<div className='card-container'>
-                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<>
-                    <react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog.id)} onCardLeftScreen={() => outOfFrame(dog.name)}>
-                      <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card' onClick={() => swiped('right', dog.id)}>
-                        <h3>
-                          {dog.name + ', Age: '}
-                          {dog.age}
-                        </h3>
-                      </div>
-                    </react_tinder_card_1.default>
-                    {/*<button onClick={() => swiped('right', dog)}>
-                      IOAUSHDOUISAHDUIAD
-                </button>*/}
-                  </>))}
-
+                {otherDogs === null || otherDogs === void 0 ? void 0 : otherDogs.map((dog, idx) => (<react_tinder_card_1.default className='swipe' key={idx} onSwipe={(direction) => swiped(direction, dog.id)} onCardLeftScreen={() => outOfFrame(dog.name)}>
+                    <div style={{ backgroundImage: 'url(' + dog.url + ')' }} className='card' onClick={() => swiped('right', dog.id)}>
+                      <h3>
+                        {dog.name + ', Age: '}
+                        {dog.age}
+                      </h3>
+                    </div>
+                  </react_tinder_card_1.default>))}
                 <div className='swipe-info'>
                   {lastDirection && <p>You swiped {lastDirection}</p>}
                 </div>

@@ -192,12 +192,14 @@ function getDogMatchesArray(dogId) {
 exports.getDogMatchesArray = getDogMatchesArray;
 function createMessage(body) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { content, sender, receiver } = body;
+        const { content, sender_id, sender_name, receiver_id, receiver_name } = body;
         try {
             const newMessage = yield Message_1.Message.create({
                 content,
-                sender,
-                receiver,
+                sender_id,
+                sender_name,
+                receiver_id,
+                receiver_name,
             });
             return newMessage;
         }
@@ -207,10 +209,10 @@ function createMessage(body) {
     });
 }
 exports.createMessage = createMessage;
-function getMessages(id) {
+function getMessages() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const messages = yield Message_1.Message.findAll({ where: { sender: id } });
+            const messages = yield Message_1.Message.findAll();
             return messages;
         }
         catch (error) {

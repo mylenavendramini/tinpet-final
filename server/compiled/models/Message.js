@@ -16,12 +16,20 @@ class Message extends sequelize_1.Model {
                 allowNull: false,
                 unique: false,
             },
-            sender: {
+            sender_id: {
                 type: sequelize_1.DataTypes.INTEGER,
                 allowNull: false
             },
-            receiver: {
+            receiver_id: {
                 type: sequelize_1.DataTypes.INTEGER,
+                allowNull: false
+            },
+            sender_name: {
+                type: sequelize_1.DataTypes.STRING,
+                allowNull: false
+            },
+            receiver_name: {
+                type: sequelize_1.DataTypes.STRING,
                 allowNull: false
             },
             createdAt: {

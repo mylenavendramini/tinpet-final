@@ -21,7 +21,7 @@ router.post('/user', createUserController);
 router.post('/dogs/:id', createDogController);
 router.post('/login', loginController);
 router.post('/messages/:id', createMessageController);
-router.get('/messages/:id', getMessagesController);
+router.get('/messages', getMessagesController);
 router.get('/user/:id', getUserController);
 router.get('/dogs', getAllDogsController);
 router.get('/dogs/:id', getDogsOfUser);

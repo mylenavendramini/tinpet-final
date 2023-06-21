@@ -2,8 +2,9 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../Context/Context';
+import React from 'react'
 
-const ChatHeader: React.FC = () => {
+const ProfileHeader: React.FC = () => {
   const contexts = useContext(Context);
   const navigate = useNavigate();
 
@@ -15,10 +16,10 @@ const ChatHeader: React.FC = () => {
         </div>
         <h3>{contexts?.currentDog?.name}</h3>
       </div>
-      <i className='logout-icon' onClick={() => navigate('/')}>
+      <i className='logout-icon' onClick={() => navigate('/myDogs')}>
         <ArrowCircleLeftIcon />
       </i>
     </div>
   );
 };
-export default ChatHeader;
+export default ProfileHeader;
