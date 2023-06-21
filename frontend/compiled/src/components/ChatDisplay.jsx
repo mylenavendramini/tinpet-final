@@ -40,7 +40,9 @@ const ChatDisplay = () => {
     console.log(contexts === null || contexts === void 0 ? void 0 : contexts.messages);
     const getMessages = () => __awaiter(void 0, void 0, void 0, function* () {
         var _e;
-        APIServices_1.default.getMessages((_e = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _e === void 0 ? void 0 : _e.id);
+        APIServices_1.default
+            .getMessages((_e = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _e === void 0 ? void 0 : _e.id)
+            .then((messagesArray) => setShowMessages(messagesArray));
     });
     (0, react_1.useEffect)(() => {
         getMessages();
@@ -48,8 +50,9 @@ const ChatDisplay = () => {
     (0, react_1.useEffect)(() => {
         var _a;
         const showMessages = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.messages) === null || _a === void 0 ? void 0 : _a.filter((message) => {
-            var _a;
-            return message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id);
+            var _a, _b;
+            return (message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id) ||
+                message.receiver_id === ((_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.id));
         });
         setShowMessages(showMessages);
         console.log({ showMessages });

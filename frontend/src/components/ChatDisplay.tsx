@@ -30,7 +30,9 @@ const ChatDisplay = () => {
   console.log(contexts?.messages);
 
   const getMessages = async () => {
-    apiService.getMessages(contexts?.currentDog?.id as number);
+    apiService
+      .getMessages(contexts?.currentDog?.id as number)
+      .then((messagesArray) => setShowMessages(messagesArray));
   };
 
   useEffect(() => {
@@ -39,7 +41,10 @@ const ChatDisplay = () => {
 
   useEffect(() => {
     const showMessages = contexts?.messages?.filter((message) => {
-      return message.sender_id === (contexts?.currentDog?.id as number);
+      return (
+        message.sender_id === (contexts?.currentDog?.id as number) ||
+        message.receiver_id === (contexts?.currentDog?.id as number)
+      );
     }) as [];
     setShowMessages(showMessages);
     console.log({ showMessages });
