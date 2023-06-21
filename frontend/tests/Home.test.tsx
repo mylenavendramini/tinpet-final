@@ -54,6 +54,4 @@ expect(
   screen.getByRole("button", { name: /Create Account/i })
 ).toBeDefined()
 })
-
-
 });
