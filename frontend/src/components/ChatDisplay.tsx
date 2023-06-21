@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../Context/Context';
 import apiService from '../services/APIServices';
+import { Message } from '../types/Types';
 
 const ChatDisplay = () => {
   const [message, setMessage] = useState('');
+  const [showMessages, setShowMessages] = useState<Message[]>([]);
   const contexts = useContext(Context);
 
   const addMessage = async () => {
@@ -21,30 +23,41 @@ const ChatDisplay = () => {
     };
     console.log(newMessage);
     apiService.sendMessage(sender_id, newMessage).then((message) => {
-      contexts?.updateMessages([...contexts.messages, message]);
+      setShowMessages([...showMessages, message]);
     });
   };
 
   console.log(contexts?.messages);
 
-  // const getMessages = async () => {
-  //   apiService.getMessages();
-  // };
+  const getMessages = async () => {
+    apiService.getMessages(contexts?.currentDog?.id as number);
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, []);
+
+  useEffect(() => {
+    const showMessages = contexts?.messages?.filter((message) => {
+      return message.sender_id === (contexts?.currentDog?.id as number);
+    }) as [];
+    setShowMessages(showMessages);
+    console.log({ showMessages });
+  }, []);
 
   return (
     <>
       <div className='chat-display'>
-        {contexts?.messages.map((message) => (
+        {showMessages.map((message: Message) => (
           <div key={message.id}>
             <div className='chat-message-header'>
               <div className='img-container'>
                 <img
                   src={contexts?.selectedDog?.url}
-                  alt={message.receiver + ' profile'}
+                  alt={message.receiver_name + ' profile'}
                 />{' '}
                 {/*contexts?.selectedDog?.url} is subject to change */}
               </div>
-              <p>{message.receiver}</p>
             </div>
             <p>{message.content}</p>
           </div>

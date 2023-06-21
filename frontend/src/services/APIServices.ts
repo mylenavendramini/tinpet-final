@@ -115,8 +115,8 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  getMessages: async (senderId: number): Promise<Message[]> => {
-    return fetch(`${PORT}/messages/${senderId}`, {
+  getMessages: async (currentId: number): Promise<Message[]> => {
+    return fetch(`${PORT}/messages/${currentId}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

@@ -10,9 +10,19 @@ const ArrowCircleLeft_1 = __importDefault(require("@mui/icons-material/ArrowCirc
 const MatchesDisplay = () => {
     var _a;
     const contexts = (0, react_1.useContext)(Context_1.Context);
-    const matchedProfiles = contexts === null || contexts === void 0 ? void 0 : contexts.matchedDogs;
+    // const matchedProfiles = contexts?.matchedDogs;
+    const [matchedProfiles, setMatchedProfiles] = (0, react_1.useState)([]);
     const [openChat, setOpenChat] = (0, react_1.useState)(false);
     console.log(openChat);
+    (0, react_1.useEffect)(() => {
+        var _a;
+        const showMatches = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.dogs) === null || _a === void 0 ? void 0 : _a.filter((dog) => {
+            var _a;
+            return dog.matches_dogs.includes((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id);
+        });
+        setMatchedProfiles(showMatches);
+        console.log({ showMatches });
+    }, []);
     return (<div className='matches-display'>
       {openChat ? (<div className='option'>
           <div className='chat-header'>

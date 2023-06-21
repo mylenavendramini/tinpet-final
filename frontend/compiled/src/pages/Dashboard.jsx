@@ -27,8 +27,6 @@ const Dashboard = () => {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
             if (theOtherDog.matches_dogs.includes(currentDog.id)) {
                 alert('Its a maaaatch');
-                // contexts?.matchedDogs.push(theOtherDog);
-                contexts === null || contexts === void 0 ? void 0 : contexts.updateMatches([...contexts.matchedDogs, theOtherDog]);
             }
         });
     });

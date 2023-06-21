@@ -138,7 +138,7 @@ p {
 .my-dogs-container {
   display: flex;
   justify-content: center;
-  height: 100%;
+  /* height: 100%; */
   flex-wrap: wrap;
 }
 
@@ -157,9 +157,10 @@ p {
 }
 
 .my-dog img {
-  border-radius: 50%;
+  border-radius: 10px;
   margin-top: 2rem;
   cursor: pointer;
+  width: 200px;
 }
 
 .my-dog p {

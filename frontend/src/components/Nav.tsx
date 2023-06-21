@@ -35,7 +35,6 @@ const Nav = () => {
         if (dog.id === id) matchedDogs.push(dog);
       });
     });
-    contexts?.updateMatches(matchedDogs);
     console.log('it came in getMatches');
   };
 

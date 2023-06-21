@@ -17,6 +17,7 @@ const Context_1 = require("../Context/Context");
 const APIServices_1 = __importDefault(require("../services/APIServices"));
 const ChatDisplay = () => {
     const [message, setMessage] = (0, react_1.useState)('');
+    const [showMessages, setShowMessages] = (0, react_1.useState)([]);
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const addMessage = () => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b, _c, _d;
@@ -33,24 +34,36 @@ const ChatDisplay = () => {
         };
         console.log(newMessage);
         APIServices_1.default.sendMessage(sender_id, newMessage).then((message) => {
-            contexts === null || contexts === void 0 ? void 0 : contexts.updateMessages([...contexts.messages, message]);
+            setShowMessages([...showMessages, message]);
         });
     });
     console.log(contexts === null || contexts === void 0 ? void 0 : contexts.messages);
-    // const getMessages = async () => {
-    //   apiService.getMessages();
-    // };
+    const getMessages = () => __awaiter(void 0, void 0, void 0, function* () {
+        var _e;
+        APIServices_1.default.getMessages((_e = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _e === void 0 ? void 0 : _e.id);
+    });
+    (0, react_1.useEffect)(() => {
+        getMessages();
+    }, []);
+    (0, react_1.useEffect)(() => {
+        var _a;
+        const showMessages = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.messages) === null || _a === void 0 ? void 0 : _a.filter((message) => {
+            var _a;
+            return message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id);
+        });
+        setShowMessages(showMessages);
+        console.log({ showMessages });
+    }, []);
     return (<>
       <div className='chat-display'>
-        {contexts === null || contexts === void 0 ? void 0 : contexts.messages.map((message) => {
+        {showMessages.map((message) => {
             var _a;
             return (<div key={message.id}>
             <div className='chat-message-header'>
               <div className='img-container'>
-                <img src={(_a = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _a === void 0 ? void 0 : _a.url} alt={message.receiver + ' profile'}/>{' '}
+                <img src={(_a = contexts === null || contexts === void 0 ? void 0 : contexts.selectedDog) === null || _a === void 0 ? void 0 : _a.url} alt={message.receiver_name + ' profile'}/>{' '}
                 {/*contexts?.selectedDog?.url} is subject to change */}
               </div>
-              <p>{message.receiver}</p>
             </div>
             <p>{message.content}</p>
           </div>);

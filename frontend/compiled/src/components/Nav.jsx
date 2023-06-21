@@ -46,7 +46,6 @@ const Nav = () => {
                     matchedDogs.push(dog);
             });
         });
-        contexts === null || contexts === void 0 ? void 0 : contexts.updateMatches(matchedDogs);
         console.log('it came in getMatches');
     });
     (0, react_1.useEffect)(() => {

@@ -1,13 +1,24 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../Context/Context';
 import ChatDisplay from './ChatDisplay';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import { Dog } from '../types/Types';
 
 const MatchesDisplay = () => {
   const contexts = useContext(Context);
-  const matchedProfiles = contexts?.matchedDogs;
+  // const matchedProfiles = contexts?.matchedDogs;
+  const [matchedProfiles, setMatchedProfiles] = useState<Dog[]>([]);
   const [openChat, setOpenChat] = useState(false);
   console.log(openChat);
+
+  useEffect(() => {
+    const showMatches = contexts?.dogs?.filter((dog) => {
+      return dog.matches_dogs.includes(contexts?.currentDog?.id as number);
+    }) as Dog[];
+    setMatchedProfiles(showMatches);
+    console.log({ showMatches });
+  }, []);
+
   return (
     <div className='matches-display'>
       {openChat ? (

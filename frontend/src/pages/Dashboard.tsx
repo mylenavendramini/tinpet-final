@@ -15,8 +15,6 @@ const Dashboard: React.FC = () => {
     apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
       if (theOtherDog.matches_dogs.includes(currentDog.id)) {
         alert('Its a maaaatch');
-        // contexts?.matchedDogs.push(theOtherDog);
-        contexts?.updateMatches([...contexts.matchedDogs, theOtherDog]);
       }
     });
   };

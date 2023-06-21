@@ -18,23 +18,7 @@ const MyDogs = () => {
     navigate(`/dashboard/${dog.id}`);
   };
 
-  const getAllTheDogs = async () => {
-    apiService.getDogsofUser(userId).then((data) => {
-      contexts?.updateMyDogs(data);
-      if (data.length > 0) {
-        contexts?.updateCurrentDog(data[0]);
-      }
-      setGotDogs(true);
-    });
-  };
-
-  useEffect(() => {
-    if (contexts?.authenticated) {
-      getAllTheDogs();
-    } else {
-      console.log('no users');
-    }
-  }, []);
+  console.log({ myDogs });
 
   return (
     <>
@@ -42,17 +26,16 @@ const MyDogs = () => {
         <Nav />
         <h2 id='my-dogs-title'>My dogs</h2>
         <div className='my-dogs-container'>
-          {gotDogs &&
-            myDogs?.map((dog) => (
-              <div className='my-dog'>
-                <p onClick={() => handleClickDog(dog)}>{dog.name}</p>
-                <img
-                  src={`${dog.url}`}
-                  alt={dog.name}
-                  onClick={() => handleClickDog(dog)}
-                />
-              </div>
-            ))}
+          {myDogs?.map((dog) => (
+            <div className='my-dog'>
+              <p onClick={() => handleClickDog(dog)}>{dog.name}</p>
+              <img
+                src={`${dog.url}`}
+                alt={dog.name}
+                onClick={() => handleClickDog(dog)}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </>

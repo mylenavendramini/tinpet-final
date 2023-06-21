@@ -115,8 +115,8 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    getMessages: (senderId) => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/messages/${senderId}`, {
+    getMessages: (currentId) => __awaiter(void 0, void 0, void 0, function* () {
+        return fetch(`${PORT}/messages/${currentId}`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
