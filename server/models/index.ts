@@ -96,8 +96,6 @@ async function createDog(dog: IDog, userId: number) {
       gender,
       about,
       url,
-      liked_dog: [],
-      matches_dogs: [],
     });
     await newDog.setUser(parsedId);
     return newDog;
@@ -105,55 +103,6 @@ async function createDog(dog: IDog, userId: number) {
     throw new Error('Unable to create a dog');
   }
 }
-
-// async function filterDogArray(
-//   array: number[],
-//   myDogId: number,
-//   theOtherDogId: number
-// ) {
-//   const filteredDog = array.filter((dogId) => dogId !== theOtherDogId);
-//   await Dog.update(
-//     {
-//       liked_dog: [...filteredDog],
-//     },
-//     { where: { id: myDogId } }
-//   );
-// }
-
-// async function addMatch(
-//   myDogMatches: number[],
-//   theOtherDog: IDog,
-//   myDog: IDog
-// ) {
-//   if (!myDog.matches_dogs.includes(Number(theOtherDog.id))) {
-//     const newMatch = await Dog.update(
-//       {
-//         matches_dogs: [...myDogMatches, Number(theOtherDog.id)],
-//       },
-//       { where: { id: Number(myDog.id) } }
-//     );
-//     return newMatch;
-//   }
-// }
-
-// async function addLike(
-//   myDogLikesArray: number[],
-//   theOtherDog: IDog,
-//   myDog: IDog
-// ) {
-//   if (
-//     !myDog.matches_dogs.includes(Number(theOtherDog.id)) &&
-//     !myDog.liked_dog.includes(Number(theOtherDog.id))
-//   ) {
-//     const likeDog = await Dog.update(
-//       {
-//         liked_dog: [...myDogLikesArray, Number(theOtherDog.id)],
-//       },
-//       { where: { id: Number(myDog.id) } }
-//     );
-//     return likeDog;
-//   }
-// }
 
 async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
   try {
@@ -177,46 +126,6 @@ async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
     }
 }
 
-// const user = await User.findOne({ where: { id: parsedId } });
-// await newDog.setUser(parsedId);
-// async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
-//   try {
-//     const myDog = (await Dog.findOne({ where: { id: myDogIdObj.id } })) as IDog;
-//     const theOtherDog = (await Dog.findOne({
-//       where: { id: Number(theOtherDogId) },
-//     })) as IDog;
-//     const myDogLikesArray = myDog?.liked_dog as number[];
-//     const theOtherDogLikesArray = theOtherDog?.liked_dog as number[];
-//     const myDogMatches = myDog?.matches_dogs as number[];
-//     const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
-
-//     // Check if it's a match and add to matches_dogs:
-//     if (theOtherDogLikesArray.includes(myDog?.id as number)) {
-//       addMatch(myDogMatches, theOtherDog, myDog);
-//       addMatch(theOtherDogMatches, myDog, theOtherDog);
-//       filterDogArray(myDogLikesArray, myDog?.id as number, theOtherDogId);
-//       filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog?.id as number);
-//       return myDog;
-//     }
-//     // Add the dog that my dog like:
-//     if (!myDogLikesArray.includes(theOtherDogId)) {
-//       addLike(myDogLikesArray, theOtherDog, myDog);
-//       return myDog;
-//     }
-//   } catch (error) {
-//     throw new Error('Unable to like a dog');
-//   }
-// }
-
-async function getDogMatchesArray(dogId: number) {
-  try {
-    const dog = await Dog.findOne({ where: { id: dogId } });
-    const matches = dog?.matches_dogs;
-    return matches;
-  } catch (error) {
-    throw new Error('Unable to get the matches');
-  }
-}
 
 async function createMessage(body: Message, sender_id:number) {
   const { content, receiver_id, receiver_name } = body;
@@ -250,7 +159,6 @@ export {
   createDog,
   getAllDogs,
   likeAndMatch,
-  getDogMatchesArray,
   createMessage,
   getMessages,
   login,
