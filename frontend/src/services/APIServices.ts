@@ -55,7 +55,7 @@ const apiService = {
   },
 
   getDogs: async (): Promise<Dog[]> => {
-    return fetch(`${PORT}/dogs/`, {
+    return fetch(`${PORT}/dogs`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',

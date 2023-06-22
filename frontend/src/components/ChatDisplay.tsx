@@ -27,16 +27,27 @@ const ChatDisplay = () => {
   };
 
   const getMessages = async () => {
-    apiService.getMessages().then((messagesArray) => {
-      const showMessages = messagesArray.filter((message) => {
-        return (
-          message.sender_id === (contexts?.currentDog?.id as number) ||
-          message.receiver_id === (contexts?.currentDog?.id as number)
-        );
-      });
-      setShowMessages(showMessages);
-    });
+    const dog = localStorage.getItem('currentDog');
+    if (dog) {
+      const parsedDog = JSON.parse(dog);
+      console.log(parsedDog);
+      contexts?.updateCurrentDog(parsedDog);
+      const dogMessages = contexts?.currentDog?.messages as Message[];
+      setShowMessages(dogMessages);
+    }
   };
+
+  // const getMessages = async () => {
+  //   apiService.getMessages().then((messagesArray) => {
+  //     const showMessages = messagesArray.filter((message) => {
+  //       return (
+  //         message.sender_id === (contexts?.currentDog?.id as number) ||
+  //         message.receiver_id === (contexts?.currentDog?.id as number)
+  //       );
+  //     });
+  //     setShowMessages(showMessages);
+  //   });
+  // };
 
   useEffect(() => {
     getMessages();

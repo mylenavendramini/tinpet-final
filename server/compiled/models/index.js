@@ -17,10 +17,7 @@ const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
 const Dog = db_1.default.Dog;
-<<<<<<< HEAD
-=======
 const MessageModel = db_1.default.Message;
->>>>>>> b7075b10e8592b04261dd4a402bfcf1789356593
 function getUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -31,9 +28,6 @@ function getUser(userId) {
                         required: true,
                         as: 'dogs',
                         where: { userId: userId },
-<<<<<<< HEAD
-                    },
-=======
                         include: [
                             { model: Dog,
                                 as: 'matches' },
@@ -41,7 +35,6 @@ function getUser(userId) {
                                 as: 'messages' }
                         ],
                     }
->>>>>>> b7075b10e8592b04261dd4a402bfcf1789356593
                 ],
                 where: {
                     id: userId,

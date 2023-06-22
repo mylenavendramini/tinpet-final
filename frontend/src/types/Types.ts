@@ -19,6 +19,7 @@ export type Dog = {
   createdAt?: Date;
   updatedAt?: Date;
   userId?: number;
+  messages: Message[];
 };
 
 export type Message = {
