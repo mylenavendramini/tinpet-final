@@ -1,9 +1,4 @@
-import {
-  getAllDogs,
-  createDog,
-  likeAndMatch,
-  getDogMatchesArray
-} from '../models/index';
+import { getAllDogs, createDog, likeAndMatch } from '../models/index';
 import { Context } from 'koa';
 import { IDog, IdObject } from '../models/Interfaces';
 
@@ -18,7 +13,6 @@ async function getAllDogsController(ctx: Context) {
     ctx.status = 500;
   }
 }
-
 
 async function createDogController(ctx: Context) {
   const dog = ctx.request.body as IDog;
@@ -49,21 +43,16 @@ async function likeAndMatchController(ctx: Context) {
   }
 }
 
-async function getAllDogMatches(ctx: Context) {
-  const dogId = ctx.params.id;
-  try {
-    const matches = await getDogMatchesArray(dogId);
-    ctx.body = matches;
-  } catch (error) {
-    console.log(error);
-    ctx.status = 500;
-    ctx.body = { error: 'Failed to retrieve all dog matches' };
-  }
-}
+// async function getAllDogMatches(ctx: Context) {
+//   const dogId = ctx.params.id;
+//   try {
+//     const matches = await getDogMatchesArray(dogId);
+//     ctx.body = matches;
+//   } catch (error) {
+//     console.log(error);
+//     ctx.status = 500;
+//     ctx.body = { error: 'Failed to retrieve all dog matches' };
+//   }
+// }
 
-export {
-  getAllDogsController,
-  createDogController,
-  likeAndMatchController,
-  getAllDogMatches,
-};
+export { getAllDogsController, createDogController, likeAndMatchController };

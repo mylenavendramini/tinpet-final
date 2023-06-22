@@ -14,12 +14,12 @@ export type Dog = {
   gender: string;
   about: string;
   url: string;
-  liked_dog: number[];
-  matches_dogs: number[];
   createdAt?: Date;
   updatedAt?: Date;
   userId?: number;
-  messages: Message[];
+  likes?: Dog[];
+  matches?: Dog[];
+  messages?: Message[];
 };
 
 export type Message = {

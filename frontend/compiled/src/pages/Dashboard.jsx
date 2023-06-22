@@ -37,7 +37,8 @@ const Dashboard = () => {
     };
     const updateMatches = (otherDogId) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.addMatch(currentDog, otherDogId).then((theOtherDog) => {
-            if (theOtherDog.matches_dogs.includes(currentDog.id)) {
+            var _a;
+            if ((_a = theOtherDog.matches) === null || _a === void 0 ? void 0 : _a.includes(currentDog)) {
                 alert('Its a maaaatch');
             }
         });
@@ -68,9 +69,10 @@ const Dashboard = () => {
         var _a;
         const dog = localStorage.getItem('currentDog');
         const addDogs = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.dogs) === null || _a === void 0 ? void 0 : _a.filter((dog) => {
+            var _a, _b;
             return ((dog === null || dog === void 0 ? void 0 : dog.userId) !== (currentUser === null || currentUser === void 0 ? void 0 : currentUser.id) &&
-                !currentDog.matches_dogs.includes(dog === null || dog === void 0 ? void 0 : dog.id) &&
-                !currentDog.liked_dog.includes(dog === null || dog === void 0 ? void 0 : dog.id));
+                !((_a = currentDog.matches) === null || _a === void 0 ? void 0 : _a.includes(dog)) &&
+                !((_b = currentDog.likes) === null || _b === void 0 ? void 0 : _b.includes(dog)));
         });
         setOtherDogs(addDogs);
         if (dog) {

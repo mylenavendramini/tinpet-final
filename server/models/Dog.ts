@@ -32,7 +32,7 @@ import {
   Sequelize,
 } from 'sequelize';
 import { User } from './User';
-import type { Message } from './Message'
+import type { Message } from './Message';
 
 type DogAssociations = 'user' | 'messages' | 'matches' | 'likes';
 
@@ -47,8 +47,6 @@ export class Dog extends Model<
   declare gender: string | null;
   declare about: string;
   declare url: string | null;
-  declare liked_dog: number[];
-  declare matches_dogs: number[];
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -59,43 +57,43 @@ export class Dog extends Model<
   declare createUser: BelongsToCreateAssociationMixin<User>;
 
   // Dog belongsToMany Dog (as Matches)
-  declare matches?: NonAttribute<Dog[]>
-  declare getMatches: HasManyGetAssociationsMixin<Dog>
-  declare setMatches: HasManySetAssociationsMixin<Dog, number>
-  declare addMatch: HasManyAddAssociationMixin<Dog, number>
-  declare addMatches: HasManyAddAssociationsMixin<Dog, number>
-  declare createMatch: HasManyCreateAssociationMixin<Dog>
-  declare removeMatch: HasManyRemoveAssociationMixin<Dog, number>
-  declare removeMatches: HasManyRemoveAssociationsMixin<Dog, number>
-  declare hasMatch: HasManyHasAssociationMixin<Dog, number>
-  declare hasMatches: HasManyHasAssociationsMixin<Dog, number>
-  declare countMatches: HasManyCountAssociationsMixin
+  declare matches?: NonAttribute<Dog[]>;
+  declare getMatches: HasManyGetAssociationsMixin<Dog>;
+  declare setMatches: HasManySetAssociationsMixin<Dog, number>;
+  declare addMatch: HasManyAddAssociationMixin<Dog, number>;
+  declare addMatches: HasManyAddAssociationsMixin<Dog, number>;
+  declare createMatch: HasManyCreateAssociationMixin<Dog>;
+  declare removeMatch: HasManyRemoveAssociationMixin<Dog, number>;
+  declare removeMatches: HasManyRemoveAssociationsMixin<Dog, number>;
+  declare hasMatch: HasManyHasAssociationMixin<Dog, number>;
+  declare hasMatches: HasManyHasAssociationsMixin<Dog, number>;
+  declare countMatches: HasManyCountAssociationsMixin;
 
   // Dog hasMany Dog (as Likes)
-  declare likes?: NonAttribute<Dog[]>
-  declare getLikes: HasManyGetAssociationsMixin<Dog>
-  declare setLikes: HasManySetAssociationsMixin<Dog, number>
-  declare addLike: HasManyAddAssociationMixin<Dog, number>
-  declare addLikes: HasManyAddAssociationsMixin<Dog, number>
-  declare createLike: HasManyCreateAssociationMixin<Dog>
-  declare removeLike: HasManyRemoveAssociationMixin<Dog, number>
-  declare removeLikes: HasManyRemoveAssociationsMixin<Dog, number>
-  declare hasLike: HasManyHasAssociationMixin<Dog, number>
-  declare hasLikes: HasManyHasAssociationsMixin<Dog, number>
-  declare countLikes: HasManyCountAssociationsMixin
+  declare likes?: NonAttribute<Dog[]>;
+  declare getLikes: HasManyGetAssociationsMixin<Dog>;
+  declare setLikes: HasManySetAssociationsMixin<Dog, number>;
+  declare addLike: HasManyAddAssociationMixin<Dog, number>;
+  declare addLikes: HasManyAddAssociationsMixin<Dog, number>;
+  declare createLike: HasManyCreateAssociationMixin<Dog>;
+  declare removeLike: HasManyRemoveAssociationMixin<Dog, number>;
+  declare removeLikes: HasManyRemoveAssociationsMixin<Dog, number>;
+  declare hasLike: HasManyHasAssociationMixin<Dog, number>;
+  declare hasLikes: HasManyHasAssociationsMixin<Dog, number>;
+  declare countLikes: HasManyCountAssociationsMixin;
 
   // Dog hasMany Message
-  declare messages?: NonAttribute<Message[]>
-  declare getMessages: HasManyGetAssociationsMixin<Message>
-  declare setMessages: HasManySetAssociationsMixin<Message, number>
-  declare addMessage: HasManyAddAssociationMixin<Message, number>
-  declare addMessages: HasManyAddAssociationsMixin<Message, number>
-  declare createMessage: HasManyCreateAssociationMixin<Message>
-  declare removeMessage: HasManyRemoveAssociationMixin<Message, number>
-  declare removeMessages: HasManyRemoveAssociationsMixin<Message, number>
-  declare hasMessage: HasManyHasAssociationMixin<Message, number>
-  declare hasMessages: HasManyHasAssociationsMixin<Message, number>
-  declare countMessages: HasManyCountAssociationsMixin
+  declare messages?: NonAttribute<Message[]>;
+  declare getMessages: HasManyGetAssociationsMixin<Message>;
+  declare setMessages: HasManySetAssociationsMixin<Message, number>;
+  declare addMessage: HasManyAddAssociationMixin<Message, number>;
+  declare addMessages: HasManyAddAssociationsMixin<Message, number>;
+  declare createMessage: HasManyCreateAssociationMixin<Message>;
+  declare removeMessage: HasManyRemoveAssociationMixin<Message, number>;
+  declare removeMessages: HasManyRemoveAssociationsMixin<Message, number>;
+  declare hasMessage: HasManyHasAssociationMixin<Message, number>;
+  declare hasMessages: HasManyHasAssociationsMixin<Message, number>;
+  declare countMessages: HasManyCountAssociationsMixin;
 
   declare static associations: {
     user: Association<Dog, User>;
@@ -130,12 +128,6 @@ export class Dog extends Model<
         },
         url: {
           type: DataTypes.STRING,
-        },
-        liked_dog: {
-          type: DataTypes.ARRAY(DataTypes.INTEGER),
-        },
-        matches_dogs: {
-          type: DataTypes.ARRAY(DataTypes.INTEGER),
         },
         createdAt: {
           type: DataTypes.DATE,

@@ -14,17 +14,16 @@ export interface IDog {
   gender: string;
   about: string;
   url: string;
-  liked_dog: number[];
-  matches_dogs: number[];
   createdAt?: Date;
   updatedAt?: Date;
+  likes?: IDog[];
+  matches?: IDog[];
+  messages?: IMessage[];
 }
 
 export interface IMessage {
   id?: number;
-  sender_id: number;
   receiver_id: number;
-  sender_name: string;
   receiver_name: string;
   content: string;
   createdAt?: Date;

@@ -21,8 +21,6 @@ const Onboarding = () => {
       gender,
       url,
       about,
-      liked_dog: [],
-      matches_dogs: [],
     };
     const userId = contexts?.user?.id as number;
     apiService.createDog(userId, newDog).then((dog) => {

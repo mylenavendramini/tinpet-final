@@ -13,8 +13,8 @@ import MyDogs from './components/MyDogs';
 const App = () => {
   const contexts = useContext(Context);
   const currentDog = contexts?.currentDog;
-  const matches = contexts?.currentDog?.matches_dogs;
-  const liked = contexts?.currentDog?.liked_dog;
+  const matches = contexts?.currentDog?.matches;
+  const liked = contexts?.currentDog?.likes;
 
   const login = async (email: string, password: string) => {
     apiService.login(email, password).then((user) => {

@@ -26,8 +26,8 @@ const App = () => {
     var _a, _b;
     const contexts = (0, react_1.useContext)(Context_1.Context);
     const currentDog = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog;
-    const matches = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.matches_dogs;
-    const liked = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.liked_dog;
+    const matches = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.matches;
+    const liked = (_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.likes;
     const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
         APIServices_1.default.login(email, password).then((user) => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateUser(user);

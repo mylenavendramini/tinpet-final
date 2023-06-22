@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDogMatches = exports.likeAndMatchController = exports.createDogController = exports.getAllDogsController = void 0;
+exports.likeAndMatchController = exports.createDogController = exports.getAllDogsController = void 0;
 const index_1 = require("../models/index");
 function getAllDogsController(ctx) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -61,18 +61,3 @@ function likeAndMatchController(ctx) {
     });
 }
 exports.likeAndMatchController = likeAndMatchController;
-function getAllDogMatches(ctx) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const dogId = ctx.params.id;
-        try {
-            const matches = yield (0, index_1.getDogMatchesArray)(dogId);
-            ctx.body = matches;
-        }
-        catch (error) {
-            console.log(error);
-            ctx.status = 500;
-            ctx.body = { error: 'Failed to retrieve all dog matches' };
-        }
-    });
-}
-exports.getAllDogMatches = getAllDogMatches;

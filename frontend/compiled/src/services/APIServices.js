@@ -60,7 +60,7 @@ const apiService = {
             .then((parsedRes) => parsedRes);
     }),
     getDogs: () => __awaiter(void 0, void 0, void 0, function* () {
-        return fetch(`${PORT}/dogs/`, {
+        return fetch(`${PORT}/dogs`, {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -70,17 +70,6 @@ const apiService = {
             .then((res) => res.json())
             .then((parsedRes) => parsedRes);
     }),
-    // getDogsofUser: async (user_id: number): Promise<Dog[]> => {
-    //   return fetch(`${PORT}/dogs/${user_id}`, {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-type': 'application/json; charset=UTF-8',
-    //     },
-    //     credentials: 'include',
-    //   })
-    //     .then((res) => res.json())
-    //     .then((parsedRes) => parsedRes);
-    // },
     getMatches: (id) => __awaiter(void 0, void 0, void 0, function* () {
         return fetch(`${PORT}/matches/${id}`, {
             method: 'GET',
@@ -102,7 +91,10 @@ const apiService = {
             credentials: 'include',
         })
             .then((res) => res.json())
-            .then((parsedRes) => parsedRes);
+            .then((parsedRes) => {
+            console.log(parsedRes);
+            return parsedRes;
+        });
     }),
     sendMessage: (senderId, body) => __awaiter(void 0, void 0, void 0, function* () {
         return fetch(`${PORT}/messages/${senderId}`, {

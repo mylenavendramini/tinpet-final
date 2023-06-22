@@ -29,12 +29,6 @@ class Dog extends sequelize_1.Model {
             url: {
                 type: sequelize_1.DataTypes.STRING,
             },
-            liked_dog: {
-                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER),
-            },
-            matches_dogs: {
-                type: sequelize_1.DataTypes.ARRAY(sequelize_1.DataTypes.INTEGER),
-            },
             createdAt: {
                 type: sequelize_1.DataTypes.DATE,
             },

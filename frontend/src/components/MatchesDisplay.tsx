@@ -17,7 +17,7 @@ const MatchesDisplay = () => {
       contexts?.updateCurrentDog(contexts.currentDog);
       apiService.getDogs().then((dogs) => {
         const showMatches = dogs.filter((dog) => {
-          return dog.matches_dogs.includes(parsedDog.id as number);
+          return dog.matches?.includes(parsedDog as Dog);
         }) as Dog[];
         setMatchedProfiles(showMatches);
         console.log({ showMatches });

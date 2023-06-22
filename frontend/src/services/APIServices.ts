@@ -88,7 +88,10 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => {
+        console.log(parsedRes);
+        return parsedRes;
+      });
   },
 
   sendMessage: async (senderId: number, body: Message): Promise<Message> => {

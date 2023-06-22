@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
 
   const updateMatches = async (otherDogId: number) => {
     apiService.addMatch(currentDog, otherDogId).then((theOtherDog) => {
-      if (theOtherDog.matches_dogs.includes(currentDog.id)) {
+      if (theOtherDog.matches?.includes(currentDog)) {
         alert('Its a maaaatch');
       }
     });
@@ -64,8 +64,8 @@ const Dashboard: React.FC = () => {
     const addDogs = contexts?.dogs?.filter((dog) => {
       return (
         dog?.userId !== currentUser?.id &&
-        !currentDog.matches_dogs.includes(dog?.id as number) &&
-        !currentDog.liked_dog.includes(dog?.id as number)
+        !currentDog.matches?.includes(dog as Dog) &&
+        !currentDog.likes?.includes(dog as Dog)
       );
     }) as Dog[];
     setOtherDogs(addDogs);

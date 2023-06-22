@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.getMessages = exports.createMessage = exports.getDogMatchesArray = exports.likeAndMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
+exports.login = exports.getMessages = exports.createMessage = exports.likeAndMatch = exports.getAllDogs = exports.createDog = exports.createUser = exports.getUser = void 0;
 const Message_1 = require("./Message");
 const db_1 = __importDefault(require("./db"));
 const User = db_1.default.User;
@@ -29,12 +29,10 @@ function getUser(userId) {
                         as: 'dogs',
                         where: { userId: userId },
                         include: [
-                            { model: Dog,
-                                as: 'matches' },
-                            { model: MessageModel,
-                                as: 'messages' }
+                            { model: Dog, as: 'matches' },
+                            { model: MessageModel, as: 'messages' },
                         ],
-                    }
+                    },
                 ],
                 where: {
                     id: userId,
@@ -53,18 +51,18 @@ function login(body) {
         try {
             const { email, password } = body;
             const user = yield User.findOne({
-                include: [{
+                include: [
+                    {
                         model: Dog,
                         required: true,
                         as: 'dogs',
                         include: [
-                            { model: Dog,
-                                as: 'matches' },
-                            { model: MessageModel,
-                                as: 'messages' }
+                            { model: Dog, as: 'matches' },
+                            { model: MessageModel, as: 'messages' },
                         ],
-                    }],
-                where: { email, password }
+                    },
+                ],
+                where: { email, password },
             });
             return user;
         }
@@ -96,10 +94,8 @@ function getAllDogs() {
         try {
             const dogs = yield Dog.findAll({
                 include: [
-                    { model: Dog,
-                        as: 'matches' },
-                    { model: MessageModel,
-                        as: 'messages' }
+                    { model: Dog, as: 'matches' },
+                    { model: MessageModel, as: 'messages' },
                 ],
             });
             return dogs;
@@ -121,8 +117,6 @@ function createDog(dog, userId) {
                 gender,
                 about,
                 url,
-                liked_dog: [],
-                matches_dogs: [],
             });
             yield newDog.setUser(parsedId);
             return newDog;
@@ -190,6 +184,7 @@ function likeAndMatch(myDogIdObj, theOtherDogId) {
             const hasLike = yield (myDog === null || myDog === void 0 ? void 0 : myDog.hasLike(parsedOtherDogId));
             const matched = yield (otherDog === null || otherDog === void 0 ? void 0 : otherDog.hasMatch(parsedMyDogId));
             if (!hasLike && !likesMyDog && !matched) {
+                console.log('HEREEEE');
                 yield (myDog === null || myDog === void 0 ? void 0 : myDog.addLike(parsedOtherDogId));
             }
             else if (likesMyDog) {
@@ -234,19 +229,15 @@ exports.likeAndMatch = likeAndMatch;
 //     throw new Error('Unable to like a dog');
 //   }
 // }
-function getDogMatchesArray(dogId) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const dog = yield Dog.findOne({ where: { id: dogId } });
-            const matches = dog === null || dog === void 0 ? void 0 : dog.matches_dogs;
-            return matches;
-        }
-        catch (error) {
-            throw new Error('Unable to get the matches');
-        }
-    });
-}
-exports.getDogMatchesArray = getDogMatchesArray;
+// async function getDogMatchesArray(dogId: number) {
+//   try {
+//     const dog = await Dog.findOne({ where: { id: dogId } });
+//     const matches = dog?.matches;
+//     return matches;
+//   } catch (error) {
+//     throw new Error('Unable to get the matches');
+//   }
+// }
 function createMessage(body, sender_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const { content, receiver_id, receiver_name } = body;
@@ -255,7 +246,7 @@ function createMessage(body, sender_id) {
             const newMessage = yield MessageModel.create({
                 content,
                 receiver_id,
-                receiver_name
+                receiver_name,
             });
             sender === null || sender === void 0 ? void 0 : sender.addMessage(newMessage);
             return newMessage;

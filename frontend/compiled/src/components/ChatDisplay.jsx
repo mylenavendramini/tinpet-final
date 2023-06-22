@@ -38,15 +38,27 @@ const ChatDisplay = () => {
         setMessage('');
     });
     const getMessages = () => __awaiter(void 0, void 0, void 0, function* () {
-        APIServices_1.default.getMessages().then((messagesArray) => {
-            const showMessages = messagesArray.filter((message) => {
-                var _a, _b;
-                return (message.sender_id === ((_a = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _a === void 0 ? void 0 : _a.id) ||
-                    message.receiver_id === ((_b = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _b === void 0 ? void 0 : _b.id));
-            });
-            setShowMessages(showMessages);
-        });
+        var _e;
+        const dog = localStorage.getItem('currentDog');
+        if (dog) {
+            const parsedDog = JSON.parse(dog);
+            console.log(parsedDog);
+            contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(parsedDog);
+            const dogMessages = (_e = contexts === null || contexts === void 0 ? void 0 : contexts.currentDog) === null || _e === void 0 ? void 0 : _e.messages;
+            setShowMessages(dogMessages);
+        }
     });
+    // const getMessages = async () => {
+    //   apiService.getMessages().then((messagesArray) => {
+    //     const showMessages = messagesArray.filter((message) => {
+    //       return (
+    //         message.sender_id === (contexts?.currentDog?.id as number) ||
+    //         message.receiver_id === (contexts?.currentDog?.id as number)
+    //       );
+    //     });
+    //     setShowMessages(showMessages);
+    //   });
+    // };
     (0, react_1.useEffect)(() => {
         getMessages();
     }, []);

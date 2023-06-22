@@ -20,7 +20,8 @@ const MatchesDisplay = () => {
             contexts === null || contexts === void 0 ? void 0 : contexts.updateCurrentDog(contexts.currentDog);
             APIServices_1.default.getDogs().then((dogs) => {
                 const showMatches = dogs.filter((dog) => {
-                    return dog.matches_dogs.includes(parsedDog.id);
+                    var _a;
+                    return (_a = dog.matches) === null || _a === void 0 ? void 0 : _a.includes(parsedDog);
                 });
                 setMatchedProfiles(showMatches);
                 console.log({ showMatches });

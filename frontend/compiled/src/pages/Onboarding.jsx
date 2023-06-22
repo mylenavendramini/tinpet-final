@@ -34,8 +34,6 @@ const Onboarding = () => {
             gender,
             url,
             about,
-            liked_dog: [],
-            matches_dogs: [],
         };
         const userId = (_a = contexts === null || contexts === void 0 ? void 0 : contexts.user) === null || _a === void 0 ? void 0 : _a.id;
         APIServices_1.default.createDog(userId, newDog).then((dog) => {
