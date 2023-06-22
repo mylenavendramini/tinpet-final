@@ -4,7 +4,8 @@ import { Message } from '../models/Message';
 
 async function createMessageController(ctx: Context) {
   try {
-    const newMessage = await createMessage(ctx.request.body as Message);
+    const sender_id = ctx.params.id
+    const newMessage = await createMessage(ctx.request.body as Message, sender_id);
     ctx.body = newMessage;
     ctx.status = 201;
   } catch (error) {

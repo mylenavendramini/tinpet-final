@@ -9,17 +9,35 @@ function initModels(sequelize) {
     User_1.User.initModel(sequelize);
     Message_1.Message.initModel(sequelize);
     Dog_1.Dog.belongsTo(User_1.User, {});
-    Dog_1.Dog.belongsToMany(Dog_1.Dog, {
-        as: 'likedDogs',
-        through: Dog_1.Dog,
-        onDelete: 'CASCADE',
+    // Dog.belongsToMany(Dog, {
+    //   as: 'matchedDogs',
+    //   through: 'Matches',
+    //   onDelete: 'CASCADE',
+    //   foreignKey: "id"
+    // });
+    Dog_1.Dog.hasMany(Dog_1.Dog, {
+        as: 'matches',
+        foreignKey: 'dogs_id'
+    });
+    Dog_1.Dog.hasMany(Dog_1.Dog, {
+        as: 'likes',
+        foreignKey: 'dogs_id'
     });
     User_1.User.hasMany(Dog_1.Dog, {
         as: 'dogs',
     });
+    Dog_1.Dog.hasMany(Message_1.Message, {
+        as: 'messages',
+        foreignKey: 'dog_id'
+    });
+    Message_1.Message.belongsTo(Dog_1.Dog, {
+        as: 'message',
+        foreignKey: 'message_id'
+    });
     return {
         Dog: Dog_1.Dog,
         User: User_1.User,
+        Message: Message_1.Message
     };
 }
 exports.initModels = initModels;

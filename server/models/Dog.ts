@@ -13,6 +13,16 @@ import {
   BelongsToManyHasAssociationMixin,
   BelongsToManyHasAssociationsMixin,
   BelongsToManyCountAssociationsMixin,
+  HasManyGetAssociationsMixin,
+  HasManySetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  HasManyRemoveAssociationMixin,
+  HasManyRemoveAssociationsMixin,
+  HasManyHasAssociationMixin,
+  HasManyHasAssociationsMixin,
+  HasManyCountAssociationsMixin,
   CreationOptional,
   DataTypes,
   InferCreationAttributes,
@@ -22,8 +32,9 @@ import {
   Sequelize,
 } from 'sequelize';
 import { User } from './User';
+import type { Message } from './Message'
 
-type DogAssociations = 'user' | 'dogs';
+type DogAssociations = 'user' | 'messages' | 'matches' | 'likes';
 
 export class Dog extends Model<
   InferAttributes<Dog, { omit: DogAssociations }>,
@@ -48,21 +59,49 @@ export class Dog extends Model<
   declare createUser: BelongsToCreateAssociationMixin<User>;
 
   // Dog belongsToMany Dog (as Matches)
-  declare dogs?: NonAttribute<Dog[]>;
-  declare getDogs: BelongsToManyGetAssociationsMixin<Dog>;
-  declare setDogs: BelongsToManySetAssociationsMixin<Dog, number>;
-  declare addDog: BelongsToManyAddAssociationMixin<Dog, number>;
-  declare addDogs: BelongsToManyAddAssociationsMixin<Dog, number>;
-  declare createDog: BelongsToManyCreateAssociationMixin<Dog>;
-  declare removeDog: BelongsToManyRemoveAssociationMixin<Dog, number>;
-  declare removeDogs: BelongsToManyRemoveAssociationsMixin<Dog, number>;
-  declare hasDog: BelongsToManyHasAssociationMixin<Dog, number>;
-  declare hasDogs: BelongsToManyHasAssociationsMixin<Dog, number>;
-  declare countDogs: BelongsToManyCountAssociationsMixin;
+  declare matches?: NonAttribute<Dog[]>
+  declare getMatches: HasManyGetAssociationsMixin<Dog>
+  declare setMatches: HasManySetAssociationsMixin<Dog, number>
+  declare addMatch: HasManyAddAssociationMixin<Dog, number>
+  declare addMatches: HasManyAddAssociationsMixin<Dog, number>
+  declare createMatch: HasManyCreateAssociationMixin<Dog>
+  declare removeMatch: HasManyRemoveAssociationMixin<Dog, number>
+  declare removeMatches: HasManyRemoveAssociationsMixin<Dog, number>
+  declare hasMatch: HasManyHasAssociationMixin<Dog, number>
+  declare hasMatches: HasManyHasAssociationsMixin<Dog, number>
+  declare countMatches: HasManyCountAssociationsMixin
+
+  // Dog hasMany Dog (as Likes)
+  declare likes?: NonAttribute<Dog[]>
+  declare getLikes: HasManyGetAssociationsMixin<Dog>
+  declare setLikes: HasManySetAssociationsMixin<Dog, number>
+  declare addLike: HasManyAddAssociationMixin<Dog, number>
+  declare addLikes: HasManyAddAssociationsMixin<Dog, number>
+  declare createLike: HasManyCreateAssociationMixin<Dog>
+  declare removeLike: HasManyRemoveAssociationMixin<Dog, number>
+  declare removeLikes: HasManyRemoveAssociationsMixin<Dog, number>
+  declare hasLike: HasManyHasAssociationMixin<Dog, number>
+  declare hasLikes: HasManyHasAssociationsMixin<Dog, number>
+  declare countLikes: HasManyCountAssociationsMixin
+
+  // Dog hasMany Message
+  declare messages?: NonAttribute<Message[]>
+  declare getMessages: HasManyGetAssociationsMixin<Message>
+  declare setMessages: HasManySetAssociationsMixin<Message, number>
+  declare addMessage: HasManyAddAssociationMixin<Message, number>
+  declare addMessages: HasManyAddAssociationsMixin<Message, number>
+  declare createMessage: HasManyCreateAssociationMixin<Message>
+  declare removeMessage: HasManyRemoveAssociationMixin<Message, number>
+  declare removeMessages: HasManyRemoveAssociationsMixin<Message, number>
+  declare hasMessage: HasManyHasAssociationMixin<Message, number>
+  declare hasMessages: HasManyHasAssociationsMixin<Message, number>
+  declare countMessages: HasManyCountAssociationsMixin
 
   declare static associations: {
     user: Association<Dog, User>;
     matches: Association<Dog, Dog>;
+    messages: Association<Dog, Message>;
+    likes: Association<Dog, Dog>;
   };
 
   static initModel(sequelize: Sequelize): typeof Dog {

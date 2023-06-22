@@ -2,8 +2,7 @@ import {
   getAllDogs,
   createDog,
   likeAndMatch,
-  getDogMatchesArray,
-  getDogsByUserId,
+  getDogMatchesArray
 } from '../models/index';
 import { Context } from 'koa';
 import { IDog, IdObject } from '../models/Interfaces';
@@ -20,18 +19,6 @@ async function getAllDogsController(ctx: Context) {
   }
 }
 
-async function getDogsOfUser(ctx: Context) {
-  const user_id = ctx.params.id;
-  try {
-    const dogs = await getDogsByUserId(user_id);
-    ctx.body = dogs;
-    ctx.status = 200;
-  } catch (error) {
-    console.log(error);
-    ctx.body = { error: "Failed to retrieve user's dogs" };
-    ctx.status = 500;
-  }
-}
 
 async function createDogController(ctx: Context) {
   const dog = ctx.request.body as IDog;
@@ -76,7 +63,6 @@ async function getAllDogMatches(ctx: Context) {
 
 export {
   getAllDogsController,
-  getDogsOfUser,
   createDogController,
   likeAndMatchController,
   getAllDogMatches,

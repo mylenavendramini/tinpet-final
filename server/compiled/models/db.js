@@ -22,7 +22,7 @@ const db = new sequelize_1.Sequelize(dbName, 'postgres', `${process.env.POSTGRES
     port: 5432,
     dialect: 'postgres',
 });
-const { Dog, User } = (0, associations_1.initModels)(db);
+const { Message, Dog, User } = (0, associations_1.initModels)(db);
 (function authenticate() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -35,4 +35,4 @@ const { Dog, User } = (0, associations_1.initModels)(db);
         }
     });
 })();
-exports.default = { db, Dog, User };
+exports.default = { db, Dog, User, Message };

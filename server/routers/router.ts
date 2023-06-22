@@ -6,7 +6,6 @@ import {
 } from '../controllers/user';
 import {
   getAllDogsController,
-  getDogsOfUser,
   createDogController,
   likeAndMatchController,
   getAllDogMatches,
@@ -24,7 +23,6 @@ router.post('/messages/:id', createMessageController);
 router.get('/messages', getMessagesController);
 router.get('/user/:id', getUserController);
 router.get('/dogs', getAllDogsController);
-router.get('/dogs/:id', getDogsOfUser);
 router.get('/matches/:id', getAllDogMatches);
 router.put('/dogs/:id', likeAndMatchController);
 
