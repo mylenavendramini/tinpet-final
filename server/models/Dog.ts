@@ -24,7 +24,7 @@ import {
 import { User } from './User';
 import type { Message } from './Message'
 
-type DogAssociations = 'user' | 'messages' | 'matches' | 'likes';
+type DogAssociations = 'messages' | 'likes' | 'matches';
 
 export class Dog extends Model<
   InferAttributes<Dog, { omit: DogAssociations }>,

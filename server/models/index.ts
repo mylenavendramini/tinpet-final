@@ -12,12 +12,14 @@ async function getUser(userId: number) {
       include: [
         {
           model: Dog,
-          required: true,
+          required: false,
           as:'dogs',
           where:{userId: userId},
           include: [
             {model: Dog,
             as:'matches'},
+            {model: Dog,
+            as:'likes'},
             {model: MessageModel,
             as: 'messages'}
           ],
@@ -26,6 +28,7 @@ async function getUser(userId: number) {
         id: userId,
       },
     });
+    console.log(user)
     return user;
   } catch (error) {
     throw new Error('Unable to get the user');
@@ -38,11 +41,13 @@ async function login(body: IUser) {
     const user = await User.findOne({
       include: [{
         model: Dog,
-        required: true,
+        required: false,
         as:'dogs',
         include: [
           {model: Dog,
           as:'matches'},
+          {model: Dog,
+          as:'likes'},
           {model: MessageModel,
           as: 'messages'}
         ],
@@ -75,6 +80,8 @@ async function getAllDogs() {
       include: [
         {model: Dog,
         as:'matches'},
+        {model: Dog,
+        as:'likes'},
         {model: MessageModel,
         as: 'messages'}
       ],
@@ -104,22 +111,24 @@ async function createDog(dog: IDog, userId: number) {
   }
 }
 
-async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
+async function likeAndMatch(theOtherDogObj: IdObject, myDogId: number) {
   try {
-    const parsedOtherDogId  = Number(theOtherDogId)
-    const parsedMyDogId = Number(myDogIdObj.id)
-    const myDog = await Dog.findOne({ where: { id: myDogIdObj.id } });
+    const parsedMyDogId  = Number(myDogId)
+    const theOtherDogId = Number(theOtherDogObj.id)
+    const myDog = await Dog.findOne({ where: { id: parsedMyDogId } });
     const otherDog = await Dog.findOne({ where: { id: theOtherDogId } });
     const likesMyDog = await otherDog?.hasLike(parsedMyDogId)
-    const hasLike = await myDog?.hasLike(parsedOtherDogId)
+    const hasLike = await myDog?.hasLike(theOtherDogId)
     const matched = await otherDog?.hasMatch(parsedMyDogId)
-    if (!hasLike && !likesMyDog && !matched) {
-      await myDog?.addLike(parsedOtherDogId)
-    } else if (likesMyDog) {
-      await otherDog?.addMatch(parsedMyDogId)
-      await myDog?.addMatch(parsedOtherDogId)
-      await otherDog?.removeLike(parsedMyDogId)
-    }
+    console.log(hasLike, likesMyDog, matched)
+    myDog?.addMatch(theOtherDogId)
+    // if (!hasLike && !likesMyDog && !matched) {
+    //   await myDog?.addLike(parsedOtherDogId)
+    // } else if (likesMyDog) {
+    //   await otherDog?.addMatch(parsedMyDogId)
+    //   await myDog?.addMatch(parsedOtherDogId)
+    //   await otherDog?.removeLike(parsedMyDogId)
+    // }
     return myDog;
     } catch(error) {
       throw new Error('Unable to like a dog');

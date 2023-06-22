@@ -25,12 +25,14 @@ function getUser(userId) {
                 include: [
                     {
                         model: Dog,
-                        required: true,
+                        required: false,
                         as: 'dogs',
                         where: { userId: userId },
                         include: [
                             { model: Dog,
                                 as: 'matches' },
+                            { model: Dog,
+                                as: 'likes' },
                             { model: MessageModel,
                                 as: 'messages' }
                         ],
@@ -40,6 +42,7 @@ function getUser(userId) {
                     id: userId,
                 },
             });
+            console.log(user);
             return user;
         }
         catch (error) {
@@ -55,11 +58,13 @@ function login(body) {
             const user = yield User.findOne({
                 include: [{
                         model: Dog,
-                        required: true,
+                        required: false,
                         as: 'dogs',
                         include: [
                             { model: Dog,
                                 as: 'matches' },
+                            { model: Dog,
+                                as: 'likes' },
                             { model: MessageModel,
                                 as: 'messages' }
                         ],
@@ -98,6 +103,8 @@ function getAllDogs() {
                 include: [
                     { model: Dog,
                         as: 'matches' },
+                    { model: Dog,
+                        as: 'likes' },
                     { model: MessageModel,
                         as: 'messages' }
                 ],
@@ -131,24 +138,25 @@ function createDog(dog, userId) {
     });
 }
 exports.createDog = createDog;
-function likeAndMatch(myDogIdObj, theOtherDogId) {
+function likeAndMatch(theOtherDogObj, myDogId) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const parsedOtherDogId = Number(theOtherDogId);
-            const parsedMyDogId = Number(myDogIdObj.id);
-            const myDog = yield Dog.findOne({ where: { id: myDogIdObj.id } });
+            const parsedMyDogId = Number(myDogId);
+            const theOtherDogId = Number(theOtherDogObj.id);
+            const myDog = yield Dog.findOne({ where: { id: parsedMyDogId } });
             const otherDog = yield Dog.findOne({ where: { id: theOtherDogId } });
             const likesMyDog = yield (otherDog === null || otherDog === void 0 ? void 0 : otherDog.hasLike(parsedMyDogId));
-            const hasLike = yield (myDog === null || myDog === void 0 ? void 0 : myDog.hasLike(parsedOtherDogId));
+            const hasLike = yield (myDog === null || myDog === void 0 ? void 0 : myDog.hasLike(theOtherDogId));
             const matched = yield (otherDog === null || otherDog === void 0 ? void 0 : otherDog.hasMatch(parsedMyDogId));
-            if (!hasLike && !likesMyDog && !matched) {
-                yield (myDog === null || myDog === void 0 ? void 0 : myDog.addLike(parsedOtherDogId));
-            }
-            else if (likesMyDog) {
-                yield (otherDog === null || otherDog === void 0 ? void 0 : otherDog.addMatch(parsedMyDogId));
-                yield (myDog === null || myDog === void 0 ? void 0 : myDog.addMatch(parsedOtherDogId));
-                yield (otherDog === null || otherDog === void 0 ? void 0 : otherDog.removeLike(parsedMyDogId));
-            }
+            console.log(hasLike, likesMyDog, matched);
+            myDog === null || myDog === void 0 ? void 0 : myDog.addMatch(theOtherDogId);
+            // if (!hasLike && !likesMyDog && !matched) {
+            //   await myDog?.addLike(parsedOtherDogId)
+            // } else if (likesMyDog) {
+            //   await otherDog?.addMatch(parsedMyDogId)
+            //   await myDog?.addMatch(parsedOtherDogId)
+            //   await otherDog?.removeLike(parsedMyDogId)
+            // }
             return myDog;
         }
         catch (error) {

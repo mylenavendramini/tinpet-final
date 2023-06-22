@@ -9,12 +9,6 @@ function initModels(sequelize) {
     User_1.User.initModel(sequelize);
     Message_1.Message.initModel(sequelize);
     Dog_1.Dog.belongsTo(User_1.User, {});
-    // Dog.belongsToMany(Dog, {
-    //   as: 'matchedDogs',
-    //   through: 'Matches',
-    //   onDelete: 'CASCADE',
-    //   foreignKey: "id"
-    // });
     Dog_1.Dog.hasMany(Dog_1.Dog, {
         as: 'matches',
         foreignKey: 'dogs_id'
