@@ -121,8 +121,6 @@ function createDog(dog, userId) {
                 gender,
                 about,
                 url,
-                liked_dog: [],
-                matches_dogs: [],
             });
             yield newDog.setUser(parsedId);
             return newDog;

@@ -96,8 +96,6 @@ async function createDog(dog: IDog, userId: number) {
       gender,
       about,
       url,
-      liked_dog: [],
-      matches_dogs: [],
     });
     await newDog.setUser(parsedId);
     return newDog;
