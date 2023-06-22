@@ -66,18 +66,6 @@ const apiService = {
       .then((parsedRes) => parsedRes);
   },
 
-  // getDogsofUser: async (user_id: number): Promise<Dog[]> => {
-  //   return fetch(`${PORT}/dogs/${user_id}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json; charset=UTF-8',
-  //     },
-  //     credentials: 'include',
-  //   })
-  //     .then((res) => res.json())
-  //     .then((parsedRes) => parsedRes);
-  // },
-
   getMatches: async (id: number) => {
     return fetch(`${PORT}/matches/${id}`, {
       method: 'GET',

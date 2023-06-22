@@ -163,14 +163,18 @@ p {
 }
 
 .my-dog img {
-  border-radius: 10px;
+  border-radius: 50%;
   margin-top: 2rem;
   cursor: pointer;
   width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
 .my-dog p {
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 /* Auth Modal */
@@ -465,7 +469,9 @@ p {
 }
 
 .img-container img {
-  width: 100%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
 
 .img-container p {
