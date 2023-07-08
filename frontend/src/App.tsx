@@ -37,8 +37,6 @@ const App = () => {
       login(email, password).then((data) => {
         contexts?.updateAuthenticated(true);
       });
-    } else {
-      console.log('You need to login first');
     }
   }, []);
 

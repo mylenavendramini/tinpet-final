@@ -76,8 +76,6 @@ const Dashboard: React.FC = () => {
     if (dog) {
       const parsedDog = JSON.parse(dog);
       contexts?.updateCurrentDog(parsedDog);
-    } else {
-      console.log('You need to login first');
     }
   };
 
