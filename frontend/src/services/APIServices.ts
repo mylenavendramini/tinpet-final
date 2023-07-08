@@ -12,7 +12,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   login: async (email: string, password: string) => {
@@ -25,7 +26,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   createDog: async (user_id: number, dog: Dog): Promise<Dog> => {
@@ -38,7 +40,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   getUser: async (user_id: number): Promise<User> => {
@@ -51,7 +54,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   getDogs: async (): Promise<Dog[]> => {
@@ -63,7 +67,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   getMatches: async (id: number) => {
@@ -75,7 +80,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   addMatch: async (myDog: Dog, otherDogId: number) => {
@@ -88,7 +94,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   sendMessage: async (senderId: number, body: Message): Promise<Message> => {
@@ -101,7 +108,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 
   getMessages: async (): Promise<Message[]> => {
@@ -113,7 +121,8 @@ const apiService = {
       credentials: 'include',
     })
       .then((res) => res.json())
-      .then((parsedRes) => parsedRes);
+      .then((parsedRes) => parsedRes)
+      .catch((error) => console.log(error));
   },
 };
 

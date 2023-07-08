@@ -96,9 +96,7 @@ const Dashboard: React.FC = () => {
                 >
                   <div
                     style={{ backgroundImage: 'url(' + dog.url + ')' }}
-                    // className={removed ? 'removed' : 'card'}
                     className='card'
-                    // onClick={() => swiped('right', dog.id as number)}
                   >
                     <h3>{`${dog.name}, Age: ${dog.age}`}</h3>
                   </div>

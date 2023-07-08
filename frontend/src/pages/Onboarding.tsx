@@ -26,7 +26,6 @@ const Onboarding = () => {
     };
     const userId = contexts?.user?.id as number;
     apiService.createDog(userId, newDog).then((dog) => {
-      console.log(dog);
       contexts?.myDogs.push(dog);
       contexts?.updateCurrentDog(dog);
       navigate(`/dashboard/${dog.id}`);
