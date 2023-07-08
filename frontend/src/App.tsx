@@ -1,10 +1,9 @@
+import { useEffect, useContext } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Onboarding from './pages/Onboarding';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Dog, User } from './types/Types';
 import Login from './components/Login';
-import { useEffect, useContext, useState } from 'react';
 import { Context } from './Context/Context';
 import apiService from './services/APIServices';
 import AuthModal from './components/Register';
@@ -12,7 +11,6 @@ import MyDogs from './components/MyDogs';
 
 const App = () => {
   const contexts = useContext(Context);
-  const currentDog = contexts?.currentDog;
   const matches = contexts?.currentDog?.matches_dogs;
   const liked = contexts?.currentDog?.liked_dog;
 
@@ -27,7 +25,6 @@ const App = () => {
     if (user) {
       const { id } = JSON.parse(user);
       apiService.getUser(id).then((user) => {
-        console.log(user);
         contexts?.updateMyDogs(user.dogs);
       });
     }
