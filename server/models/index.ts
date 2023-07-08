@@ -1,6 +1,9 @@
 import { IUser, IDog, IdObject, IMessage } from './Interfaces';
 import db from './db';
-
+const saltRounds = 12;
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+const SECRET_KEY = process.env.SECRET_KEY || 'not-so-secret';
 const User = db.User;
 const Dog = db.Dog;
 const Message = db.Message;
@@ -37,9 +40,15 @@ async function login(body: IUser) {
           as: 'dogs',
         },
       ],
-      where: { email, password },
+      where: { email },
     });
-    return user;
+    const valid = await bcrypt.compare(password, user?.password as string)
+    const accessToken = jwt.sign({ id: user?.id }, SECRET_KEY, { expiresIn: '12h' });
+    if(valid) {
+      return {user, accessToken}
+    } else {
+      throw new Error('Email and Password does not match.')
+    }
   } catch (error) {
     throw new Error('Unable to login');
   }
@@ -48,12 +57,17 @@ async function login(body: IUser) {
 async function createUser(user: IUser) {
   try {
     const { username, email, password } = user;
+    const prevPassword = password
     const newUser = await User.create({
       username,
       email,
-      password,
+      password: await bcrypt.hash(
+        prevPassword,
+        saltRounds
+      ),
     });
-    return newUser;
+    const accessToken = jwt.sign({ id: newUser.id }, SECRET_KEY, { expiresIn: '12h' });
+    return {user:newUser, accessToken};
   } catch (error) {
     throw new Error('User creation failed.');
   }
