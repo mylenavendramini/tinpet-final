@@ -9,7 +9,7 @@ const corsConfig = {
 };
 
 const app = new Koa();
-const PORT = 3001;
+const PORT = process.env.SERVER_PORT || 3001;
 
 app
   .use(cors(corsConfig))
