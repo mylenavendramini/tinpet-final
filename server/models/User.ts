@@ -61,10 +61,7 @@ export class User extends Model<
         },
         updatedAt: {
           type: DataTypes.DATE,
-        },
-        // messages: {
-        //   type: DataTypes.ARRAY(DataTypes.INTEGER) //for messages might not be needed depends on the message model
-        // }
+        }
       },
       {
         sequelize,

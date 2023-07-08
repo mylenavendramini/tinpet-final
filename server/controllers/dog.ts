@@ -40,7 +40,6 @@ async function createDogController(ctx: Context) {
     const newDog = await createDog(dog, user_id);
     ctx.body = newDog;
     ctx.status = 201;
-    console.log(newDog, 'controller');
   } catch (error) {
     console.log(error);
     ctx.status = 500;

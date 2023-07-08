@@ -9,7 +9,6 @@ async function getUserController(ctx: Context) {
     ctx.body = user;
     ctx.status = 200;
   } catch (error) {
-    console.log(error);
     ctx.status = 500;
     ctx.body = { error: 'Failed to retrieve user' };
   }
@@ -22,7 +21,6 @@ async function createUserController(ctx: Context) {
     ctx.body = newUser;
     ctx.status = 201;
   } catch (error) {
-    console.log(error);
     ctx.status = 500;
     ctx.body = { error: 'Failed to create user' };
   }

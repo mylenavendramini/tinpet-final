@@ -2,7 +2,6 @@ import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import cors from '@koa/cors';
 import router from './routers/router';
-// import {db} from './models/db';
 
 const corsConfig = {
   origin: 'http://localhost:5173',
@@ -11,10 +10,6 @@ const corsConfig = {
 
 const app = new Koa();
 const PORT = 3001;
-
-// (async () => {
-//   await db.sync();
-// })();
 
 app
   .use(cors(corsConfig))

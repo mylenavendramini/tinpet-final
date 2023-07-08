@@ -5,39 +5,6 @@ const User = db.User;
 const Dog = db.Dog;
 const Message = db.Message;
 
-// async function getUser(userId: number) {
-//   console.log(userId);
-//   try {
-//     const user = await User.findOne({
-//       include: [
-//         {
-//           required: false,
-//           model: Dog,
-//           as: 'dogs',
-//           where: { userId: userId },
-//         },
-//       ],
-//       where: {
-//         id: userId,
-//       },
-//     });
-//     console.log(user, ' Should console log user here');
-//     return user;
-//   } catch (error) {
-//     throw new Error('Unable to get the user');
-//   }
-// }
-
-// async function login(body: IUser) {
-//   try {
-//     const { email, password } = body;
-//     const user = await User.findOne({ where: { email, password } });
-//     return user;
-//   } catch (error) {
-//     throw new Error('Unable to login');
-//   }
-// }
-
 async function getUser(userId: number) {
   try {
     const user = await User.findOne({
@@ -54,7 +21,6 @@ async function getUser(userId: number) {
         id: userId,
       },
     });
-    console.log(user);
     return user;
   } catch (error) {
     throw new Error('Unable to get the user');
@@ -135,7 +101,6 @@ async function getDogsByUserId(userId: number) {
       const dogs = user.dogs;
       return dogs;
     } else {
-      console.log('Dogs not found');
       return undefined;
     }
   } catch (error) {
@@ -202,8 +167,6 @@ async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
     const theOtherDogLikesArray = theOtherDog?.liked_dog as number[];
     const myDogMatches = myDog?.matches_dogs as number[];
     const theOtherDogMatches = theOtherDog?.matches_dogs as number[];
-
-    // Check if it's a match and add to matches_dogs:
     if (theOtherDogLikesArray.includes(myDog?.id as number)) {
       addMatch(myDogMatches, theOtherDog, myDog);
       addMatch(theOtherDogMatches, myDog, theOtherDog);
@@ -211,7 +174,6 @@ async function likeAndMatch(myDogIdObj: IdObject, theOtherDogId: number) {
       filterDogArray(theOtherDogLikesArray, theOtherDogId, myDog?.id as number);
       return myDog;
     }
-    // Add the dog that my dog like:
     if (!myDogLikesArray.includes(theOtherDogId)) {
       addLike(myDogLikesArray, theOtherDog, myDog);
       return myDog;
