@@ -6,6 +6,7 @@
   padding: 0;
   margin: 0;
   text-align: center;
+  overflow: auto;
 }
 
 #root {
@@ -353,8 +354,10 @@ p {
 }
 
 .card h3 {
-  margin-top: 0;
-  padding-top: 5px;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: #47a992;
+  color: white;
 }
 
 .infoText {
@@ -388,7 +391,7 @@ p {
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.15) 0px 0px 0px 1px;
-  width: 40%;
+  width: 40vw;
   text-align: left;
   z-index: 1;
 }
@@ -469,6 +472,7 @@ p {
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+  margin-right: 1rem;
 }
 
 .img-container img {
@@ -482,8 +486,9 @@ p {
 }
 
 .chat-message-header p {
-  text-align: justify;
-  font-size: 1.3rem;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 2;
 }
 
 .chat-message-header {
@@ -494,19 +499,17 @@ p {
   background-color: #47a992;
   border-radius: 8px;
   height: auto;
-  width: fit-content;
-  margin-right: 30%;
-  padding: 1rem;
+  margin-right: 40%;
+  overflow-wrap: break-word;
 }
 
 .right {
   background-color: #eff5c7;
   border-radius: 8px;
   height: auto;
-  width: fit-content;
   justify-content: flex-end;
-  margin-left: 70%;
-  padding: 1rem;
+  margin-left: 40%;
+  overflow-wrap: break-word;
 }
 
 /* Chat display */
@@ -514,7 +517,6 @@ p {
 .chat-display {
   padding: 1.3rem;
   height: 50vh;
-  overflow-y: auto;
 }
 
 /* Chat input */
@@ -526,6 +528,8 @@ p {
 
 .chat-input textarea {
   padding: 1rem;
+  border: 2px solid #025464;
+  border-radius: 10px;
 }
 
 .match-card {
@@ -537,12 +541,24 @@ p {
   padding: 1rem;
   background-color: rgba(208, 245, 190, 0.3);
   border-radius: 1rem;
+  color: white;
 }
 
 /*-------- Chat Display --------*/
 .chat-display,
 .matches-display {
   overflow-y: auto;
+}
+
+.matches-display {
+  border-bottom: 1px solid lightgray;
+  background-color: #47a992;
+  padding-bottom: 1rem;
+}
+
+.matches-display h2 {
+  margin: 1rem 0;
+  color: white;
 }
 
 /*-------- Matches Display --------*/
