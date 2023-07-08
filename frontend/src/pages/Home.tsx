@@ -15,9 +15,8 @@ const Home = () => {
         <div className='home'>
           <h1 className='primary-title'>TinPet</h1>
           <p>
-            Your pet is lonely and has no friends? TinPet is the solution, here
-            you can contact other people who are also looking for friends for
-            their pets, where you can make friends .... among other things...
+            Discover like-minded dog lovers and find the perfect playmate for
+            your friend.
           </p>
           {authenticated ? (
             <>

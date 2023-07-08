@@ -120,11 +120,13 @@ nav .dropdown-btns button {
 
 /* HomePage */
 .home {
-  margin-top: 30vh;
+  margin: 30vh 30vw;
 }
 
 p {
   padding: 0 1rem;
+  font-size: 1.5em;
+  line-height: 3rem;
   color: rgb(106, 106, 106);
 }
 
