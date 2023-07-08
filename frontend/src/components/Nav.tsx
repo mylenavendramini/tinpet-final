@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import logo from '../assets/dog-face-svgrepo-com.svg';
 import HomeIcon from '@mui/icons-material/Home';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -6,7 +6,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Context } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { Dog } from '../types/Types';
-import apiService from '../services/APIServices';
+
 const Nav = () => {
   const [open, setOpen] = useState(false);
 

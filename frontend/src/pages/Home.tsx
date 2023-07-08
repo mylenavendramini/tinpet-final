@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Nav from '../components/Nav';
 import { useNavigate } from 'react-router';
+import Nav from '../components/Nav';
 import { Context } from '../Context/Context';
 
 const Home = () => {

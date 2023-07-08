@@ -67,7 +67,6 @@ button:hover {
 /* Navbar styles */
 
 nav {
-  /* width: 100%; */
   display: flex;
   position: absolute;
 }
@@ -144,7 +143,6 @@ p {
 .my-dogs-container {
   display: flex;
   justify-content: center;
-  /* height: 100%; */
   flex-wrap: wrap;
 }
 
@@ -343,7 +341,6 @@ p {
   position: relative;
   width: 400px;
   height: 600px;
-  /* box-shadow: 0px 0px 60px 0px rgba(0,0,0,0.30); */
   border-radius: 30px;
   background-size: cover;
   background-position: center;
@@ -400,7 +397,6 @@ p {
     rgba(208, 245, 190, 1) 0%,
     rgba(251, 255, 220, 1) 100%
   );
-  /* height: 3rem; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -470,7 +466,6 @@ p {
   width: 50px;
   border-radius: 50%;
   overflow: hidden;
-  /* margin: 10px; */
   cursor: pointer;
 }
 
@@ -545,8 +540,6 @@ p {
 /*-------- Chat Display --------*/
 .chat-display,
 .matches-display {
-  /* padding: 20px; */
-  /* height: 60vh; */
   overflow-y: auto;
 }
 

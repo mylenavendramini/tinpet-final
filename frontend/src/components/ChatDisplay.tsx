@@ -6,7 +6,6 @@ import { Dog, Message } from '../types/Types';
 const ChatDisplay = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
-
   const contexts = useContext(Context);
 
   const addMessage = async () => {
@@ -40,10 +39,7 @@ const ChatDisplay = () => {
     const dog = localStorage.getItem('currentDog');
     if (dog) {
       const parsedDog = JSON.parse(dog);
-      console.log(parsedDog);
       contexts?.updateCurrentDog(parsedDog);
-      console.log(contexts?.currentDog);
-      // const dogMessages = contexts?.currentDog?.messages as Message[];
 
       const receiveMessages = contexts?.selectedDog?.messages?.filter(
         (message) => {
